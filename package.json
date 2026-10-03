@@ -1,0 +1,24 @@
+{
+  "name": "campushelp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MVP web para gestionar incidentes y solicitudes de servicios tecnológicos universitarios (Taller ScrumBan).",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node database/init.js",
+    "test": "node --test"
+  },
+  "keywords": ["mesa-de-servicios", "scrumban", "express", "mysql"],
+  "author": "Sebastian, Keyla, Miguel",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mysql2": "^3.11.0"
+  }
+}
