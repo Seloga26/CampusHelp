@@ -1,6 +1,6 @@
 # Sprint 1 — Planning
 
-**Fechas del sprint:** sábado 3 – viernes 9 de octubre de 2026
+**Fechas del sprint:** sábado 3 – martes 6 de octubre de 2026 (acortado: la entrega final es el martes 13)
 **Sprint Planning:** domingo 4 de octubre de 2026
 **Equipo:** Sebastian (@Seloga26), Keyla (@Keyla-Cartagena), Miguel (@miguelfsociety)
 
@@ -20,7 +20,7 @@ Al final del sprint se debe poder demostrar: **Registrar → ver en la bandeja �
 | HU-02 Consultar mis casos | 3 | Keyla (la jala la primera persona con capacidad) | [HU-02](../historias/HU-02.md) | #2 |
 | **Total** | **16** | | | |
 
-**Capacidad:** es el primer sprint, así que no hay velocidad histórica. 16 SP con 3 personas y 5 días hábiles se considera alcanzable. El Throughput real de este sprint será la base para planear el Sprint 2.
+**Capacidad:** es el primer sprint, así que no hay velocidad histórica. Quedan 2 días de desarrollo (lunes 5 y martes 6) más lo que se adelante hoy domingo, así que 16 SP es ajustado. Si HU-02 no alcanza a terminarse, pasa al Sprint 2 y se registra en la Review; eso es preferible a dejar historias a medias. El Throughput real de este sprint será la base para planear el Sprint 2.
 
 No hay roles fijos: el responsable es quien lleva la historia hasta Done, pero cualquiera puede ayudar en sus tareas, sobre todo cuando una columna llega a su límite WIP.
 
@@ -100,11 +100,11 @@ Cada historia trabaja en sus propios archivos. En los archivos compartidos, cada
 |---|---|
 | Sáb 3 | Configuración: repositorio, protección de `main`, tablero, Issues #1–#12 y etiquetas |
 | Dom 4 | **Sprint Planning** y refinamiento de HU-01, HU-02, HU-03 y HU-05 (este documento) |
-| Lun 5 | Cada uno verifica `npm run db:init` y `/api/health` en su equipo. T0, `historial.js` y `comun.js` integrados |
-| Lun 5 – Vie 9 | **Daily** de 10–15 min. Hora: ____ . Revisar flujo, bloqueos y WIP |
-| Mié 7 | **Refinement** de las historias del Sprint 2 (HU-04, HU-06, HU-07, HU-08) |
-| Jue 8 | Meta: las 4 historias en En validación o Done |
-| Vie 9 | **Sprint Review** (demo del flujo) y **Retrospective** con las métricas del sprint |
+| Dom 4 | Si alguien puede adelantar: verificar `npm run db:init` y `/api/health`, y empezar T0, `historial.js` y `comun.js` |
+| Lun 5 | **Daily** (hora: ____). T0, `historial.js` y `comun.js` integrados en la mañana. Desarrollo de HU-01, HU-03 y HU-05 |
+| Mar 6 | **Daily**. Meta: las 4 historias en En validación o Done. **Refinement** de las historias del Sprint 2 (HU-04, HU-06, HU-07, HU-08) |
+| Mar 6 (final del día) | **Sprint Review** (demo del flujo) y **Retrospective** con las métricas del sprint |
+| Mié 7 | Sprint 2 Planning |
 
 ## Riesgos
 
@@ -114,3 +114,4 @@ Cada historia trabaja en sus propios archivos. En los archivos compartidos, cada
 | MySQL configurado distinto en cada equipo | Todos validan `/api/health` el lunes; cualquier problema se marca como `blocked` |
 | HU-01 se retrasa y frena la demo completa | T0 permite avanzar HU-02, HU-03 y HU-05 con datos de ejemplo |
 | En análisis llena (3/3) con el equipo completo | Si alguien se bloquea, marca `blocked` con motivo y ayuda a otro; no jala trabajo nuevo |
+| Solo 2 días de desarrollo | PR pequeños e integración diaria; si HU-02 no cabe, pasa al Sprint 2 |
