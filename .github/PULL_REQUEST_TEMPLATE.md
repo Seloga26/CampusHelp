@@ -16,4 +16,4 @@ Closes #  · HU-XX / DEF-XX
 - [ ] `npm test` pasa
 - [ ] Casos de prueba ejecutados y registrados en `docs/pruebas/casos_prueba.md`
 - [ ] Documentación actualizada si aplica
-- [ ] Revisado por al menos un compañero
+- [ ] Avisé al equipo si el cambio afecta archivos de otra historia

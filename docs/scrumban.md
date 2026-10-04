@@ -61,7 +61,7 @@ Una historia está **Ready** cuando tiene:
 
 Una historia está **Done** cuando:
 
-- [ ] Código integrado en `main` mediante PR revisado
+- [ ] Código integrado en `main` mediante PR
 - [ ] Criterios de aceptación verificados
 - [ ] Pruebas ejecutadas y resultados registrados
 - [ ] Sin defectos críticos abiertos

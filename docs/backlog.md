@@ -30,3 +30,4 @@ Registrar aquí historias nuevas (evento E5), divisiones de historias grandes (E
 | 2026-10-04 | La semana del 26 sep al 2 oct pasa a ser Sprint 0 (preparación); los sprints 1–3 van del 3 al 23 de octubre | El repositorio y el tablero quedaron listos el 3 oct; así los sprints de desarrollo duran una semana y las fechas registradas son reales | Equipo |
 | 2026-10-04 | HU-05 depende de HU-03 solo en el frontend; el backend se hace en paralelo | Evitar que HU-05 espere a HU-03 y repartir el trabajo entre los tres | Equipo |
 | 2026-10-04 | Nueva tarea T0 (casos de ejemplo en el seed) | Quitar el bloqueo de HU-02, HU-03 y HU-05 mientras se termina HU-01 | Equipo |
+| 2026-10-04 | Los PR ya no requieren aprobación; quien abre el PR lo fusiona | La espera de aprobaciones demoraba la integración; se mantiene el uso de PR para trazabilidad con los Issues | Equipo |

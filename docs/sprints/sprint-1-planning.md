@@ -26,7 +26,7 @@ No hay roles fijos: el responsable es quien lleva la historia hasta Done, pero c
 
 ## Flujo planeado en el tablero
 
-1. Al aprobar el PR de este planning, las 4 historias pasan a **Ready**. Registrar la fecha en `docs/metricas/registro_flujo.csv`.
+1. Al fusionar el PR de este planning, las 4 historias pasan a **Ready**. Registrar la fecha en `docs/metricas/registro_flujo.csv`.
 2. **Pull inicial:** Sebastian jala HU-01, Keyla jala HU-03 y Miguel jala HU-05. **En análisis queda en 3/3**, su límite.
 3. **HU-02 espera en Ready.** Se jala cuando haya espacio en En análisis, es decir, cuando alguna de las otras tres pase a En atención. Esto es el principio Pull del Taller: no se empieza trabajo nuevo sin capacidad.
 4. Cada movimiento de columna se registra el mismo día en `registro_flujo.csv`.
