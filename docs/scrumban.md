@@ -9,11 +9,30 @@ Entregar un MVP de CampusHelp que permita gestionar de extremo a extremo inciden
 | Sprint | Fechas | Sprint Goal | Historias | Planning |
 |---|---|---|---|---|
 | 0 | sáb 26 sep – vie 2 oct | Preparación: comprender el Taller y alistar el entorno | — | [sprint-0.md](sprints/sprint-0.md) |
-| 1 | sáb 3 oct – vie 9 oct | Un solicitante registra y consulta sus casos, y un agente los ve en la bandeja y avanza su estado con historial, todo persistido en MySQL | HU-01, HU-02, HU-03, HU-05 | [sprint-1-planning.md](sprints/sprint-1-planning.md) |
-| 2 | sáb 10 oct – vie 16 oct | Completar asignación, atención, validación e historial | HU-04, HU-06, HU-07, HU-08 | |
-| 3 | sáb 17 oct – vie 23 oct | Completar filtros, indicadores, categorías y detalle | HU-09, HU-10, HU-11, HU-12 | |
+| 1 | sáb 3 – mar 6 oct (4 días) | Un solicitante registra y consulta sus casos, y un agente los ve en la bandeja y avanza su estado con historial, todo persistido en MySQL | HU-01, HU-02, HU-03, HU-05 | [sprint-1-planning.md](sprints/sprint-1-planning.md) |
+| 2 | mié 7 – vie 9 oct (3 días) | Completar asignación, atención, validación e historial | HU-04, HU-06, HU-07, HU-08 | |
+| 3 | sáb 10 – lun 12 oct (3 días) | Completar filtros, indicadores, categorías y detalle | HU-09, HU-10, HU-11, HU-12 | |
+| — | **mar 13 oct** | **Entrega final y presentación** | | |
 
-El Sprint 0 no entrega historias; los tres sprints de desarrollo duran una semana, como pide el Taller.
+El Taller sugiere sprints de 1 semana. Como la entrega final es el martes 13 de octubre, el equipo los acortó a 3–4 días para mantener los tres sprints con su cadencia completa (Planning, Daily, Refinement, Review y Retrospective). La decisión está en el registro de cambios del [backlog](backlog.md).
+
+### Cadencia con sprints cortos
+
+| Evento | Cuándo |
+|---|---|
+| Sprint Planning | Primer día del sprint, máximo 30 min |
+| Daily | Todos los días del sprint, 10–15 min |
+| Refinement | Penúltimo día del sprint, para dejar Ready las historias del siguiente |
+| Review + Retrospective | Último día del sprint, al final de la jornada |
+
+### Plan de contingencia
+
+Si al cerrar el Sprint 2 el Throughput muestra que no alcanza el tiempo, se recorta en este orden, de menor a mayor impacto en el MVP:
+
+1. **HU-12** (P3): el detalle del caso se cubre en parte con HU-02 y HU-08.
+2. **HU-11** (P2): las categorías ya vienen cargadas en el seed.
+
+HU-01 a HU-10 no se recortan: cubren el flujo obligatorio y los módulos de historial, filtros e indicadores que exige el Taller.
 
 ## Tablero
 
