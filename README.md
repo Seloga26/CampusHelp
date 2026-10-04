@@ -97,7 +97,8 @@ Los endpoints pendientes responden `501` hasta que se implementan.
 | Documento | Contenido |
 |---|---|
 | [docs/backlog.md](docs/backlog.md) | Product Backlog con prioridad, puntos, sprint y estado |
-| [docs/scrumban.md](docs/scrumban.md) | Product Goal, tablero, políticas WIP, DoR y DoD |
+| [docs/scrumban.md](docs/scrumban.md) | Product Goal, calendario de sprints, tablero, políticas WIP, DoR y DoD |
+| [docs/sprints/](docs/sprints/) | Sprint 0 y Sprint Planning de cada sprint |
 | [docs/historias/](docs/historias/) | Fichas de historia refinadas |
 | [docs/pruebas/](docs/pruebas/) | Casos de prueba, resultados y defectos |
 | [docs/metricas/](docs/metricas/) | Registro de fechas del flujo y métricas |

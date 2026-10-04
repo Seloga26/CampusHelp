@@ -6,11 +6,14 @@ Entregar un MVP de CampusHelp que permita gestionar de extremo a extremo inciden
 
 ## Sprints
 
-| Sprint | Fechas | Sprint Goal | Historias |
-|---|---|---|---|
-| 1 | | Construir el flujo básico de registro y consulta | HU-01, HU-02, HU-03, HU-05 |
-| 2 | | Completar asignación, atención, validación e historial | HU-04, HU-06, HU-07, HU-08 |
-| 3 | | Completar filtros, indicadores, categorías y detalle | HU-09, HU-10, HU-11, HU-12 |
+| Sprint | Fechas | Sprint Goal | Historias | Planning |
+|---|---|---|---|---|
+| 0 | sáb 26 sep – vie 2 oct | Preparación: comprender el Taller y alistar el entorno | — | [sprint-0.md](sprints/sprint-0.md) |
+| 1 | sáb 3 oct – vie 9 oct | Un solicitante registra y consulta sus casos, y un agente los ve en la bandeja y avanza su estado con historial, todo persistido en MySQL | HU-01, HU-02, HU-03, HU-05 | [sprint-1-planning.md](sprints/sprint-1-planning.md) |
+| 2 | sáb 10 oct – vie 16 oct | Completar asignación, atención, validación e historial | HU-04, HU-06, HU-07, HU-08 | |
+| 3 | sáb 17 oct – vie 23 oct | Completar filtros, indicadores, categorías y detalle | HU-09, HU-10, HU-11, HU-12 | |
+
+El Sprint 0 no entrega historias; los tres sprints de desarrollo duran una semana, como pide el Taller.
 
 ## Tablero
 
@@ -58,7 +61,7 @@ Una historia está **Ready** cuando tiene:
 
 Una historia está **Done** cuando:
 
-- [ ] Código integrado en `main` mediante PR revisado
+- [ ] Código integrado en `main` mediante PR
 - [ ] Criterios de aceptación verificados
 - [ ] Pruebas ejecutadas y resultados registrados
 - [ ] Sin defectos críticos abiertos

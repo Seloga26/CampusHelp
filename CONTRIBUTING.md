@@ -42,7 +42,7 @@ Commits pequeños y frecuentes; mejor varios al día que uno grande al final.
 
 1. Usa la plantilla y enlaza la historia (`HU-XX`) o el defecto (`DEF-XX`).
 2. `npm test` debe pasar.
-3. Al menos **un compañero** revisa y aprueba antes de hacer merge.
+3. No se requiere aprobación: quien abre el PR lo fusiona cuando `npm test` pasa. Si el cambio toca código de otra historia, avisar en la Daily o pedir un comentario antes de fusionar.
 4. Tras el merge, mueve la tarjeta en el tablero y registra la fecha en `docs/metricas/registro_flujo.csv`.
 
 ## Relación con el tablero
