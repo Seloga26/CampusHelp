@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar caso — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Registrar incidente o solicitud</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html" aria-current="page">Registrar caso</a>
+    </nav>
+
+    <section>
+      <label for="actuar-como">Actuar como</label>
+      <select id="actuar-como"></select>
+    </section>
+
+    <section>
+      <h2>Nuevo caso</h2>
+      <form id="form-registro" class="formulario">
+        <label for="tipo">Tipo</label>
+        <select id="tipo" name="tipo" required>
+          <option value="Incidente">Incidente</option>
+          <option value="Solicitud de servicio">Solicitud de servicio</option>
+        </select>
+
+        <label for="area">Área</label>
+        <select id="area" name="area" required></select>
+
+        <label for="categoria">Categoría</label>
+        <select id="categoria" name="categoria" required></select>
+
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" type="text" maxlength="180" required>
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required
+          placeholder="Mínimo 10 caracteres"></textarea>
+
+        <label for="prioridad">Prioridad</label>
+        <select id="prioridad" name="prioridad" required>
+          <option value="P1">P1 — Urgente</option>
+          <option value="P2" selected>P2 — Normal</option>
+          <option value="P3">P3 — Baja</option>
+        </select>
+
+        <button type="submit">Registrar caso</button>
+      </form>
+      <p id="mensaje" role="status"></p>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/registrar.js"></script>
+</body>
+</html>
