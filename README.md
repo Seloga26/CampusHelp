@@ -48,22 +48,28 @@ No hay autenticación real (permitido por el Taller). Se cargan estos usuarios:
 | elena@campus.edu | Validador |
 | fabio@campus.edu | Administrador |
 
-## Estructura del proyecto
+## Arquitectura
+
+Cliente-servidor con API REST, organizada como **arquitectura limpia en capas** aplicando **SOLID**. Detalle, diagrama y receta para implementar una historia: [ADR-003](docs/decisiones/ADR-003-arquitectura.md).
 
 ```
 CampusHelp/
-├── database/          schema.sql, seed.sql, init.js
+├── database/              schema.sql, seed.sql, init.js
 ├── src/
-│   ├── app.js         configuración de Express y rutas
-│   ├── server.js      punto de entrada
-│   ├── config/        conexión a MySQL
-│   ├── routes/        endpoints de la API
-│   ├── services/      reglas de negocio (estados, validaciones)
-│   └── middleware/    manejo de errores
-├── public/            frontend (HTML, CSS, JS)
-├── tests/             pruebas automáticas (node --test)
-└── docs/              documentación ScrumBan (ver abajo)
+│   ├── domain/            reglas puras: estados, catálogos, errores del negocio
+│   ├── services/          casos de uso (uno por acción); reciben sus dependencias
+│   ├── repositories/      único lugar con SQL, un repositorio por entidad
+│   ├── routes/            HTTP: leer petición → llamar servicio → responder
+│   ├── middleware/        errores → respuestas HTTP; soporte async
+│   ├── config/            conexión MySQL y contenedor (inyección de dependencias)
+│   ├── app.js             arma Express a partir del contenedor
+│   └── server.js          punto de entrada
+├── public/                frontend (HTML, CSS, JS)
+├── tests/                 domain/, services/, api/ y fakes/ (repositorios en memoria)
+└── docs/                  documentación ScrumBan (ver abajo)
 ```
+
+Regla de dependencias: `routes → services → domain`, y `services` usa `repositories` solo a través de lo que le inyecta `config/contenedor.js`. `npm test` corre sin MySQL.
 
 ## API
 
@@ -103,5 +109,5 @@ Los endpoints pendientes responden `501` hasta que se implementan.
 | [docs/pruebas/](docs/pruebas/) | Casos de prueba, resultados y defectos |
 | [docs/metricas/](docs/metricas/) | Registro de fechas del flujo y métricas |
 | [docs/reviews/](docs/reviews/) · [docs/retrospectivas/](docs/retrospectivas/) | Evidencia por sprint |
-| [docs/decisiones/](docs/decisiones/) | Decisiones técnicas (ADR) |
+| [docs/decisiones/](docs/decisiones/) | Decisiones técnicas (ADR): stack, modelo de datos y arquitectura |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Ramas, commits y pull requests |

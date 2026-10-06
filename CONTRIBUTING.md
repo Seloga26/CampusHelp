@@ -2,6 +2,8 @@
 
 El historial de commits es evidencia evaluada (rúbrica: *Repositorio y documentación*), así que cada integrante hace commits con su propia cuenta y por su propio trabajo.
 
+**Antes de programar una historia**, lee la arquitectura y la receta paso a paso en [ADR-003](docs/decisiones/ADR-003-arquitectura.md): SQL solo en `repositories/`, reglas en `domain/` y `services/`, y pruebas de servicios sin MySQL.
+
 ## Ramas
 
 - `main`: siempre ejecutable. Solo se actualiza por Pull Request.

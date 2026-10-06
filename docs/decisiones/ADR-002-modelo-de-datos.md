@@ -14,4 +14,4 @@ El Taller (sección 8) permite agregar campos o restricciones si se justifican. 
 | Índices en estado, tipo/prioridad, usuario, agente e historial | Consultas de bandeja, filtros (HU-09) e historial (HU-08) |
 | `tipo` ampliado a `VARCHAR(25)` | "Solicitud de servicio" tiene 21 caracteres y no cabía en `VARCHAR(20)` |
 
-La transición entre estados se valida en el backend (`src/services/estados.js`), no en la BD.
+La transición entre estados se valida en el backend (`src/domain/estados.js`), no en la BD.
