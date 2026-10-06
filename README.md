@@ -80,7 +80,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 1 |
-| PATCH | `/api/casos/:id/estado` | HU-05 | ⏳ Sprint 1 |
+| PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
 | POST | `/api/casos/:id/atencion` | HU-06 | ⏳ Sprint 2 |
 | POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
@@ -89,6 +89,23 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/indicadores` | HU-10 | ⏳ Sprint 3 |
 
 Los endpoints pendientes responden `501` hasta que se implementan.
+
+### Cambiar estado (HU-05)
+
+`PATCH /api/casos/:id/estado` recibe `{ "estado": "En análisis", "usuario_id": 3 }`
+y devuelve `200` con el caso actualizado. Respuestas de error: `400` por datos
+inválidos, `403` si el usuario no es un agente activo, `404` si el caso no existe
+y `409` por una transición no permitida.
+
+El agente avanza `Pendiente → En análisis → En atención → En validación`.
+El estado y el evento de historial se guardan juntos; el inicio de atención se
+registra una sola vez. Aprobar o devolver desde validación corresponde a HU-07.
+
+En `/cambiar-estado.html` se puede operar un caso existente indicando su ID y
+estado actual. El servidor comprueba el estado persistido. El control reutilizable
+para la bandeja y la guía de pruebas están en
+[docs/pruebas/HU-05.md](docs/pruebas/HU-05.md). La integración con `bandeja.html`
+depende de HU-03, que aún no está implementada en la versión base.
 
 ## Reglas de negocio clave
 

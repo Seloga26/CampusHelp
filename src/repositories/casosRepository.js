@@ -43,8 +43,23 @@ function crearCasosRepository(ejecutor) {
 
     // ---------------------------------------------------------------- HU-05
     /** Un caso por id (con área, categoría, solicitante y agente), o null. */
-    async buscarPorId(id) {
-      throw new ErrorNoImplementado('HU-05 casosRepository.buscarPorId');
+    async buscarPorId(id, { bloquear = false } = {}) {
+      // Al validar una transición, bloquea solo el caso dentro de la transacción.
+      if (bloquear) {
+        const [filas] = await ejecutor.query('SELECT * FROM caso WHERE id = ? FOR UPDATE', [id]);
+        return filas[0] || null;
+      }
+      const [filas] = await ejecutor.query(
+        `SELECT c.*, a.nombre AS area, cat.nombre AS categoria,
+          solicitante.nombre AS solicitante, agente.nombre AS agente
+         FROM caso c
+         JOIN categoria cat ON cat.id = c.categoria_id
+         JOIN area a ON a.id = cat.area_id
+         JOIN usuario solicitante ON solicitante.id = c.usuario_id
+         LEFT JOIN usuario agente ON agente.id = c.agente_id
+         WHERE c.id = ?`, [id],
+      );
+      return filas[0] || null;
     },
 
     /**
@@ -52,7 +67,15 @@ function crearCasosRepository(ejecutor) {
      * NULL, guarda fecha_inicio_atencion = NOW().
      */
     async actualizarEstado(id, nuevoEstado, { marcarInicioAtencion = false } = {}) {
-      throw new ErrorNoImplementado('HU-05 casosRepository.actualizarEstado');
+      await ejecutor.query(
+        `UPDATE caso SET estado = ?,
+          fecha_inicio_atencion = CASE
+            WHEN ? THEN COALESCE(fecha_inicio_atencion, CURRENT_TIMESTAMP)
+            ELSE fecha_inicio_atencion
+          END
+         WHERE id = ?`,
+        [nuevoEstado, marcarInicioAtencion, id],
+      );
     },
   };
 }

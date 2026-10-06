@@ -39,13 +39,17 @@ function crearRepositorios(ejecutor) {
 function crearEnTransaccion(pool) {
   return async function enTransaccion(trabajo) {
     const conexion = await pool.getConnection();
+    let iniciada = false;
     try {
       await conexion.beginTransaction();
+      iniciada = true;
       const resultado = await trabajo(crearRepositorios(conexion));
       await conexion.commit();
       return resultado;
     } catch (err) {
-      await conexion.rollback();
+      if (iniciada) {
+        try { await conexion.rollback(); } catch { /* Conservar el error original. */ }
+      }
       throw err;
     } finally {
       conexion.release();
