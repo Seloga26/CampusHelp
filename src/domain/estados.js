@@ -1,7 +1,11 @@
-// Reglas de negocio de estados (Taller, sección 7).
+// CAPA DE DOMINIO — reglas puras, sin Express ni MySQL.
+// Estados y transiciones del caso (Taller, sección 7):
 // Pendiente → En análisis → En atención → En validación → Cerrada
 // En validación → En atención cuando la solución es devuelta.
-// Una solicitud Cerrada no puede cambiarse desde la operación normal.
+// Un caso Cerrada no puede cambiarse desde la operación normal.
+//
+// Principio abierto/cerrado (O): para cambiar el flujo se edita la tabla
+// TRANSICIONES; las funciones de abajo no cambian.
 
 const ESTADOS = Object.freeze([
   'Pendiente',
@@ -11,16 +15,15 @@ const ESTADOS = Object.freeze([
   'Cerrada',
 ]);
 
-const TRANSICIONES = Object.freeze({
-  'Pendiente': ['En análisis'],
-  'En análisis': ['En atención'],
-  'En atención': ['En validación'],
-  'En validación': ['Cerrada', 'En atención'],
-  'Cerrada': [],
-});
+const ESTADO_INICIAL = 'Pendiente';
 
-const TIPOS = Object.freeze(['Incidente', 'Solicitud de servicio']);
-const PRIORIDADES = Object.freeze(['P1', 'P2', 'P3']);
+const TRANSICIONES = Object.freeze({
+  'Pendiente': Object.freeze(['En análisis']),
+  'En análisis': Object.freeze(['En atención']),
+  'En atención': Object.freeze(['En validación']),
+  'En validación': Object.freeze(['Cerrada', 'En atención']),
+  'Cerrada': Object.freeze([]),
+});
 
 function esEstadoValido(estado) {
   return ESTADOS.includes(estado);
@@ -37,9 +40,8 @@ function siguientesEstados(actual) {
 
 module.exports = {
   ESTADOS,
+  ESTADO_INICIAL,
   TRANSICIONES,
-  TIPOS,
-  PRIORIDADES,
   esEstadoValido,
   puedeTransicionar,
   siguientesEstados,

@@ -1,7 +1,7 @@
 // Pruebas unitarias de las transiciones de estado (base de CP-04, CP-05 y CP-08).
 const test = require('node:test');
 const assert = require('node:assert');
-const { puedeTransicionar, siguientesEstados } = require('../src/services/estados');
+const { puedeTransicionar, siguientesEstados } = require('../../src/domain/estados');
 
 test('flujo principal permitido: Pendiente → … → Cerrada', () => {
   assert.ok(puedeTransicionar('Pendiente', 'En análisis'));

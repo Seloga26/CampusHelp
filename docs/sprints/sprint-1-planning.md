@@ -36,7 +36,7 @@ No hay roles fijos: el responsable es quien lleva la historia hasta Done, pero c
 | Tarea | Responsable | Desbloquea | Meta |
 |---|---|---|---|
 | **T0** — 6 a 8 casos de ejemplo en `database/seed.sql` (varios tipos, áreas, prioridades y estados, incluido uno Cerrada) | Keyla | HU-02, HU-03, HU-05 | Lunes 5 |
-| `src/services/historial.js` con `registrarEvento()` | Sebastian | HU-05 | Lunes 5 |
+| `historialRepository.registrar()` en `src/repositories/historialRepository.js` | Sebastian | HU-05 | Primero, antes del resto de HU-01 |
 | `public/js/comun.js` con el selector "Actuar como" y un helper para llamar la API | Sebastian | Todas las páginas | Lunes 5 |
 
 Conviene subir estas tareas en PR pequeños y separados, para que se aprueben rápido.
@@ -74,22 +74,29 @@ Se acuerda antes de programar para que frontend y backend no se esperen entre s�
 // 200 → el caso actualizado | 403 no es Agente | 404 no existe | 409 transición no permitida
 ```
 
-**Helper de historial** (lo crea HU-01, lo usa HU-05)
+**Historial** (lo implementa HU-01, lo usa HU-05). Dentro de una transacción:
 ```js
-registrarEvento(conn, { casoId, evento, estadoAnterior, estadoNuevo, usuarioId })
+await enTransaccion(async (tx) => {
+  const id = await tx.casos.crear({ ... });
+  await tx.historial.registrar({ casoId: id, evento: 'Caso registrado',
+    estadoAnterior: null, estadoNuevo: 'Pendiente', usuarioId });
+});
 ```
+
+La arquitectura y la receta para implementar cada historia están en [ADR-003](../decisiones/ADR-003-arquitectura.md).
 
 ## Acuerdos para no pisarse en el código
 
-Cada historia trabaja en sus propios archivos. En los archivos compartidos, cada uno cambia solo su parte.
+Cada historia trabaja en sus propios archivos. Las rutas del Sprint 1 ya están conectadas a su servicio, así que nadie necesita tocar `src/routes/`, `src/app.js` ni `src/config/contenedor.js`.
 
-| Historia | Archivos propios |
-|---|---|
-| HU-01 | `src/services/casosRegistro.js`, `src/services/historial.js`, `public/registrar.html`, `public/js/registrar.js`, `public/js/comun.js` |
-| HU-02 / HU-03 | `src/services/casosConsulta.js`, `public/mis-casos.html`, `public/bandeja.html`, `public/js/mis-casos.js`, `public/js/bandeja.js` |
-| HU-05 | `src/services/casosEstado.js` |
+| Historia | Servicio (caso de uso) | Repositorio (solo su método) | Pruebas | Frontend |
+|---|---|---|---|---|
+| HU-01 | `src/services/casos/registrarCaso.js` | `casosRepository.crear`, `historialRepository.registrar` | `tests/services/registrarCaso.test.js` | `public/registrar.html`, `public/js/registrar.js`, `public/js/comun.js` |
+| HU-02 / HU-03 | `src/services/casos/listarCasos.js` | `casosRepository.listar` | `tests/services/listarCasos.test.js` | `public/mis-casos.html`, `public/bandeja.html`, `public/js/mis-casos.js`, `public/js/bandeja.js` |
+| HU-05 | `src/services/casos/cambiarEstado.js` | `casosRepository.buscarPorId`, `casosRepository.actualizarEstado` | `tests/services/cambiarEstado.test.js` | botón en `public/js/bandeja.js` |
 
-- **`src/routes/casos.js`:** cada historia reemplaza solo su línea `pendiente(...)`.
+- **`src/repositories/casosRepository.js`:** cada método ya tiene su bloque marcado con la HU; cada uno edita solo el suyo.
+- **Pruebas de servicios:** usan `crearReposEnMemoria()` de `tests/fakes/`, sin MySQL. Ver el ejemplo en `tests/services/catalogos.test.js`.
 - **`public/js/bandeja.js`:** lo crea Keyla (HU-03). Miguel agrega el botón de cambio de estado (HU-05) cuando HU-03 esté integrada. Coordinarlo en la Daily.
 - **`public/index.html`:** pasa a ser un menú con enlaces a las páginas. Sebastian agrega los enlaces.
 - Antes de abrir un PR, hacer `git pull origin main` en la rama para resolver conflictos localmente.
@@ -100,8 +107,9 @@ Cada historia trabaja en sus propios archivos. En los archivos compartidos, cada
 |---|---|
 | Sáb 3 | Configuración: repositorio, protección de `main`, tablero, Issues #1–#12 y etiquetas |
 | Dom 4 | **Sprint Planning** y refinamiento de HU-01, HU-02, HU-03 y HU-05 (este documento) |
-| Dom 4 | Si alguien puede adelantar: verificar `npm run db:init` y `/api/health`, y empezar T0, `historial.js` y `comun.js` |
-| Lun 5 | **Daily** (hora: ____). T0, `historial.js` y `comun.js` integrados en la mañana. Desarrollo de HU-01, HU-03 y HU-05 |
+| Dom 4 | Si alguien puede adelantar: verificar `npm run db:init` y `/api/health`, y empezar T0, el historial y `comun.js` |
+| Lun 5 | **Daily** (hora: ____). T0, el historial y `comun.js` integrados en la mañana. Desarrollo de HU-01, HU-03 y HU-05 |
+| Mar 6 (mañana) | Reestructuración del backend a arquitectura limpia con SOLID ([ADR-003](../decisiones/ADR-003-arquitectura.md)), antes de empezar a programar las historias |
 | Mar 6 | **Daily**. Meta: las 4 historias en En validación o Done. **Refinement** de las historias del Sprint 2 (HU-04, HU-06, HU-07, HU-08) |
 | Mar 6 (final del día) | **Sprint Review** (demo del flujo) y **Retrospective** con las métricas del sprint |
 | Mié 7 | Sprint 2 Planning |
