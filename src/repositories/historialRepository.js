@@ -2,8 +2,6 @@
 // Lo usan HU-01 (evento "Caso registrado") y HU-05 (evento "Cambio de estado").
 // Se implementa primero en HU-01 para no bloquear a HU-05.
 
-const { ErrorNoImplementado } = require('../domain/errores');
-
 function crearHistorialRepository(ejecutor) {
   return {
     // ---------------------------------------------------------------- HU-01
@@ -13,7 +11,17 @@ function crearHistorialRepository(ejecutor) {
      *          estadoNuevo: string|null, usuarioId: number}} evento
      */
     async registrar(evento) {
-      throw new ErrorNoImplementado('HU-01 historialRepository.registrar');
+      await ejecutor.query(
+        `INSERT INTO historial (caso_id, evento, estado_anterior, estado_nuevo, usuario_id)
+         VALUES (?, ?, ?, ?, ?)`,
+        [
+          evento.casoId,
+          evento.evento,
+          evento.estadoAnterior ?? null,
+          evento.estadoNuevo ?? null,
+          evento.usuarioId,
+        ]
+      );
     },
 
     // ---------------------------------------------------------------- HU-08

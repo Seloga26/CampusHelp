@@ -15,7 +15,21 @@ function crearCasosRepository(ejecutor) {
      * @returns {Promise<number>} id generado
      */
     async crear(caso) {
-      throw new ErrorNoImplementado('HU-01 casosRepository.crear');
+      const [resultado] = await ejecutor.query(
+        `INSERT INTO caso
+           (tipo, titulo, descripcion, prioridad, estado, usuario_id, categoria_id)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [
+          caso.tipo,
+          caso.titulo,
+          caso.descripcion,
+          caso.prioridad,
+          caso.estado,
+          caso.usuario_id,
+          caso.categoria_id,
+        ]
+      );
+      return resultado.insertId;
     },
 
     // ---------------------------------------------------------- HU-02/HU-03

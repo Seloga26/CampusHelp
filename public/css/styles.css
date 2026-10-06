@@ -24,3 +24,30 @@ section {
 }
 .ok { color: #15803d; }
 .error { color: #b91c1c; }
+.menu { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.menu a { color: var(--primario); text-decoration: none; font-weight: 600; }
+.menu a[aria-current="page"] { text-decoration: underline; }
+.formulario { display: grid; gap: .5rem; max-width: 32rem; }
+.formulario label { font-weight: 600; margin-top: .5rem; }
+.formulario input,
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  padding: .5rem .65rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  font: inherit;
+}
+.formulario button {
+  margin-top: 1rem;
+  justify-self: start;
+  background: var(--primario);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  padding: .6rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+#mensaje { margin-top: 1rem; min-height: 1.25rem; }
+section label + select { display: block; width: 100%; max-width: 24rem; margin-top: .35rem; }
