@@ -8,7 +8,9 @@
 // Errores de dominio: ErrorValidacion (400), ErrorPermiso (403).
 // Debe devolver el caso creado (mismos campos que GET /api/casos).
 
-const { TIPOS, PRIORIDADES, ROLES, DESCRIPCION_MINIMA } = require('../../domain/catalogos');
+const {
+  TIPOS, PRIORIDADES, ROLES, DESCRIPCION_MINIMA, TITULO_MAXIMO,
+} = require('../../domain/catalogos');
 const { ESTADO_INICIAL } = require('../../domain/estados');
 const { ErrorValidacion, ErrorPermiso } = require('../../domain/errores');
 
@@ -32,6 +34,9 @@ function crearRegistrarCaso({ repos, enTransaccion }) {
     }
     if (!titulo) {
       throw new ErrorValidacion('El título es obligatorio');
+    }
+    if (titulo.length > TITULO_MAXIMO) {
+      throw new ErrorValidacion(`El título no puede superar ${TITULO_MAXIMO} caracteres`);
     }
     if (!descripcion || descripcion.length < DESCRIPCION_MINIMA) {
       throw new ErrorValidacion(

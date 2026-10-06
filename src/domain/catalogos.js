@@ -16,4 +16,7 @@ const LISTA_ROLES = Object.freeze(Object.values(ROLES));
 
 const DESCRIPCION_MINIMA = 10;
 
-module.exports = { TIPOS, PRIORIDADES, ROLES, LISTA_ROLES, DESCRIPCION_MINIMA };
+// Igual al tamaño de la columna caso.titulo VARCHAR(180) en database/schema.sql
+const TITULO_MAXIMO = 180;
+
+module.exports = { TIPOS, PRIORIDADES, ROLES, LISTA_ROLES, DESCRIPCION_MINIMA, TITULO_MAXIMO };

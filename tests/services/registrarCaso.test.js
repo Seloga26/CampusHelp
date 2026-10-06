@@ -109,6 +109,19 @@ test('CP-16: deja el evento Caso registrado con estado nuevo Pendiente', async (
   });
 });
 
+test('rechaza un título de más de 180 caracteres y acepta uno de 180 exactos', async () => {
+  const { registrarCaso, datos } = armar();
+
+  await assert.rejects(
+    () => registrarCaso({ ...incidenteValido, titulo: 'a'.repeat(181) }),
+    ErrorValidacion
+  );
+  assert.equal(datos.casos.length, 0);
+
+  const caso = await registrarCaso({ ...incidenteValido, titulo: 'a'.repeat(180) });
+  assert.equal(caso.titulo.length, 180);
+});
+
 test('rechaza a un usuario que no es Solicitante', async () => {
   const { registrarCaso, datos } = armar();
 
