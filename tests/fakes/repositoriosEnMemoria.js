@@ -127,6 +127,19 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
       async contarPorCaso(casoId) {
         return datos.atenciones.filter((a) => a.caso_id === Number(casoId)).length;
       },
+      // HU-07: mismo formato que devolverá el repositorio real
+      async listarPorCaso(casoId) {
+        return datos.atenciones
+          .filter((a) => a.caso_id === Number(casoId))
+          .sort((a, b) => b.id - a.id)
+          .map((a) => ({
+            id: a.id,
+            diagnostico: a.diagnostico,
+            solucion: a.solucion,
+            fecha: a.fecha,
+            agente: (datos.usuarios.find((u) => u.id === a.agente_id) || {}).nombre,
+          }));
+      },
     },
 
     historial: {

@@ -12,7 +12,7 @@ const pendiente = (historia) => manejar(async () => {
 
 function crearCasosRouter({
   registrarCaso, listarCasos, cambiarEstado, asignarCaso, registrarAtencion,
-  validarSolucion, consultarHistorial,
+  validarSolucion, listarAtenciones, consultarHistorial,
 }) {
   const router = express.Router();
 
@@ -44,6 +44,10 @@ function crearCasosRouter({
   // HU-07
   router.post('/:id/validacion', manejar(async (req, res) => {
     res.json(await validarSolucion({ ...req.body, id: Number(req.params.id) }));
+  }));
+
+  router.get('/:id/atenciones', manejar(async (req, res) => {
+    res.json(await listarAtenciones({ id: Number(req.params.id) }));
   }));
 
   // HU-08
