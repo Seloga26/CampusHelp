@@ -14,12 +14,15 @@ const { crearCategoriasRepository } = require('../repositories/categoriasReposit
 const { crearUsuariosRepository } = require('../repositories/usuariosRepository');
 const { crearCasosRepository } = require('../repositories/casosRepository');
 const { crearHistorialRepository } = require('../repositories/historialRepository');
+const { crearAtencionesRepository } = require('../repositories/atencionesRepository');
 
 const { crearListarCategorias } = require('../services/catalogos/listarCategorias');
 const { crearListarUsuarios } = require('../services/catalogos/listarUsuarios');
 const { crearRegistrarCaso } = require('../services/casos/registrarCaso');
 const { crearListarCasos } = require('../services/casos/listarCasos');
 const { crearCambiarEstado } = require('../services/casos/cambiarEstado');
+const { crearAsignarCaso } = require('../services/casos/asignarCaso');
+const { crearRegistrarAtencion } = require('../services/casos/registrarAtencion');
 
 /** Construye todos los repositorios sobre un mismo ejecutor (pool o conexión). */
 function crearRepositorios(ejecutor) {
@@ -28,6 +31,7 @@ function crearRepositorios(ejecutor) {
     usuarios: crearUsuariosRepository(ejecutor),
     casos: crearCasosRepository(ejecutor),
     historial: crearHistorialRepository(ejecutor),
+    atenciones: crearAtencionesRepository(ejecutor),
   };
 }
 
@@ -62,6 +66,8 @@ function crearServicios({ repos, enTransaccion }) {
     registrarCaso: crearRegistrarCaso(deps), // HU-01
     listarCasos: crearListarCasos(deps), // HU-02 / HU-03
     cambiarEstado: crearCambiarEstado(deps), // HU-05
+    asignarCaso: crearAsignarCaso(deps), // HU-04
+    registrarAtencion: crearRegistrarAtencion(deps), // HU-06
   };
 }
 
