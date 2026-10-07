@@ -10,7 +10,7 @@ Entregar un MVP de CampusHelp que permita gestionar de extremo a extremo inciden
 |---|---|---|---|---|
 | 0 | sáb 26 sep – vie 2 oct | Preparación: comprender el Taller y alistar el entorno | — | [sprint-0.md](sprints/sprint-0.md) |
 | 1 | sáb 3 – mar 6 oct (4 días) | Un solicitante registra y consulta sus casos, y un agente los ve en la bandeja y avanza su estado con historial, todo persistido en MySQL | HU-01, HU-02, HU-03, HU-05 | [sprint-1-planning.md](sprints/sprint-1-planning.md) |
-| 2 | mié 7 – vie 9 oct (3 días) | Completar asignación, atención, validación e historial | HU-04, HU-06, HU-07, HU-08 | [sprint-2-planning.md](sprints/sprint-2-planning.md) |
+| 2 | mar 6 – vie 9 oct (4 días) | Completar asignación, atención, validación e historial | HU-04, HU-06, HU-07, HU-08 | [sprint-2-planning.md](sprints/sprint-2-planning.md) |
 | 3 | sáb 10 – lun 12 oct (3 días) | Completar filtros, indicadores, categorías y detalle | HU-09, HU-10, HU-11, HU-12 | |
 
 Resultados: Sprint 1 → [Review](reviews/sprint-1.md) · [Retro](retrospectivas/sprint-1.md)
