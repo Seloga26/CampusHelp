@@ -41,9 +41,10 @@ test('HU-05 en memoria: fallo del historial revierte estado y fecha', async () =
 });
 
 test('HU-05 en memoria: fecha inicial se mantiene hasta validación', async () => {
-  const { cambiarEstado } = preparar('En análisis');
+  const { cambiarEstado, repos } = preparar('En análisis');
   const enAtencion = await cambiarEstado({ id: 10, estado: 'En atención', usuario_id: 3 });
   assert.ok(enAtencion.fecha_inicio_atencion);
+  await repos.atenciones.crear({ casoId: 10, agenteId: 3, diagnostico: 'Diagnóstico de prueba', solucion: 'Solución de prueba' });
   const enValidacion = await cambiarEstado({ id: 10, estado: 'En validación', usuario_id: 3 });
   assert.equal(enValidacion.fecha_inicio_atencion, enAtencion.fecha_inicio_atencion);
 });

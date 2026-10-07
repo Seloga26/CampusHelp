@@ -97,6 +97,10 @@ test('HU-05: persistencia, rollback y concurrencia en MySQL real', {
     await avanzar(id, 'En atención');
     const fecha = (await leerCaso(id)).fecha_inicio_atencion;
     assert.ok(fecha);
+    await db.execute(
+      'INSERT INTO atencion (caso_id, diagnostico, solucion, agente_id) VALUES (?, ?, ?, 3)',
+      [id, 'Diagnóstico de prueba', 'Solución de prueba'],
+    );
     await avanzar(id, 'En validación');
     assert.equal((await leerCaso(id)).fecha_inicio_atencion, fecha);
     const anterior = '2026-10-04 09:00:00';

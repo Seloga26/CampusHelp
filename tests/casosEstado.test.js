@@ -9,7 +9,7 @@ const app = crearApp(crearContenedor(pool));
 // Doble transaccional de MySQL: permite comprobar HTTP, permisos y rollback
 // sin requerir un servidor local. No reemplaza la prueba manual de persistencia.
 function baseDePrueba({ estado = 'Pendiente', tipo = 'Incidente', rol = 'Agente', activo = true,
-  existeUsuario = true, existeCaso = true, fecha = null, fallo = null } = {}) {
+  existeUsuario = true, existeCaso = true, fecha = null, fallo = null, atenciones = 0 } = {}) {
   let caso = existeCaso ? {
     id: 10, tipo, titulo: 'Caso de prueba HU-05', estado,
     fecha_inicio_atencion: fecha,
@@ -29,6 +29,7 @@ function baseDePrueba({ estado = 'Pendiente', tipo = 'Incidente', rol = 'Agente'
         return [existeUsuario && activo ? [{ id: params[0], rol }] : []];
       }
       if (sql.startsWith('SELECT') && /FROM caso/.test(sql)) return [caso ? [{ ...caso }] : []];
+      if (sql.startsWith('SELECT COUNT(*) AS cantidad FROM atencion')) return [[{ cantidad: atenciones }]];
       if (sql.startsWith('UPDATE caso')) {
         if (fallo === 'update') throw new Error('Fallo al actualizar');
         caso.estado = params[0];
@@ -159,10 +160,18 @@ test('HU-05: contrato HTTP y transacción caso + historial', async (t) => {
 
   await t.test('conserva la fecha de inicio al avanzar a validación', async (st) => {
     const fecha = '2026-10-04 09:00:00';
-    preparar(st, { estado: 'En atención', fecha });
+    preparar(st, { estado: 'En atención', fecha, atenciones: 1 });
     const respuesta = await enviar(10, { estado: 'En validación', usuario_id: 3 });
     assert.equal(respuesta.status, 200);
     assert.equal(respuesta.body.fecha_inicio_atencion, fecha);
+  });
+
+  await t.test('CP-22: sin atención devuelve 409 sin modificar estado ni historial', async (st) => {
+    const db = preparar(st, { estado: 'En atención' });
+    assert.equal((await enviar(10, { estado: 'En validación', usuario_id: 3 })).status, 409);
+    assert.equal(db.caso().estado, 'En atención');
+    assert.deepEqual(db.historial(), []);
+    assert.ok(!db.llamadas.some((l) => l.sql?.startsWith('UPDATE')));
   });
 
   await t.test('no sobrescribe una fecha de inicio existente al entrar en atención', async (st) => {

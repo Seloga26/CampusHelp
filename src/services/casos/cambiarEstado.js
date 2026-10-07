@@ -41,6 +41,10 @@ function crearCambiarEstado({ enTransaccion }) {
       if (!puedeTransicionar(caso.estado, estado)) {
         throw new ErrorConflicto(`No se permite pasar de ${caso.estado} a ${estado}`);
       }
+      // HU-06: comprobar la atención mientras el caso sigue bloqueado.
+      if (estado === 'En validación' && await tx.atenciones.contarPorCaso(casoId) < 1) {
+        throw new ErrorConflicto('Registra diagnóstico y solución antes de enviar el caso a validación');
+      }
 
       await tx.casos.actualizarEstado(casoId, estado, { marcarInicioAtencion: estado === 'En atención' });
       await tx.historial.registrar({
