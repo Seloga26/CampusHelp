@@ -1,7 +1,7 @@
 # Sprint Review — Sprint 1
 
 **Sprint:** sábado 3 – martes 6 de octubre de 2026
-**Review:** miércoles 7 de octubre de 2026 (un día después del cierre, segundo día del Sprint 2)  ·  **Asistentes:** _completar_
+**Review:** miércoles 7 de octubre de 2026  ·  **Asistentes:** _completar_
 
 **Sprint Goal:** un solicitante registra y consulta sus casos, y un agente los ve en la bandeja y avanza su estado dejando historial, todo persistido en MySQL.
 
