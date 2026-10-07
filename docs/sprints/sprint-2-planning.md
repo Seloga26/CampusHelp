@@ -1,7 +1,7 @@
 # Sprint 2 — Planning
 
-**Fechas del sprint:** miércoles 7 – viernes 9 de octubre de 2026
-**Sprint Planning:** miércoles 7 de octubre de 2026
+**Fechas del sprint:** martes 6 – viernes 9 de octubre de 2026 (empieza el mismo día en que cierra el Sprint 1)
+**Sprint Planning:** miércoles 7 de octubre de 2026 (segundo día del sprint)
 **Equipo:** Sebastian (@Seloga26), Keyla (@Keyla-Cartagena), Miguel (@miguelfsociety)
 
 ## Punto de partida
@@ -25,7 +25,7 @@ Registrar → ver en la bandeja → **asignarse** → En análisis → En atenci
 | HU-08 Consultar el historial | 5 | Sebastian | [HU-08](../historias/HU-08.md) | #8 |
 | **Total** | **18** | Sebastian 8 · Miguel 5 · Keyla 5 | | |
 
-**Capacidad:** 18 SP en 3 días. Sebastian lleva 8 SP porque HU-04 es pequeña y la termina antes de que las demás la necesiten.
+**Capacidad:** 18 SP en 4 días de sprint, con el desarrollo concentrado el jueves y el viernes. Sebastian lleva 8 SP porque HU-04 es pequeña y la termina antes de que las demás la necesiten.
 
 ## Orden de pull y dependencias
 
@@ -95,6 +95,7 @@ En `public/index.html` cada responsable agrega el enlace de su página al menú.
 
 | Día | Actividad |
 |---|---|
+| Mar 6 | Cierre del Sprint 1 e inicio del Sprint 2 |
 | Mié 7 | **Sprint Planning** (este documento). HU-04, HU-06, HU-07 y HU-08 a **Ready**; anotar la fecha en `registro_flujo.csv` |
 | Jue 8 | **Daily**. HU-04, HU-06 y HU-07 a En análisis. Backend y pruebas con repositorios en memoria (T2-01 a T2-07, T2-09, T2-10). PR de HU-04 en la mañana. **Refinement** del Sprint 3 (HU-09, HU-10, HU-11, HU-12) |
 | Vie 9 | **Daily**. HU-08 y frontends (T2-08, T2-11 a T2-14). Mediodía: prueba del flujo completo con MySQL (T2-15). Tarde: **Sprint Review** (demo del flujo completo) y **Retrospective** con las métricas |

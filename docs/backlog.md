@@ -40,3 +40,4 @@ Registrar aquí historias nuevas (evento E5), divisiones de historias grandes (E
 | 2026-10-07 | HU-04: solo el agente asignado cambia el estado. HU-06: no se pasa a En validación sin atención registrada | Reglas del Taller (sección 7) que el refinamiento de HU-05 había dejado para el Sprint 2 | Equipo |
 | 2026-10-07 | DEF-01 registrado (título de más de 180 caracteres respondía 500) | Encontrado en revisión de código de HU-01; corregido en `d9bcb17` | Equipo |
 | 2026-10-07 | Sprint 2 planificado sobre el resultado del Sprint 1 completo; HU-07 a Keyla y HU-08 a Sebastian; tareas T2-01 a T2-16 | Repartir 18 SP entre los tres y fijar el orden de pull | Equipo |
+| 2026-10-07 | El Sprint 2 empieza el martes 6 de octubre, el mismo día en que cierra el Sprint 1 (6–9 oct, 4 días) | Sprints consecutivos sin días sueltos entre uno y otro | Equipo |
