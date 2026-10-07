@@ -79,13 +79,13 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/categorias` | HU-11 | ✅ (lectura) |
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
-| GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 1 |
-| PATCH | `/api/casos/:id/estado` | HU-05 | ⏳ Sprint 1 |
+| GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 2 |
+| PATCH | `/api/casos/:id/estado` | HU-05 | ⏳ Sprint 2 |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
 | POST | `/api/casos/:id/atencion` | HU-06 | ⏳ Sprint 2 |
-| POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
-| GET | `/api/casos/:id/historial` | HU-08 | ⏳ Sprint 2 |
-| GET | `/api/casos/:id` | HU-12 | ⏳ Sprint 3 |
+| POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 3 |
+| GET | `/api/casos/:id/historial` | HU-08 | ⏳ Sprint 3 |
+| GET | `/api/casos/:id` | HU-12 | ✂️ Recortada (contingencia) |
 | GET | `/api/indicadores` | HU-10 | ⏳ Sprint 3 |
 
 Los endpoints pendientes responden `501` hasta que se implementan.

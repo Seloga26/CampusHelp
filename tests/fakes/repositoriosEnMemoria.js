@@ -32,7 +32,7 @@ function categoriasBase() {
 const PESO_PRIORIDAD = { P1: 1, P2: 2, P3: 3 };
 
 function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoriasBase(), casos = [] } = {}) {
-  const datos = { usuarios, categorias, casos, historial: [] };
+  const datos = { usuarios, categorias, casos, historial: [], atenciones: [] };
   const sinActivo = ({ activo, ...resto }) => resto;
   const sinActiva = ({ activa, ...resto }) => resto;
 
@@ -93,6 +93,32 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
           c.fecha_inicio_atencion = new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
       },
+      // HU-04
+      async asignarAgente(id, agenteId) {
+        const c = datos.casos.find((x) => x.id === Number(id));
+        if (!c) return;
+        c.agente_id = Number(agenteId);
+        c.fecha_asignacion = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      },
+    },
+
+    // HU-06
+    atenciones: {
+      async crear({ casoId, diagnostico, solucion, agenteId }) {
+        const fila = {
+          id: datos.atenciones.length + 1,
+          caso_id: Number(casoId),
+          diagnostico,
+          solucion,
+          fecha: new Date().toISOString().slice(0, 19).replace('T', ' '),
+          agente_id: Number(agenteId),
+        };
+        datos.atenciones.push(fila);
+        return { ...fila };
+      },
+      async contarPorCaso(casoId) {
+        return datos.atenciones.filter((a) => a.caso_id === Number(casoId)).length;
+      },
     },
 
     historial: {
@@ -105,12 +131,15 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
   // Versión en memoria de la transacción: ejecuta el trabajo con los mismos
   // repositorios. Si el trabajo falla, deja los datos como estaban.
   async function enTransaccion(trabajo) {
-    const copia = JSON.parse(JSON.stringify({ casos: datos.casos, historial: datos.historial }));
+    const copia = JSON.parse(JSON.stringify({
+      casos: datos.casos, historial: datos.historial, atenciones: datos.atenciones,
+    }));
     try {
       return await trabajo(repos);
     } catch (err) {
       datos.casos.splice(0, datos.casos.length, ...copia.casos);
       datos.historial.splice(0, datos.historial.length, ...copia.historial);
+      datos.atenciones.splice(0, datos.atenciones.length, ...copia.atenciones);
       throw err;
     }
   }
