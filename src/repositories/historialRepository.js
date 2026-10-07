@@ -1,6 +1,8 @@
 // CAPA DE REPOSITORIOS — único lugar con SQL del historial.
 // Lo usan HU-01 (evento "Caso registrado") y HU-05 (evento "Cambio de estado").
-// Se implementa primero en HU-01 para no bloquear a HU-05.
+// Se implementa primero en HU-01 para no bloquear a HU-05. HU-08 agrega la consulta.
+
+const { ErrorNoImplementado } = require('../domain/errores');
 
 function crearHistorialRepository(ejecutor) {
   return {
@@ -25,7 +27,13 @@ function crearHistorialRepository(ejecutor) {
     },
 
     // ---------------------------------------------------------------- HU-08
-    // async listarPorCaso(casoId) { ... }
+    /**
+     * Eventos de un caso en orden cronológico, con nombre y rol del usuario.
+     * @returns {Promise<Array<{id, evento, estado_anterior, estado_nuevo, usuario, rol, fecha}>>}
+     */
+    async listarPorCaso(casoId) {
+      throw new ErrorNoImplementado('HU-08 historialRepository.listarPorCaso');
+    },
   };
 }
 

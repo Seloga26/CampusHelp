@@ -4,64 +4,53 @@
 **Sprint Planning:** miércoles 7 de octubre de 2026 (tarde)
 **Equipo:** Sebastian (@Seloga26), Keyla (@Keyla-Cartagena), Miguel (@miguelfsociety)
 
-## Punto de partida
+## Regla del equipo para este sprint
 
-El Sprint 1 cerró con **0 historias Done** ([Review](../reviews/sprint-1.md), [Retro](../retrospectivas/sprint-1.md)). Por el principio Pull, este sprint **primero termina lo empezado** y solo después jala trabajo nuevo.
+Las historias de cada sprint **no se mezclan**. Las del Sprint 1 que no se terminaron (HU-01, HU-02, HU-03 y HU-05) siguen siendo trabajo del **Sprint 1**, con los **mismos responsables**, y se cierran como tal. El Sprint 2 contiene solo sus historias planeadas.
 
 ## Sprint Goal
 
-> Un agente ve la bandeja, se asigna un caso, avanza su estado y registra diagnóstico y solución; el solicitante consulta sus casos. Todo persistido en MySQL y demostrable de punta a punta hasta **En validación**.
+> Completar asignación, atención, validación e historial: un agente se asigna un caso y registra diagnóstico y solución, un validador aprueba o devuelve, y cualquier usuario autorizado consulta lo ocurrido.
 
-Demo al cierre: **Registrar → ver en la bandeja → asignarse → En análisis → En atención → registrar solución → En validación**.
+Demo al cierre: **Asignarse → registrar solución → validar (aprobar o devolver) → consultar el historial**, sobre casos persistidos en MySQL.
 
-## Historias seleccionadas (en orden de pull)
+## Historias seleccionadas
 
-| # | Historia | SP | Viene de | Responsable (propuesto) | Por qué en este orden |
-|---|---|---|---|---|---|
-| 1 | HU-05 Cambiar estado | 5 | Sprint 1 | Miguel | Ya está programada: falta corregir la documentación, PR y merge. Desbloquea HU-04 y HU-06 en el backend |
-| 2 | HU-03 Bandeja (+ T0) | 3 | Sprint 1 | Keyla + apoyo de Sebastian | **Camino crítico:** sin bandeja no se cierra HU-01 ni se integran HU-04, HU-05 y HU-06 |
-| 3 | HU-01 Registrar (cierre) | — | Sprint 1 | Sebastian | Solo falta validar: prueba con MySQL y verlo en la bandeja |
-| 4 | HU-04 Asignarme un caso | 3 | Nueva | Sebastian | Depende de HU-05 en `main` |
-| 5 | HU-06 Registrar diagnóstico y solución | 5 | Nueva | Miguel | Depende de HU-04 y HU-05 |
-| 6 | HU-02 Consultar mis casos | 3 | Sprint 1 | Keyla | Reutiliza el backend de HU-03; se jala cuando HU-03 pase a En validación |
-| | **Total** | **19** (+ cierre de HU-01) | | | |
+| Historia | SP | Responsable | Ficha | Issue |
+|---|---|---|---|---|
+| HU-04 Asignarme un caso | 3 | Sebastian | [HU-04](../historias/HU-04.md) | #4 |
+| HU-06 Registrar diagnóstico y solución | 5 | Miguel | [HU-06](../historias/HU-06.md) | #6 |
+| HU-07 Aprobar o devolver una solución | 5 | _por asignar_ | [HU-07](../historias/HU-07.md) | #7 |
+| HU-08 Consultar el historial | 5 | _por asignar_ | [HU-08](../historias/HU-08.md) | #8 |
+| **Total** | **18** | | | |
 
-**Capacidad:** el Sprint 1 tuvo Throughput 0, así que no hay velocidad de referencia. 19 SP en 3 días es ambicioso; el orden de la tabla es también el orden de recorte. Si el viernes no alcanza, HU-02 pasa al Sprint 3 antes que cualquier otra.
+**Capacidad:** el Sprint 1 cerró con Throughput 0, así que no hay velocidad de referencia. Los tres integrantes, además, deben cerrar sus historias del Sprint 1 en paralelo. El orden de pull de abajo define qué se deja para el final si no alcanza.
 
-**No hay roles fijos.** El responsable lleva la historia a Done, pero el apoyo en HU-03 es explícito: es la mejora acordada en la Retro (*swarming* sobre el camino crítico).
-
-## Fuera de este sprint
-
-| Historia | Nuevo destino | Motivo |
-|---|---|---|
-| HU-07 Aprobar o devolver | Sprint 3 | Depende de HU-06; sin ella no hay qué validar |
-| HU-08 Consultar historial | Sprint 3 | El historial ya se guarda; consultarlo puede esperar |
-| HU-11 Gestionar categorías | Recortada (contingencia) | Las categorías vienen en el seed; no es un módulo obligatorio |
-| HU-12 Detalle del caso | Recortada (contingencia) | Se cubre en parte con HU-02 y HU-08 |
-
-El Sprint 3 queda con HU-07, HU-08, HU-09 y HU-10 (18 SP). HU-07 es imprescindible: sin ella no se puede demostrar el cierre del flujo.
-
-## Dependencias
+## Orden de pull y dependencias
 
 ```
-HU-05 ──► HU-04 ──► HU-06
-  │                   ▲
-  └───────────────────┘
-HU-03 ──► (botones en la bandeja de HU-04, HU-05 y HU-06), cierre de HU-01, HU-02
+HU-05 (Sprint 1) ──► HU-04 ──► HU-06 ──► HU-07
+        │
+        └──────────► HU-08
+HU-03 (Sprint 1) ──► botones en la bandeja de HU-04, HU-06 y HU-07
 ```
+
+1. **HU-04** y **HU-08**: su backend solo necesita HU-05 en `main`. Se pueden empezar con los repositorios en memoria mientras tanto.
+2. **HU-06**: necesita que el caso tenga agente asignado (HU-04).
+3. **HU-07**: necesita casos con solución registrada (HU-06).
+
+Las historias del Sprint 2 dependen de dos historias abiertas del Sprint 1: **HU-05** (backend) y **HU-03** (bandeja para los botones). Cerrarlas pronto, con sus responsables actuales, es lo que más acelera este sprint.
 
 ## Reglas nuevas que cambian HU-05
 
-Se acordaron en el refinamiento de HU-04 y HU-06 y se implementan dentro de esas historias:
+Se acordaron en el refinamiento y se implementan dentro de las historias del Sprint 2, en `services/casos/cambiarEstado.js`, después de que HU-05 esté en `main`:
 
-| Regla | La implementa | Archivo |
-|---|---|---|
-| Solo el agente **asignado** cambia el estado (un caso sin asignar no sale de Pendiente) | HU-04 | `services/casos/cambiarEstado.js` |
-| No se pasa a En validación sin al menos una atención registrada | HU-06 | `services/casos/cambiarEstado.js` |
+| Regla | La implementa |
+|---|---|
+| Solo el agente **asignado** cambia el estado (un caso sin asignar no sale de Pendiente) | HU-04 |
+| No se pasa a En validación sin al menos una atención registrada | HU-06 |
 
-Ambas tocan el mismo archivo en partes distintas: coordinarlo en la Daily y hacer `git pull origin main` antes de abrir PR.
-
-## Contrato de API nuevo
+## Contrato de API
 
 **`PATCH /api/casos/:id/asignar`** (HU-04)
 ```json
@@ -75,32 +64,46 @@ Ambas tocan el mismo archivo en partes distintas: coordinarlo en la Daily y hace
 // 201 → atención creada | 400 | 403 no es el agente asignado | 404 | 409 no está En atención
 ```
 
-Las dos rutas ya están conectadas a su servicio y al contenedor; responden 501 hasta que se implementen.
+**`POST /api/casos/:id/validacion`** (HU-07)
+```json
+{ "decision": "aprobar" | "devolver", "motivo": "obligatorio al devolver", "usuario_id": 5 }
+// 200 → caso actualizado | 400 | 403 no es Validador | 404 | 409 no está En validación o sin solución
+```
+
+**`GET /api/casos/:id/historial?usuario_id=3`** (HU-08)
+```json
+// 200 → [{ "id", "evento", "estado_anterior", "estado_nuevo", "usuario", "rol", "fecha" }]
+// 400 | 403 sin permiso | 404
+```
+
+Las cuatro rutas ya están conectadas a su servicio y al contenedor; responden 501 hasta que se implementen.
 
 ## Archivos por historia
 
 | Historia | Servicio | Repositorio | Pruebas | Frontend |
 |---|---|---|---|---|
-| HU-04 | `services/casos/asignarCaso.js` | `casosRepository.asignarAgente()` (agregar cuando HU-05 esté en `main`) | `tests/services/asignarCaso.test.js` | botón "Asignarme" en `bandeja.html` |
-| HU-06 | `services/casos/registrarAtencion.js` | `repositories/atencionesRepository.js` | `tests/services/registrarAtencion.test.js` | formulario de atención |
-| HU-03 / HU-02 | `services/casos/listarCasos.js` | `casosRepository.listar()` | `tests/services/listarCasos.test.js` | `bandeja.html`, `mis-casos.html` |
+| HU-04 | `services/casos/asignarCaso.js` | `casosRepository.asignarAgente()` (agregar cuando HU-05 esté en `main`) | `tests/services/asignarCaso.test.js` | botón "Asignarme" en la bandeja |
+| HU-06 | `services/casos/registrarAtencion.js` | `atencionesRepository.js` | `tests/services/registrarAtencion.test.js` | formulario de atención |
+| HU-07 | `services/casos/validarSolucion.js` | `casosRepository.cerrar()` (agregar cuando HU-05 esté en `main`) | `tests/services/validarSolucion.test.js` | vista del validador |
+| HU-08 | `services/casos/consultarHistorial.js` | `historialRepository.listarPorCaso()` | `tests/services/consultarHistorial.test.js` | `historial.html` |
 
-Los repositorios en memoria (`tests/fakes/`) ya incluyen `asignarAgente`, atenciones y el agente asignado, para escribir las pruebas sin MySQL.
+Los repositorios en memoria (`tests/fakes/`) ya incluyen `asignarAgente`, `cerrar`, atenciones y `listarPorCaso`, para escribir las pruebas sin MySQL.
 
 ## Calendario
 
 | Día | Actividad |
 |---|---|
-| Mié 7 (tarde) | Review y Retro del Sprint 1. Sprint Planning (este documento). Mover tarjetas y anotar fechas |
-| Jue 8 | **Daily** (empieza por HU-03). HU-05 fusionada en la mañana. T0 y HU-03 en curso. HU-04 en curso. **Refinement** de HU-07, HU-08, HU-09 y HU-10 |
-| Vie 9 | **Daily**. Meta: HU-05, HU-03, HU-01 y HU-04 en Done; HU-06 en validación. **Review y Retrospective** al final del día |
+| Mié 7 (tarde) | Review y Retro del Sprint 1. Sprint Planning (este documento). HU-04, HU-06, HU-07 y HU-08 a Ready |
+| Jue 8 | **Daily**. Desarrollo. **Refinement** de las historias del Sprint 3 (HU-09, HU-10, HU-11, HU-12) |
+| Vie 9 | **Daily**. **Review y Retrospective** al final del día |
 | Sáb 10 | Sprint 3 Planning |
 
 ## Riesgos
 
 | Riesgo | Plan |
 |---|---|
-| HU-03 vuelve a no avanzar | Se marca `blocked` el mismo día y Sebastian se suma; si el jueves a mediodía no hay rama, Sebastian la toma |
+| HU-05 (Sprint 1) no llega a `main` | HU-04, HU-07 y HU-08 avanzan con los repositorios en memoria; el método del repositorio se agrega al fusionar HU-05 |
+| HU-03 (Sprint 1) no llega a tiempo | Los botones de HU-04, HU-06 y HU-07 van en páginas propias, como hizo HU-05 con `cambiar-estado.html`, y se mueven a la bandeja cuando exista |
 | HU-04 y HU-06 tocan `cambiarEstado.js` | Cambios pequeños en zonas distintas, PR cortos, `git pull` antes de cada PR |
-| La rama de HU-05 choca con `main` | Miguel actualiza su rama desde `main` antes del PR (posibles conflictos en `casos_prueba.md` y `casosRepository.js`) |
-| No se registran fechas otra vez | Mejora de la Retro: quien mueve la tarjeta anota la fecha; se revisa al final de cada Daily |
+| Capacidad: cada integrante tiene trabajo abierto del Sprint 1 | Se respeta el orden de pull; lo que no alcance queda documentado en la Review del Sprint 2 |
+| No se registran fechas otra vez | Mejora de la Retro: quien mueve la tarjeta anota la fecha ese mismo día |
