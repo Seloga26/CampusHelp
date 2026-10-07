@@ -41,3 +41,16 @@ test('enTransaccion también deshace asignaciones y atenciones (HU-04, HU-06)', 
   assert.equal(datos.casos[0].agente_id, null);
   assert.equal(await repos.atenciones.contarPorCaso(id), 0);
 });
+
+test('el historial en memoria se lista por caso con usuario y rol (HU-08)', async () => {
+  const { repos } = crearReposEnMemoria();
+  await repos.historial.registrar({ casoId: 1, evento: 'Caso registrado', estadoAnterior: null, estadoNuevo: 'Pendiente', usuarioId: 1 });
+  await repos.historial.registrar({ casoId: 2, evento: 'Caso registrado', estadoAnterior: null, estadoNuevo: 'Pendiente', usuarioId: 2 });
+
+  const eventos = await repos.historial.listarPorCaso(1);
+
+  assert.equal(eventos.length, 1);
+  assert.equal(eventos[0].usuario, 'Ana Solicitante');
+  assert.equal(eventos[0].rol, 'Solicitante');
+  assert.ok(eventos[0].fecha);
+});

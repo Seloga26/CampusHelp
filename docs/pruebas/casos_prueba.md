@@ -31,5 +31,11 @@ Registrar el **resultado real** y la fecha al ejecutar cada caso. Si falla, crea
 | CP-20 | HU-06 | Incidente | Red | Diego registra la atención de un caso asignado a Carla | 403; no se guarda la atención | | Pendiente | | |
 | CP-21 | HU-06 | Solicitud | Cuentas | Registrar atención de un caso En análisis | 409; no se guarda la atención | | Pendiente | | |
 | CP-22 | HU-06 | Incidente | Plataformas | Pasar a En validación un caso En atención sin atenciones | 409; el estado no cambia | | Pendiente | | |
+| CP-23 | HU-07 | Incidente | Red | Un Agente intenta aprobar una solución | 403; no cambia nada | | Pendiente | | |
+| CP-24 | HU-07 | Solicitud | Software | Aprobar un caso que está En atención | 409; el estado no cambia | | Pendiente | | |
+| CP-25 | HU-07 | Incidente | Hardware | Devolver sin motivo o con menos de 10 caracteres | 400; el caso sigue En validación | | Pendiente | | |
+| CP-26 | HU-08 | Incidente | Red | Consultar el historial de un caso registrado, asignado y en análisis | 3 eventos en orden cronológico con usuario y fecha | | Pendiente | | |
+| CP-27 | HU-08 | Solicitud | Cuentas | Bruno consulta el historial de un caso de Ana | 403 | | Pendiente | | |
+| CP-28 | HU-08 | Ambos | Todas | Consultar el historial de un caso inexistente | 404 | | Pendiente | | |
 
 Ideas para los siguientes sprints: cerrar un caso sin solución, registrar atención con un agente no asignado, indicadores con cero casos.

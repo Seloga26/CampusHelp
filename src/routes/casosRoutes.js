@@ -12,6 +12,7 @@ const pendiente = (historia) => manejar(async () => {
 
 function crearCasosRouter({
   registrarCaso, listarCasos, cambiarEstado, asignarCaso, registrarAtencion,
+  validarSolucion, consultarHistorial,
 }) {
   const router = express.Router();
 
@@ -40,10 +41,18 @@ function crearCasosRouter({
     res.status(201).json(await registrarAtencion({ ...req.body, id: Number(req.params.id) }));
   }));
 
-  // Sprint 3 (HU-12 recortada por contingencia)
+  // HU-07
+  router.post('/:id/validacion', manejar(async (req, res) => {
+    res.json(await validarSolucion({ ...req.body, id: Number(req.params.id) }));
+  }));
+
+  // HU-08
+  router.get('/:id/historial', manejar(async (req, res) => {
+    res.json(await consultarHistorial({ usuario_id: req.query.usuario_id, id: Number(req.params.id) }));
+  }));
+
+  // Sprint 3
   router.get('/:id', pendiente('HU-12 Detalle del caso'));
-  router.post('/:id/validacion', pendiente('HU-07 Aprobar/devolver'));
-  router.get('/:id/historial', pendiente('HU-08 Historial'));
 
   return router;
 }

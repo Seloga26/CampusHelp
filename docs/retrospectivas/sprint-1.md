@@ -28,7 +28,7 @@
 
 - **Las historias entraron tarde al flujo:** el planning se cerró el 4 oct, pero las tarjetas pasaron a Ready el 6 oct, último día del sprint.
 - **El camino crítico no avanzó:** HU-03 y la tarea T0 (casos de ejemplo) eran las primeras del plan porque desbloqueaban a las demás, y no tuvieron actividad en el repositorio.
-- **Un bloqueo no se hizo visible:** ninguna tarjeta se marcó `blocked` y no hubo ayuda entre integrantes sobre HU-03.
+- **Un bloqueo no se hizo visible:** ninguna tarjeta se marcó `blocked`, así que el retraso de HU-03 no se detectó a tiempo.
 - **Las fechas del flujo no se registraron**, así que no se pueden calcular Cycle Time ni Lead Time del sprint.
 - **El cambio de arquitectura** se hizo el último día del sprint y consumió parte de la única jornada de desarrollo.
 - **Trabajo terminado sin integrar:** HU-05 quedó en una rama sin PR.
@@ -42,12 +42,12 @@
 ## Mejora seleccionada
 
 - **Problema:** el trabajo que desbloquea a los demás (HU-03) no avanzó y nadie lo notó a tiempo, porque los bloqueos y las fechas no se registran en el tablero.
-- **Hipótesis:** si cada Daily empieza por la historia del camino crítico y todo bloqueo se marca `blocked` el mismo día, el equipo hará *swarming* (varios sobre la misma historia) y al menos 3 historias llegarán a Done en el Sprint 2.
+- **Hipótesis:** si cada Daily empieza por las historias que bloquean a otras y todo bloqueo se marca `blocked` el mismo día, los retrasos se detectan a tiempo y las historias abiertas del Sprint 1 se cierran durante el Sprint 2 sin frenar las nuevas.
 - **Cambio:**
-  1. La Daily revisa primero HU-03 y luego el resto del tablero, de derecha a izquierda (lo más cercano a Done primero).
+  1. La Daily revisa primero las historias que bloquean a otras (hoy HU-05 y HU-03) y luego el resto del tablero, de derecha a izquierda (lo más cercano a Done primero).
   2. Quien no avance en su historia durante un día la marca `blocked` con el motivo en un comentario del Issue.
   3. Cada movimiento de tarjeta se anota en `registro_flujo.csv` ese mismo día; quien mueve la tarjeta, anota la fecha.
   4. Ninguna rama termina el día sin PR abierto si su historia está en En validación.
-- **Indicador:** historias Done al cierre del Sprint 2 (meta: ≥ 3) y porcentaje de movimientos con fecha en `registro_flujo.csv` (meta: 100 %).
+- **Indicador:** historias del Sprint 1 cerradas al final del Sprint 2 (meta: 4 de 4), historias del Sprint 2 en Done (meta: ≥ 2) y porcentaje de movimientos con fecha en `registro_flujo.csv` (meta: 100 %).
 - **Responsable:** _completar_ (propuesta: Sebastian revisa el CSV al final de cada Daily)
 - **Fecha de revisión:** Retrospectiva del Sprint 2, viernes 9 de octubre.

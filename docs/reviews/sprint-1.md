@@ -36,16 +36,18 @@
 | 6 oct | Backend reorganizado en arquitectura limpia con SOLID | PR #16, ADR-003 |
 | 6 oct | Defecto DEF-01 detectado en revisión y corregido | `d9bcb17`, `docs/pruebas/defectos.md` |
 
-## Historias que pasan al Sprint 2
+## Historias del Sprint 1 sin terminar
 
-| Historia | Estado al pasar | Decisión |
-|---|---|---|
-| HU-01 | En validación | Se cierra cuando HU-03 muestre el caso y se registre la prueba con MySQL |
-| HU-05 | En atención (rama sin PR) | Primera prioridad del Sprint 2: corregir documentación, PR y merge |
-| HU-03 | Ready | Camino crítico del Sprint 2: bloquea HU-01, HU-04 y la integración de HU-05 |
-| HU-02 | Ready | Se jala cuando haya capacidad |
+**Decisión del equipo:** no se mezclan con el Sprint 2. Siguen siendo historias del Sprint 1, con los mismos responsables, y se cierran como tal. Al cerrarlas, su Lead Time y Cycle Time reflejarán el retraso real.
+
+| Historia | Responsable | Dónde está | Qué falta para Done |
+|---|---|---|---|
+| HU-01 | Sebastian | En validación | Prueba con MySQL real y ver el caso en la bandeja (HU-03) |
+| HU-05 | Miguel | En atención (rama sin PR) | Corregir la documentación de pruebas, PR y merge; integrar en la bandeja |
+| HU-03 | Keyla | Ready | Desarrollo completo (incluye T0) |
+| HU-02 | Keyla | Ready | Desarrollo completo |
 
 ## Retroalimentación y cambios al backlog
 
-- HU-07 y HU-08 pasan del Sprint 2 al Sprint 3; se activa el plan de contingencia para HU-11 y HU-12. Ver [sprint-2-planning.md](../sprints/sprint-2-planning.md).
+- El Sprint 2 mantiene su alcance planeado: HU-04, HU-06, HU-07 y HU-08. Ver [sprint-2-planning.md](../sprints/sprint-2-planning.md).
 - _completar con comentarios de la reunión_

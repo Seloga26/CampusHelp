@@ -23,6 +23,8 @@ const { crearListarCasos } = require('../services/casos/listarCasos');
 const { crearCambiarEstado } = require('../services/casos/cambiarEstado');
 const { crearAsignarCaso } = require('../services/casos/asignarCaso');
 const { crearRegistrarAtencion } = require('../services/casos/registrarAtencion');
+const { crearValidarSolucion } = require('../services/casos/validarSolucion');
+const { crearConsultarHistorial } = require('../services/casos/consultarHistorial');
 
 /** Construye todos los repositorios sobre un mismo ejecutor (pool o conexión). */
 function crearRepositorios(ejecutor) {
@@ -68,6 +70,8 @@ function crearServicios({ repos, enTransaccion }) {
     cambiarEstado: crearCambiarEstado(deps), // HU-05
     asignarCaso: crearAsignarCaso(deps), // HU-04
     registrarAtencion: crearRegistrarAtencion(deps), // HU-06
+    validarSolucion: crearValidarSolucion(deps), // HU-07
+    consultarHistorial: crearConsultarHistorial(deps), // HU-08
   };
 }
 

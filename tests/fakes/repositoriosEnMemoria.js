@@ -33,6 +33,7 @@ const PESO_PRIORIDAD = { P1: 1, P2: 2, P3: 3 };
 
 function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoriasBase(), casos = [] } = {}) {
   const datos = { usuarios, categorias, casos, historial: [], atenciones: [] };
+  const fechasHistorial = new Map(); // fecha de cada evento, como la pone MySQL
   const sinActivo = ({ activo, ...resto }) => resto;
   const sinActiva = ({ activa, ...resto }) => resto;
 
@@ -93,6 +94,13 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
           c.fecha_inicio_atencion = new Date().toISOString().slice(0, 19).replace('T', ' ');
         }
       },
+      // HU-07
+      async cerrar(id) {
+        const c = datos.casos.find((x) => x.id === Number(id));
+        if (!c) return;
+        c.estado = 'Cerrada';
+        c.fecha_cierre = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      },
       // HU-04
       async asignarAgente(id, agenteId) {
         const c = datos.casos.find((x) => x.id === Number(id));
@@ -123,7 +131,26 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
 
     historial: {
       async registrar(evento) {
-        datos.historial.push({ id: datos.historial.length + 1, ...evento });
+        const id = datos.historial.length + 1;
+        datos.historial.push({ id, ...evento });
+        fechasHistorial.set(id, new Date().toISOString().slice(0, 19).replace('T', ' '));
+      },
+      // HU-08: mismo formato que devolverá el repositorio real
+      async listarPorCaso(casoId) {
+        return datos.historial
+          .filter((h) => h.casoId === Number(casoId))
+          .map((h) => {
+            const u = datos.usuarios.find((x) => x.id === h.usuarioId) || {};
+            return {
+              id: h.id,
+              evento: h.evento,
+              estado_anterior: h.estadoAnterior ?? null,
+              estado_nuevo: h.estadoNuevo ?? null,
+              usuario: u.nombre,
+              rol: u.rol,
+              fecha: fechasHistorial.get(h.id) || null,
+            };
+          });
       },
     },
   };
