@@ -27,3 +27,30 @@ test('enTransaccion deshace todo cuando el trabajo falla a mitad', async () => {
   assert.equal(datos.casos.length, 0);
   assert.equal(datos.historial.length, 0);
 });
+
+test('enTransaccion también deshace asignaciones y atenciones (HU-04, HU-06)', async () => {
+  const { enTransaccion, repos, datos } = crearReposEnMemoria();
+  const id = await repos.casos.crear({ titulo: 'A', estado: 'En atención', prioridad: 'P1', usuario_id: 1 });
+
+  await assert.rejects(() => enTransaccion(async (tx) => {
+    await tx.casos.asignarAgente(id, 3);
+    await tx.atenciones.crear({ casoId: id, diagnostico: 'diagnóstico', solucion: 'solución', agenteId: 3 });
+    throw new Error('falla antes del historial');
+  }));
+
+  assert.equal(datos.casos[0].agente_id, null);
+  assert.equal(await repos.atenciones.contarPorCaso(id), 0);
+});
+
+test('el historial en memoria se lista por caso con usuario y rol (HU-08)', async () => {
+  const { repos } = crearReposEnMemoria();
+  await repos.historial.registrar({ casoId: 1, evento: 'Caso registrado', estadoAnterior: null, estadoNuevo: 'Pendiente', usuarioId: 1 });
+  await repos.historial.registrar({ casoId: 2, evento: 'Caso registrado', estadoAnterior: null, estadoNuevo: 'Pendiente', usuarioId: 2 });
+
+  const eventos = await repos.historial.listarPorCaso(1);
+
+  assert.equal(eventos.length, 1);
+  assert.equal(eventos[0].usuario, 'Ana Solicitante');
+  assert.equal(eventos[0].rol, 'Solicitante');
+  assert.ok(eventos[0].fecha);
+});
