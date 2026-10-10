@@ -4,6 +4,7 @@ const assert = require('node:assert');
 const { crearReposEnMemoria } = require('../fakes/repositoriosEnMemoria');
 const { crearListarCasos } = require('../../src/services/casos/listarCasos');
 const { ErrorValidacion } = require('../../src/domain/errores');
+const { crearRegistrarCaso } = require('../../src/services/casos/registrarCaso');
 
 // Mismos casos que database/seed.sql: Ana (1) tiene 3, Bruno (2) tiene 1.
 function casosDePrueba() {
@@ -130,4 +131,46 @@ test('sin parámetros lista todos del más reciente al más antiguo', async () =
   const casos = await listarCasos({});
 
   assert.deepEqual(casos.map((c) => c.id), [2, 3, 1, 4]);
+});
+
+// CP-13 — bandeja con P1, P2, P3 y un Cerrada
+test('CP-13: la bandeja no muestra Cerrada y ordena P1→P3, el más antiguo primero en igual prioridad', async () => {
+  const base = { descripcion: 'Descripción de prueba', categoria_id: 1, agente_id: null, usuario_id: 1 };
+  const { repos } = crearReposEnMemoria({
+    casos: [
+      { ...base, id: 1, tipo: 'Incidente', titulo: 'P3 antiguo', prioridad: 'P3', estado: 'Pendiente', fecha_creacion: '2026-10-01 08:00:00' },
+      { ...base, id: 2, tipo: 'Incidente', titulo: 'P1 reciente', prioridad: 'P1', estado: 'En atención', fecha_creacion: '2026-10-05 08:00:00' },
+      { ...base, id: 3, tipo: 'Incidente', titulo: 'P1 antiguo', prioridad: 'P1', estado: 'Pendiente', fecha_creacion: '2026-10-02 08:00:00' },
+      { ...base, id: 4, tipo: 'Solicitud de servicio', titulo: 'P2 en validación', prioridad: 'P2', estado: 'En validación', fecha_creacion: '2026-10-03 08:00:00' },
+      { ...base, id: 5, tipo: 'Solicitud de servicio', titulo: 'P1 cerrado', prioridad: 'P1', estado: 'Cerrada', fecha_creacion: '2026-10-01 07:00:00' },
+    ],
+  });
+  const listarCasos = crearListarCasos({ repos });
+
+  const casos = await listarCasos({ vista: 'bandeja' });
+
+  assert.ok(!casos.some((c) => c.estado === 'Cerrada'));
+  assert.deepEqual(casos.map((c) => c.id), [3, 2, 4, 1]);
+});
+
+// HU-03, escenario 3 — un caso recién registrado aparece Pendiente y sin asignar
+test('bandeja: un caso recién registrado (HU-01) aparece Pendiente y sin agente', async () => {
+  const { repos, enTransaccion } = crearReposEnMemoria();
+  const registrarCaso = crearRegistrarCaso({ repos, enTransaccion });
+  const listarCasos = crearListarCasos({ repos });
+
+  const nuevo = await registrarCaso({
+    tipo: 'Incidente',
+    titulo: 'Sin Wi-Fi en bloque B',
+    descripcion: 'No conecta desde las 8 am',
+    prioridad: 'P1',
+    categoria_id: 8,
+    usuario_id: 1,
+  });
+  const bandeja = await listarCasos({ vista: 'bandeja' });
+
+  const enBandeja = bandeja.find((c) => c.id === nuevo.id);
+  assert.ok(enBandeja, 'el caso nuevo debe aparecer en la bandeja');
+  assert.equal(enBandeja.estado, 'Pendiente');
+  assert.equal(enBandeja.agente_id, null);
 });
