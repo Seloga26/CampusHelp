@@ -7,7 +7,7 @@ Backlog inicial del docente, refinado por el equipo. Una historia pasa a **Ready
 | HU-01 | Como solicitante, quiero registrar un incidente o solicitud para pedir atención tecnológica. | P1 | 5 | 1 | — | Sebastian | En validación |
 | HU-02 | Como solicitante, quiero consultar mis casos para conocer su estado. | P1 | 3 | 1 | HU-03 (mismo backend) | Keyla | Ready |
 | HU-03 | Como agente, quiero visualizar la bandeja de casos pendientes para seleccionar trabajo. | P1 | 3 | 1 | HU-01 (se mitiga con T0) | Keyla | Ready |
-| HU-05 | Como agente, quiero cambiar el estado del caso para reflejar su avance. | P1 | 5 | 1 | HU-03 (solo frontend) | Miguel | En validación (control en bandeja y MySQL verificados; pendiente merge del PR) |
+| HU-05 | Como agente, quiero cambiar el estado del caso para reflejar su avance. | P1 | 5 | 1 | HU-03 (solo frontend) | Miguel | Done (2026-10-09, PR #28; Issue #5 cerrada) |
 | HU-04 | Como agente, quiero asignarme un caso para asumir su atención. | P1 | 3 | 2 | HU-05, HU-03 | Sebastian | Ready |
 | HU-06 | Como agente, quiero registrar diagnóstico y solución para documentar la atención. | P1 | 5 | 2 | HU-04, HU-05 | Miguel | En atención (implementación integrada; pendiente flujo con HU-03/HU-04) |
 | HU-07 | Como validador, quiero aprobar o devolver una solución para controlar la calidad. | P1 | 5 | 2 | HU-06 | Keyla | Ready |
