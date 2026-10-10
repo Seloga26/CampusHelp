@@ -2,6 +2,10 @@
 
 El historial de commits es evidencia evaluada (rúbrica: *Repositorio y documentación*), así que cada integrante hace commits con su propia cuenta y por su propio trabajo.
 
+La configuración compartida en `.claude/settings.json` desactiva la atribución
+automática de Claude Code en commits y PR. La autoría se toma del nombre y correo
+de Git de cada integrante, vinculados a su cuenta de GitHub.
+
 **Antes de programar una historia**, lee la arquitectura y la receta paso a paso en [ADR-003](docs/decisiones/ADR-003-arquitectura.md): SQL solo en `repositories/`, reglas en `domain/` y `services/`, y pruebas de servicios sin MySQL.
 
 ## Ramas

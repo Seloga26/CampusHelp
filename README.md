@@ -80,10 +80,9 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ |
-| GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 1 |
 | PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
-| POST | `/api/casos/:id/atencion` | HU-06 | ✅ (en esta rama) |
+| POST | `/api/casos/:id/atencion` | HU-06 | ✅ |
 | POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/atenciones` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/historial` | HU-08 | ⏳ Sprint 2 |
@@ -107,7 +106,7 @@ En `/cambiar-estado.html` se puede operar un caso existente indicando su ID y
 estado actual. El servidor comprueba el estado persistido. El control reutilizable
 para la bandeja y la guía de pruebas están en
 [docs/pruebas/HU-05.md](docs/pruebas/HU-05.md). La integración con `bandeja.html`
-depende de HU-03, que aún no está implementada en la versión base.
+queda pendiente: la bandeja de HU-03 ya está disponible, pero aún no incluye el control de cambio de estado.
 
 ### Registrar atención (HU-06)
 
@@ -121,7 +120,7 @@ después de quitar espacios al inicio y al final.
 Atención e historial se guardan en una transacción; el estado se conserva. Se
 pueden registrar varias atenciones, sin editar las anteriores. Errores: `400`
 por datos inválidos, `403` por permisos, `404` por caso inexistente y `409`
-por estado incorrecto. En esta rama, HU-05 responde `409` al intentar pasar
+por estado incorrecto. HU-05 responde `409` al intentar pasar
 a En validación sin una atención del propio caso.
 
 La página `/atender.html?id=10` permite registrar la atención directamente;
