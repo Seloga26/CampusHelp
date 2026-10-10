@@ -80,10 +80,9 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ |
-| GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 1 |
-| PATCH | `/api/casos/:id/estado` | HU-05 | ⏳ Sprint 1 |
+| PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
-| POST | `/api/casos/:id/atencion` | HU-06 | ⏳ Sprint 2 |
+| POST | `/api/casos/:id/atencion` | HU-06 | ✅ |
 | POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/atenciones` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/historial` | HU-08 | ⏳ Sprint 2 |
@@ -91,6 +90,43 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/indicadores` | HU-10 | ⏳ Sprint 3 |
 
 Los endpoints pendientes responden `501` hasta que se implementan.
+
+### Cambiar estado (HU-05)
+
+`PATCH /api/casos/:id/estado` recibe `{ "estado": "En análisis", "usuario_id": 3 }`
+y devuelve `200` con el caso actualizado. Respuestas de error: `400` por datos
+inválidos, `403` si el usuario no es un agente activo, `404` si el caso no existe
+y `409` por una transición no permitida.
+
+El agente avanza `Pendiente → En análisis → En atención → En validación`.
+El estado y el evento de historial se guardan juntos; el inicio de atención se
+registra una sola vez. Aprobar o devolver desde validación corresponde a HU-07.
+
+En `/cambiar-estado.html` se puede operar un caso existente indicando su ID y
+estado actual. El servidor comprueba el estado persistido. El control reutilizable
+para la bandeja y la guía de pruebas están en
+[docs/pruebas/HU-05.md](docs/pruebas/HU-05.md). La integración con `bandeja.html`
+queda pendiente: la bandeja de HU-03 ya está disponible, pero aún no incluye el control de cambio de estado.
+
+### Registrar atención (HU-06)
+
+`POST /api/casos/:id/atencion` recibe `{ "diagnostico": "El AP estaba apagado",
+"solucion": "Se reinició y verificó el AP", "usuario_id": 3 }` y devuelve `201`
+con la atención creada (`id`, `caso_id`, `diagnostico`, `solucion`, `fecha`,
+`agente_id`). El caso debe estar En atención y asignado al agente activo que
+registra. Ambos textos son obligatorios y requieren al menos 10 caracteres
+después de quitar espacios al inicio y al final.
+
+Atención e historial se guardan en una transacción; el estado se conserva. Se
+pueden registrar varias atenciones, sin editar las anteriores. Errores: `400`
+por datos inválidos, `403` por permisos, `404` por caso inexistente y `409`
+por estado incorrecto. HU-05 responde `409` al intentar pasar
+a En validación sin una atención del propio caso.
+
+La página `/atender.html?id=10` permite registrar la atención directamente;
+también puede indicarse el ID en el formulario. El enlace desde la bandeja
+queda pendiente de HU-03 y el flujo de asignación depende de HU-04. Pruebas,
+alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
 
 ### `GET /api/casos`
 

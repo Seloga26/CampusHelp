@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar atención — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Registrar diagnóstico y solución</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="atender.html" aria-current="page">Registrar atención</a>
+      <a href="cambiar-estado.html">Cambiar estado</a>
+    </nav>
+    <section>
+      <label for="actuar-como">Actuar como</label>
+      <select id="actuar-como" disabled></select>
+    </section>
+    <section>
+      <h2>Atención del caso</h2>
+      <p>El caso debe estar En atención y asignado al agente seleccionado.
+        Registrar la solución conserva el estado actual.</p>
+      <form id="form-atencion" class="formulario">
+        <label for="caso-id">Número de caso</label>
+        <input id="caso-id" name="caso-id" type="number" min="1" max="2147483647" step="1" required>
+        <label for="diagnostico">Diagnóstico</label>
+        <textarea id="diagnostico" name="diagnostico" rows="4" minlength="10" required
+          placeholder="Mínimo 10 caracteres"></textarea>
+        <label for="solucion">Solución</label>
+        <textarea id="solucion" name="solucion" rows="4" minlength="10" required
+          placeholder="Mínimo 10 caracteres"></textarea>
+        <button id="guardar-atencion" type="submit" disabled>Registrar atención</button>
+      </form>
+      <p id="mensaje" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/atender.js"></script>
+</body>
+</html>

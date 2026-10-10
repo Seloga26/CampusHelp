@@ -13,12 +13,24 @@ function crearAtencionesRepository(ejecutor) {
      * @returns {Promise<{id, caso_id, diagnostico, solucion, fecha, agente_id}>}
      */
     async crear(atencion) {
-      throw new ErrorNoImplementado('HU-06 atencionesRepository.crear');
+      const [resultado] = await ejecutor.query(
+        `INSERT INTO atencion (caso_id, diagnostico, solucion, agente_id)
+         VALUES (?, ?, ?, ?)`,
+        [atencion.casoId, atencion.diagnostico, atencion.solucion, atencion.agenteId],
+      );
+      const [filas] = await ejecutor.query(
+        'SELECT id, caso_id, diagnostico, solucion, fecha, agente_id FROM atencion WHERE id = ?',
+        [resultado.insertId],
+      );
+      return filas[0];
     },
 
     /** Cantidad de atenciones registradas para un caso (regla: no validar sin solución). */
     async contarPorCaso(casoId) {
-      throw new ErrorNoImplementado('HU-06 atencionesRepository.contarPorCaso');
+      const [filas] = await ejecutor.query(
+        'SELECT COUNT(*) AS cantidad FROM atencion WHERE caso_id = ?', [casoId],
+      );
+      return Number(filas[0].cantidad);
     },
 
     // ---------------------------------------------------------------- HU-07

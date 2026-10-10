@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cambiar estado · CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/estado-caso.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Cambiar estado del caso</p>
+  </header>
+  <main>
+    <p><a href="/">Volver al inicio</a></p>
+    <section>
+      <h2>Avanzar un caso</h2>
+      <p>Indica el ID y el estado actual de un caso existente. El sistema comprobará
+        el estado guardado antes de aceptar el cambio.</p>
+      <form id="preparar-cambio">
+        <label for="usuario">Actuar como agente</label>
+        <select id="usuario" required disabled>
+          <option value="">Cargando agentes…</option>
+        </select>
+        <label for="caso-id">ID del caso</label>
+        <input id="caso-id" type="number" min="1" max="2147483647" step="1" required>
+        <label for="estado-actual">Estado actual</label>
+        <select id="estado-actual" required>
+          <option>Pendiente</option>
+          <option>En análisis</option>
+          <option>En atención</option>
+          <option>En validación</option>
+          <option>Cerrada</option>
+        </select>
+        <button type="submit" id="preparar" disabled>Preparar cambio</button>
+      </form>
+      <p id="mensaje" role="status" aria-live="polite"></p>
+    </section>
+    <section id="caso-seleccionado" hidden>
+      <h2 id="titulo-caso"></h2>
+      <p id="resumen-caso"></p>
+      <div id="accion-estado"></div>
+    </section>
+  </main>
+  <script src="js/estado-caso.js"></script>
+  <script src="js/cambiar-estado.js"></script>
+</body>
+</html>

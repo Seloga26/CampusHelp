@@ -39,9 +39,9 @@ INSERT INTO caso (tipo, titulo, descripcion, prioridad, estado, usuario_id, cate
   -- Casos de Ana (ID 1)
   ('Incidente', 'Pantalla azul en portátil', 'Al encender sale error crítico', 'P1', 'Pendiente', 1, 1, '2026-10-05 08:00:00'),
   ('Solicitud de servicio', 'Instalar Photoshop', 'Requerido para diseño gráfico', 'P2', 'En análisis', 1, 5, '2026-10-05 09:30:00'),
-  
+
   -- Caso de Bruno (ID 2)
   ('Incidente', 'No conecta al Wi-Fi', 'Falla en el bloque C segundo piso', 'P1', 'Pendiente', 2, 8, '2026-10-05 08:15:00'),
-  
+
   -- Caso Cerrado para probar que también se ven
   ('Solicitud de servicio', 'Cambio de teclado', 'Teclas pegajosas por café', 'P3', 'Cerrada', 1, 2, '2026-10-04 15:00:00');
