@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bandeja — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Bandeja de casos pendientes</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html">Mis casos</a>
+      <a href="bandeja.html" aria-current="page">Bandeja</a>
+    </nav>
+
+    <section>
+      <label for="actuar-como">Actuar como</label>
+      <select id="actuar-como"></select>
+    </section>
+
+    <section>
+      <h2>Casos abiertos</h2>
+      <p id="mensaje" role="status"></p>
+      <p id="vacio" hidden>No hay casos abiertos en este momento.</p>
+      <div class="tabla-contenedor">
+        <table id="tabla-casos" hidden>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Tipo</th>
+              <th>Área</th>
+              <th>Categoría</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+              <th>Solicitante</th>
+              <th>Agente asignado</th>
+              <th>Fecha de creación</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-casos"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/bandeja.js"></script>
+</body>
+</html>

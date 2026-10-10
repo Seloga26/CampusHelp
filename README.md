@@ -79,6 +79,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/categorias` | HU-11 | ✅ (lectura) |
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
+| GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 1 |
 | PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
@@ -127,6 +128,16 @@ La página `/atender.html?id=10` permite registrar la atención directamente;
 también puede indicarse el ID en el formulario. El enlace desde la bandeja
 queda pendiente de HU-03 y el flujo de asignación depende de HU-04. Pruebas,
 alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
+
+### `GET /api/casos`
+
+| Parámetro | Resultado | Orden |
+|---|---|---|
+| `?usuario_id=1` | Casos de ese solicitante, incluidos los cerrados (HU-02) | Más reciente primero |
+| `?vista=bandeja` | Casos que no están `Cerrada` (HU-03) | Prioridad P1 → P3, luego el más antiguo primero |
+| sin parámetros | Todos los casos | Más reciente primero |
+
+Cada caso incluye: `id`, `tipo`, `titulo`, `prioridad`, `estado`, `area`, `categoria`, `solicitante`, `agente` (`null` si no está asignado) y `fecha_creacion`. Si no hay casos responde `200` con `[]`. Un `usuario_id` que no sea un entero positivo, o una `vista` distinta de `bandeja`, responde `400`.
 
 ## Reglas de negocio clave
 
