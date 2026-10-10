@@ -79,6 +79,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/categorias` | HU-11 | ✅ (lectura) |
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
+| GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03, HU-09 | ⏳ Sprint 1 |
 | PATCH | `/api/casos/:id/estado` | HU-05 | ⏳ Sprint 1 |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
@@ -90,6 +91,16 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/indicadores` | HU-10 | ⏳ Sprint 3 |
 
 Los endpoints pendientes responden `501` hasta que se implementan.
+
+### `GET /api/casos`
+
+| Parámetro | Resultado | Orden |
+|---|---|---|
+| `?usuario_id=1` | Casos de ese solicitante, incluidos los cerrados (HU-02) | Más reciente primero |
+| `?vista=bandeja` | Casos que no están `Cerrada` (HU-03) | Prioridad P1 → P3, luego el más antiguo primero |
+| sin parámetros | Todos los casos | Más reciente primero |
+
+Cada caso incluye: `id`, `tipo`, `titulo`, `prioridad`, `estado`, `area`, `categoria`, `solicitante`, `agente` (`null` si no está asignado) y `fecha_creacion`. Si no hay casos responde `200` con `[]`. Un `usuario_id` que no sea un entero positivo, o una `vista` distinta de `bandeja`, responde `400`.
 
 ## Reglas de negocio clave
 
