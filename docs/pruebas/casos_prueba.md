@@ -10,7 +10,7 @@ Registrar el **resultado real** y la fecha al ejecutar cada caso. Si falla, crea
 | CP-04 | HU-05 | Incidente | Red | Transición válida | Cambia estado y crea historial | Botón en bandeja: HTTP 200, estado e historial con autor; doble clic genera un solo cambio en MySQL 8.0.46 | Pasa (Chrome y MySQL real) | 2026-10-09 | Codex |
 | CP-05 | HU-05 | Solicitud | Software | Transición inválida | Sistema impide la operación | HTTP 409; estado e historial intactos en MySQL 8.0.46 | Pasa (MySQL real) | 2026-10-09 | Codex |
 | CP-06 | HU-04 | Ambos | Todas | Asignar agente | Se registra responsable y fecha | | Pendiente | | |
-| CP-07 | HU-06 | Ambos | Todas | Registrar diagnóstico/solución | La atención queda almacenada | HTTP 201; atención con fecha y agente, historial y estado conservado en MySQL 8.0.46 | Pasa (MySQL real) | 2026-10-07 | Codex |
+| CP-07 | HU-06 | Ambos | Todas | Registrar diagnóstico/solución | La atención queda almacenada | Formulario con doble clic: un solo POST 201, atención e historial con autor/fecha, estado conservado y segunda atención sin modificar la primera | Pasa (Chrome y MySQL 8.0.46) | 2026-10-09 | Codex |
 | CP-08 | HU-07 | Ambos | Todas | Devolver desde validación | Vuelve a atención y registra historial | | Pendiente | | |
 | CP-09 | HU-07 | Ambos | Todas | Aprobar solución | Caso queda Cerrado y registra fecha | | Pendiente | | |
 | CP-10 | HU-09 | Ambos | Todas | Filtrar por prioridad/área/tipo | Solo aparecen coincidencias | | Pendiente | | |
@@ -28,9 +28,9 @@ Registrar el **resultado real** y la fecha al ejecutar cada caso. Si falla, crea
 | CP-17 | HU-04 | Incidente | Red | Diego intenta asignarse un caso ya asignado a Carla | 409; el caso sigue asignado a Carla | | Pendiente | | |
 | CP-18 | HU-04 | Solicitud | Software | Un Solicitante intenta asignarse un caso | 403; no cambia nada | | Pendiente | | |
 | CP-19 | HU-04 | Incidente | Hardware | Diego intenta cambiar el estado de un caso asignado a Carla | 403; el estado no cambia | | Pendiente | | |
-| CP-20 | HU-06 | Incidente | Red | Diego registra la atención de un caso asignado a Carla | 403; no se guarda la atención | HTTP 403; atención e historial intactos en MySQL 8.0.46 | Pasa (MySQL real) | 2026-10-07 | Codex |
-| CP-21 | HU-06 | Solicitud | Cuentas | Registrar atención de un caso En análisis | 409; no se guarda la atención | Servicio 409; sin escrituras en MySQL; HTTP 409 verificado con repositorios en memoria | Pasa (MySQL real y HTTP en memoria) | 2026-10-07 | Codex |
-| CP-22 | HU-06 | Incidente | Plataformas | Pasar a En validación un caso En atención sin atenciones | 409; el estado no cambia | Servicio 409; caso e historial intactos en MySQL; una atención de otro caso no permite validar | Pasa (MySQL real) | 2026-10-07 | Codex |
+| CP-20 | HU-06 | Incidente | Red | Diego registra la atención de un caso asignado a Carla | 403; no se guarda la atención | Formulario muestra 403 y conserva los textos; sin escrituras; reintento válido al seleccionar Carla | Pasa (Chrome y MySQL 8.0.46) | 2026-10-09 | Codex |
+| CP-21 | HU-06 | Solicitud | Cuentas | Registrar atención de un caso En análisis | 409; no se guarda la atención | Formulario muestra 409; estado, atención e historial intactos en MySQL | Pasa (Chrome y MySQL 8.0.46) | 2026-10-09 | Codex |
+| CP-22 | HU-06 | Incidente | Plataformas | Pasar a En validación un caso En atención sin atenciones | 409; el estado no cambia | Bandeja muestra 409 sin solución; atención de otro caso no permite validar; se envía tras registrar atención propia | Pasa (Chrome y MySQL 8.0.46) | 2026-10-09 | Codex |
 | CP-23 | HU-07 | Incidente | Red | Un Agente intenta aprobar una solución | 403; no cambia nada | | Pendiente | | |
 | CP-24 | HU-07 | Solicitud | Software | Aprobar un caso que está En atención | 409; el estado no cambia | | Pendiente | | |
 | CP-25 | HU-07 | Incidente | Hardware | Devolver sin motivo o con menos de 10 caracteres | 400; el caso sigue En validación | | Pendiente | | |
@@ -61,3 +61,10 @@ se eliminaron. Se comprobó también el formulario en Chrome con Express y
 repositorios en memoria. El flujo desde la bandeja y la asignación siguen
 pendientes de HU-03/HU-04; estos resultados no implican que HU-06 esté Done.
 Véase [guía y evidencia de HU-06](HU-06.md).
+
+HU-06 se revalidó el 2026-10-09 con una nueva suite de formulario en Chrome y
+MySQL 8.0.46: **127 pruebas aprobadas, sin fallos ni omisiones** en la suite
+completa. Se verificaron doble clic, conservación de textos ante errores,
+rollback real y reintento, múltiples atenciones y envío desde bandeja a
+validación. No se modificó `campushelp`. HU-06 pasa a En validación; permanece
+abierta hasta demostrar el flujo desde la asignación real de HU-04.
