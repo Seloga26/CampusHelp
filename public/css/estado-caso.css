@@ -1,11 +1,14 @@
 form { display: grid; gap: .65rem; max-width: 420px; }
 label { font-weight: 600; }
 input, select, button { font: inherit; padding: .6rem .75rem; border-radius: 5px; }
-input, select { border: 1px solid var(--borde); width: 100%; }
-button { background: var(--primario); color: #fff; border: 0; cursor: pointer; }
+input, select { border: 1px solid var(--linea); width: 100%; }
+button { background: var(--acento); color: #fff; border: 0; cursor: pointer; }
 button:disabled { opacity: .6; cursor: default; }
 button:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 3px solid var(--primario); outline-offset: 3px;
+  outline: 3px solid var(--cobalto); outline-offset: 3px;
 }
 .control-estado p { margin-bottom: 0; }
+.control-estado p:empty { display: none; }
+.acciones-caso { min-width: 15rem; white-space: normal; }
+.acciones-caso a { display: inline-block; margin-top: .5rem; color: var(--cobalto); }
 [hidden] { display: none !important; }
