@@ -51,3 +51,12 @@ section {
 }
 #mensaje { margin-top: 1rem; min-height: 1.25rem; }
 section label + select { display: block; width: 100%; max-width: 24rem; margin-top: .35rem; }
+
+
+
+/* Tabla de casos (Mis casos) */
+.tabla-contenedor { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--borde); }
+th { background: var(--fondo); white-space: nowrap; }
+#vacio a { color: var(--primario); font-weight: 600; }

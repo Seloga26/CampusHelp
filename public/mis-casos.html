@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis casos — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Consultar mis casos</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html" aria-current="page">Mis casos</a>
+    </nav>
+
+    <section>
+      <label for="actuar-como">Actuar como</label>
+      <select id="actuar-como"></select>
+    </section>
+
+    <section>
+      <h2>Mis casos</h2>
+      <p id="mensaje" role="status"></p>
+      <div id="vacio" hidden>
+        <p>Aún no has registrado casos</p>
+        <p><a href="registrar.html">Registrar un caso</a></p>
+      </div>
+      <div class="tabla-contenedor">
+        <table id="tabla-casos" hidden>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Tipo</th>
+              <th>Área</th>
+              <th>Categoría</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+              <th>Fecha de creación</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-casos"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/mis-casos.js"></script>
+</body>
+</html>
