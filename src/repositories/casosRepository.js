@@ -62,7 +62,7 @@ function crearCasosRepository(ejecutor) {
           : "c.fecha_creacion DESC, c.id DESC";
 
       const [filas] = await ejecutor.query(
-        `SELECT c.id, c.tipo, c.titulo, c.prioridad, c.estado,
+        `SELECT c.id, c.tipo, c.titulo, c.prioridad, c.estado, c.agente_id,
                 a.nombre AS area, cat.nombre AS categoria,
                 u.nombre AS solicitante, ag.nombre AS agente,
                 c.fecha_creacion

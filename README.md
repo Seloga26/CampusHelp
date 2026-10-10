@@ -105,8 +105,11 @@ registra una sola vez. Aprobar o devolver desde validación corresponde a HU-07.
 En `/cambiar-estado.html` se puede operar un caso existente indicando su ID y
 estado actual. El servidor comprueba el estado persistido. El control reutilizable
 para la bandeja y la guía de pruebas están en
-[docs/pruebas/HU-05.md](docs/pruebas/HU-05.md). La integración con `bandeja.html`
-queda pendiente: la bandeja de HU-03 ya está disponible, pero aún no incluye el control de cambio de estado.
+[docs/pruebas/HU-05.md](docs/pruebas/HU-05.md). En `/bandeja.html`, cada caso
+incluye el botón **Pasar a <siguiente estado>**, con el agente seleccionado en
+"Actuar como". Al guardar se actualiza la tabla; los errores quedan visibles
+y el doble clic no duplica el cambio. Los casos En validación quedan a cargo
+del validador y no muestran botón de avance.
 
 ### Registrar atención (HU-06)
 
@@ -124,8 +127,10 @@ por estado incorrecto. HU-05 responde `409` al intentar pasar
 a En validación sin una atención del propio caso.
 
 La página `/atender.html?id=10` permite registrar la atención directamente;
-también puede indicarse el ID en el formulario. El enlace desde la bandeja
-queda pendiente de HU-03 y el flujo de asignación depende de HU-04. Pruebas,
+también puede indicarse el ID en el formulario. La bandeja muestra **Registrar
+atención** en los casos En atención asignados al agente seleccionado; el
+formulario permite volver a la bandeja para enviar a validación. El flujo de
+asignación depende de HU-04. Pruebas,
 alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
 
 ### `GET /api/casos`
@@ -136,7 +141,7 @@ alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
 | `?vista=bandeja` | Casos que no están `Cerrada` (HU-03) | Prioridad P1 → P3, luego el más antiguo primero |
 | sin parámetros | Todos los casos | Más reciente primero |
 
-Cada caso incluye: `id`, `tipo`, `titulo`, `prioridad`, `estado`, `area`, `categoria`, `solicitante`, `agente` (`null` si no está asignado) y `fecha_creacion`. Si no hay casos responde `200` con `[]`. Un `usuario_id` que no sea un entero positivo, o una `vista` distinta de `bandeja`, responde `400`.
+Cada caso incluye: `id`, `tipo`, `titulo`, `prioridad`, `estado`, `area`, `categoria`, `solicitante`, `agente`, `agente_id` (ambos `null` si no está asignado) y `fecha_creacion`. Si no hay casos responde `200` con `[]`. Un `usuario_id` que no sea un entero positivo, o una `vista` distinta de `bandeja`, responde `400`.
 
 ## Reglas de negocio clave
 
