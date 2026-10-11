@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Historial del caso — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/historial.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Historial del caso</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html">Mis casos</a>
+      <a href="bandeja.html">Bandeja</a>
+      <a href="historial.html" aria-current="page">Historial</a>
+    </nav>
+
+    <section>
+      <label for="actuar-como">Actuar como</label>
+      <select id="actuar-como"></select>
+    </section>
+
+    <section>
+      <h2>Consultar historial</h2>
+      <p>Agentes, validadores y administradores ven el historial de cualquier caso;
+        un solicitante, solo el de sus propios casos.</p>
+      <form id="form-historial" class="formulario">
+        <label for="caso-id">Número de caso</label>
+        <input id="caso-id" name="caso-id" type="number" min="1" max="2147483647" step="1" required>
+        <button id="consultar" type="submit">Ver historial</button>
+      </form>
+      <p id="mensaje" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="resultado" hidden>
+      <h2 id="titulo-historial">Historial</h2>
+      <p id="vacio-historial" hidden>Este caso aún no tiene eventos registrados.</p>
+      <ol id="linea-tiempo" class="linea-tiempo"></ol>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/historial.js"></script>
+</body>
+</html>
