@@ -98,6 +98,12 @@ function mostrarTabla(casos) {
       enlace.textContent = 'Registrar atención';
       celda.append(enlace);
     }
+    // HU-08: historial del caso, disponible para cualquier agente.
+    const historial = document.createElement('a');
+    historial.className = 'ver-historial';
+    historial.href = `historial.html?id=${encodeURIComponent(caso.id)}`;
+    historial.textContent = 'Ver historial';
+    celda.append(historial);
     return control;
   });
   document.getElementById('tabla-casos').hidden = casos.length === 0;

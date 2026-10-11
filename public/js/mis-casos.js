@@ -1,5 +1,6 @@
 // Mis casos (HU-02): lista los casos del solicitante elegido en "Actuar como".
 // Usa GET /api/casos?usuario_id=ID (más reciente primero, incluye cerrados).
+// Cada fila enlaza al historial del caso (HU-08).
 
 let consultaActual = 0; // evita que una respuesta lenta pise a una más nueva
 
@@ -35,6 +36,7 @@ function mostrarTabla(casos) {
         <td>${escapar(c.prioridad)}</td>
         <td>${escapar(c.estado)}</td>
         <td>${escapar(c.fecha_creacion)}</td>
+        <td><a href="historial.html?id=${encodeURIComponent(c.id)}">Ver historial</a></td>
       </tr>`)
     .join('');
   tabla.hidden = casos.length === 0;

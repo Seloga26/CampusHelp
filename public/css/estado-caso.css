@@ -10,6 +10,6 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .control-estado p { margin-bottom: 0; }
 .control-estado p:empty { display: none; }
 .acciones-caso { min-width: 15rem; white-space: normal; }
-.acciones-caso a { display: inline-block; margin-top: .5rem; color: var(--cobalto); }
+.acciones-caso a { display: inline-block; margin-top: .5rem; margin-right: .75rem; color: var(--cobalto); }
 [hidden] { display: none !important; }
 .acciones-caso .asignarme { display: block; margin-bottom: .5rem; }

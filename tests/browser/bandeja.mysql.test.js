@@ -136,14 +136,14 @@ test('HU-04/HU-05: bandeja en navegador con MySQL real', {
   await t.test('HU-06: error visible sin solución, enlace al agente asignado y envío a validación', async () => {
     await evaluar("{ const s = document.getElementById('actuar-como'); s.value = '4'; s.dispatchEvent(new Event('change')); }");
     await esperar(`${fila(id)}?.querySelector('.control-estado p')?.textContent.includes('Asignado a Carla Agente')`);
-    assert.equal(await evaluar(`${fila(id)}.querySelector('a') === null`), true);
+    assert.equal(await evaluar(`${fila(id)}.querySelector('a[href^="atender.html"]') === null`), true);
     await evaluar("{ const s = document.getElementById('actuar-como'); s.value = '3'; s.dispatchEvent(new Event('change')); }");
-    await esperar(`${fila(id)}?.querySelector('a')?.getAttribute('href') === 'atender.html?id=${id}'`);
+    await esperar(`${fila(id)}?.querySelector('a[href^="atender.html"]')?.getAttribute('href') === 'atender.html?id=${id}'`);
     await evaluar(`${botonEstado(id)}.click()`);
     await esperar(`${fila(id)}?.querySelector('.error')?.textContent.includes('diagnóstico y solución')`);
     assert.ok(await evaluar(estado(id, 'En atención')));
     assert.equal((await eventos(id)).filter((e) => e.evento === 'Cambio de estado').length, 2);
-    await evaluar(`${fila(id)}.querySelector('a').click()`);
+    await evaluar(`${fila(id)}.querySelector('a[href^="atender.html"]').click()`);
     await esperar("document.getElementById('guardar-atencion')?.disabled === false");
     assert.equal(await evaluar("document.getElementById('caso-id').value"), String(id));
     await evaluar(`document.getElementById('diagnostico').value = 'Punto de acceso desconectado';
