@@ -15,6 +15,7 @@ const { crearUsuariosRepository } = require('../repositories/usuariosRepository'
 const { crearCasosRepository } = require('../repositories/casosRepository');
 const { crearHistorialRepository } = require('../repositories/historialRepository');
 const { crearAtencionesRepository } = require('../repositories/atencionesRepository');
+const { crearIndicadoresRepository } = require('../repositories/indicadoresRepository');
 
 const { crearListarCategorias } = require('../services/catalogos/listarCategorias');
 const { crearListarUsuarios } = require('../services/catalogos/listarUsuarios');
@@ -26,6 +27,11 @@ const { crearRegistrarAtencion } = require('../services/casos/registrarAtencion'
 const { crearValidarSolucion } = require('../services/casos/validarSolucion');
 const { crearConsultarHistorial } = require('../services/casos/consultarHistorial');
 const { crearListarAtenciones } = require('../services/casos/listarAtenciones');
+const { crearListarCategoriasGestion } = require('../services/catalogos/listarCategoriasGestion');
+const { crearAgregarCategoria } = require('../services/catalogos/agregarCategoria');
+const { crearActualizarCategoria } = require('../services/catalogos/actualizarCategoria');
+const { crearConsultarDetalle } = require('../services/casos/consultarDetalle');
+const { crearConsultarIndicadores } = require('../services/indicadores/consultarIndicadores');
 
 /** Construye todos los repositorios sobre un mismo ejecutor (pool o conexión). */
 function crearRepositorios(ejecutor) {
@@ -35,6 +41,7 @@ function crearRepositorios(ejecutor) {
     casos: crearCasosRepository(ejecutor),
     historial: crearHistorialRepository(ejecutor),
     atenciones: crearAtencionesRepository(ejecutor),
+    indicadores: crearIndicadoresRepository(ejecutor),
   };
 }
 
@@ -78,6 +85,11 @@ function crearServicios({ repos, enTransaccion }) {
     validarSolucion: crearValidarSolucion(deps), // HU-07
     listarAtenciones: crearListarAtenciones(deps), // HU-07
     consultarHistorial: crearConsultarHistorial(deps), // HU-08
+    listarCategoriasGestion: crearListarCategoriasGestion(deps), // HU-11
+    agregarCategoria: crearAgregarCategoria(deps), // HU-11
+    actualizarCategoria: crearActualizarCategoria(deps), // HU-11
+    consultarDetalle: crearConsultarDetalle(deps), // HU-12
+    consultarIndicadores: crearConsultarIndicadores(deps), // HU-10
   };
 }
 

@@ -1,7 +1,7 @@
 # Sprint 2 — Planning
 
 **Inicio del sprint:** martes 6 de octubre de 2026, el mismo día en que cierra el Sprint 1
-**Fechas del sprint:** martes 6 – viernes 9 de octubre de 2026
+**Fechas del sprint:** martes 6 – viernes 9 de octubre de 2026 (el 11 de octubre el equipo extendió el cierre al sábado 10; ver la [Review](../reviews/sprint-2.md))
 **Equipo:** Sebastian (@Seloga26), Keyla (@Keyla-Cartagena), Miguel (@miguelfsociety)
 
 ## Punto de partida

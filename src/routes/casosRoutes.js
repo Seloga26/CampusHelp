@@ -1,18 +1,13 @@
 // CAPA HTTP — rutas de casos (API sugerida por el docente).
 // Las rutas de los sprints 1 y 2 ya están conectadas a su servicio: cada
 // historia implementa el servicio y el repositorio, no necesita tocar este
-// archivo. Las del Sprint 3 responden 501 hasta que se implementen.
+// archivo. Las del Sprint 3 también están conectadas: su servicio responde
+// 501 hasta que la historia lo implemente.
 const express = require('express');
 const { manejar } = require('../middleware/asincrono');
-const { ErrorNoImplementado } = require('../domain/errores');
-
-const pendiente = (historia) => manejar(async () => {
-  throw new ErrorNoImplementado(historia);
-});
-
 function crearCasosRouter({
   registrarCaso, listarCasos, cambiarEstado, asignarCaso, registrarAtencion,
-  validarSolucion, listarAtenciones, consultarHistorial,
+  validarSolucion, listarAtenciones, consultarHistorial, consultarDetalle,
 }) {
   const router = express.Router();
 
@@ -21,7 +16,7 @@ function crearCasosRouter({
     res.status(201).json(await registrarCaso(req.body));
   }));
 
-  // HU-02 / HU-03 (HU-09 agregará filtros)
+  // HU-02 / HU-03 / HU-09 (filtros por estado, tipo, área, categoría y prioridad)
   router.get('/', manejar(async (req, res) => {
     res.json(await listarCasos(req.query));
   }));
@@ -55,15 +50,20 @@ function crearCasosRouter({
     res.json(await consultarHistorial({ usuario_id: req.query.usuario_id, id: Number(req.params.id) }));
   }));
 
-  // Sprint 3
-  router.get('/:id', pendiente('HU-12 Detalle del caso'));
+  // HU-12 (va al final: las rutas más específicas de arriba tienen prioridad)
+  router.get('/:id', manejar(async (req, res) => {
+    res.json(await consultarDetalle({ usuario_id: req.query.usuario_id, id: Number(req.params.id) }));
+  }));
 
   return router;
 }
 
-function crearIndicadoresRouter() {
+// HU-10
+function crearIndicadoresRouter({ consultarIndicadores }) {
   const router = express.Router();
-  router.get('/', pendiente('HU-10 Indicadores'));
+  router.get('/', manejar(async (req, res) => {
+    res.json(await consultarIndicadores({ usuario_id: req.query.usuario_id }));
+  }));
   return router;
 }
 

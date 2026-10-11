@@ -51,3 +51,14 @@
 
 - El Sprint 2 mantiene su alcance planeado: HU-04, HU-06, HU-07 y HU-08. Ver [sprint-2-planning.md](../sprints/sprint-2-planning.md).
 - _completar con comentarios de la reunión_
+
+## Seguimiento posterior (actualizado el 11 de octubre)
+
+Esta Review describe el estado al cierre del Sprint 1 (6 oct). Después, las historias abiertas avanzaron así, sin dejar de pertenecer al Sprint 1:
+
+| Historia | Resultado | Evidencia |
+|---|---|---|
+| HU-05 | Done el 9 oct | PR #27, #28 y #29 |
+| HU-02 | Integrada el 9 oct; falta registrar la fecha Done | PR #24 |
+| HU-03 | Integrada el 9 oct; falta registrar la fecha Done | PR #25 |
+| HU-01 | Done el 11 oct, tras la prueba con MySQL real y en la bandeja | PR #33 |

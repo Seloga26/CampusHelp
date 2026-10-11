@@ -76,10 +76,13 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | Método | Ruta | Historia | Estado |
 |---|---|---|---|
 | GET | `/api/health` | — | ✅ |
-| GET | `/api/categorias` | HU-11 | ✅ (lectura) |
+| GET | `/api/categorias` | HU-01 | ✅ (activas, para el registro) |
+| GET | `/api/categorias/gestion` | HU-11 | ⏳ Sprint 3 |
+| POST | `/api/categorias` | HU-11 | ⏳ Sprint 3 |
+| PATCH | `/api/categorias/:id` | HU-11 | ⏳ Sprint 3 |
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
-| GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ |
+| GET | `/api/casos` | HU-02, HU-03 | ✅ (filtros de HU-09: ⏳ Sprint 3) |
 | PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ✅ |
 | POST | `/api/casos/:id/atencion` | HU-06 | ✅ |

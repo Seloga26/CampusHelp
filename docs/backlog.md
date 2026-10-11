@@ -4,20 +4,20 @@ Backlog inicial del docente, refinado por el equipo. Una historia pasa a **Ready
 
 | ID | Historia | Prioridad | SP | Sprint | Dependencias | Responsable | Estado |
 |---|---|---|---|---|---|---|---|
-| HU-01 | Como solicitante, quiero registrar un incidente o solicitud para pedir atención tecnológica. | P1 | 5 | 1 | — | Sebastian | En validación |
-| HU-02 | Como solicitante, quiero consultar mis casos para conocer su estado. | P1 | 3 | 1 | HU-03 (mismo backend) | Keyla | Ready |
-| HU-03 | Como agente, quiero visualizar la bandeja de casos pendientes para seleccionar trabajo. | P1 | 3 | 1 | HU-01 (se mitiga con T0) | Keyla | Ready |
+| HU-01 | Como solicitante, quiero registrar un incidente o solicitud para pedir atención tecnológica. | P1 | 5 | 1 | — | Sebastian | Done (2026-10-11, PR #33; Issue #1 cerrado) |
+| HU-02 | Como solicitante, quiero consultar mis casos para conocer su estado. | P1 | 3 | 1 | HU-03 (mismo backend) | Keyla | En validación (integrada el 9 oct, PR #24; falta registrar Done) |
+| HU-03 | Como agente, quiero visualizar la bandeja de casos pendientes para seleccionar trabajo. | P1 | 3 | 1 | HU-01 (se mitiga con T0) | Keyla | En validación (integrada el 9 oct, PR #25; falta registrar Done) |
 | HU-05 | Como agente, quiero cambiar el estado del caso para reflejar su avance. | P1 | 5 | 1 | HU-03 (solo frontend) | Miguel | Done (2026-10-09, PR #28; Issue #5 cerrada) |
-| HU-04 | Como agente, quiero asignarme un caso para asumir su atención. | P1 | 3 | 2 | HU-05, HU-03 | Sebastian | Ready |
-| HU-06 | Como agente, quiero registrar diagnóstico y solución para documentar la atención. | P1 | 5 | 2 | HU-04, HU-05 | Miguel | En validación (127 pruebas con Chrome/MySQL; cierre pendiente del flujo real de HU-04) |
+| HU-04 | Como agente, quiero asignarme un caso para asumir su atención. | P1 | 3 | 2 | HU-05, HU-03 | Sebastian | Done (2026-10-11, PR #31; Issue #4 cerrado) |
+| HU-06 | Como agente, quiero registrar diagnóstico y solución para documentar la atención. | P1 | 5 | 2 | HU-04, HU-05 | Miguel | En validación (desbloqueada el 11 oct al integrarse HU-04; falta registrar Done) |
 | HU-07 | Como validador, quiero aprobar o devolver una solución para controlar la calidad. | P1 | 5 | 2 | HU-06 | Keyla | Ready |
-| HU-08 | Como usuario autorizado, quiero consultar el historial para conocer lo ocurrido. | P2 | 5 | 2 | HU-05 | Sebastian | Ready |
-| HU-09 | Como administrador, quiero filtrar casos para encontrarlos rápidamente. | P2 | 3 | 3 | HU-03 | | Product Backlog |
-| HU-10 | Como administrador, quiero visualizar indicadores para conocer el comportamiento del servicio. | P2 | 5 | 3 | HU-07 | | Product Backlog |
-| HU-11 | Como administrador, quiero gestionar categorías de soporte. | P2 | 3 | 3 | — | | Product Backlog |
-| HU-12 | Como solicitante, quiero consultar el detalle de mi caso y la solución registrada. | P3 | 3 | 3 | HU-06 | | Product Backlog |
+| HU-08 | Como usuario autorizado, quiero consultar el historial para conocer lo ocurrido. | P2 | 5 | 2 | HU-05 | Sebastian | Done (2026-10-11, PR #32; Issue #8 cerrado) |
+| HU-09 | Como administrador, quiero filtrar casos para encontrarlos rápidamente. | P2 | 3 | 3 | HU-03 | Sebastian | Ready (2026-10-11) |
+| HU-10 | Como administrador, quiero visualizar indicadores para conocer el comportamiento del servicio. | P2 | 5 | 3 | HU-07 (solo tiempos de cierre) | Sebastian | Ready (2026-10-11) |
+| HU-11 | Como administrador, quiero gestionar categorías de soporte. | P2 | 3 | 3 | — | Miguel | Ready (2026-10-11) |
+| HU-12 | Como solicitante, quiero consultar el detalle de mi caso y la solución registrada. | P3 | 3 | 3 | HU-06; comparte `atencionesRepository.listarPorCaso` con HU-07 | Miguel | Ready (2026-10-11) |
 
-**Totales por sprint:** Sprint 1 = 16 SP (0 terminados al cierre del timebox; sus historias siguen abiertas con sus responsables) · Sprint 2 = 18 SP · Sprint 3 = 14 SP
+**Totales por sprint:** Sprint 1 = 16 SP (0 terminados al cierre del timebox; sus historias siguen abiertas con sus responsables) · Sprint 2 = 18 SP (0 terminados al cierre del sábado 10) · Sprint 3 = 14 SP
 
 Cada historia pertenece a un solo sprint: las del Sprint 1 no terminadas no se mueven al Sprint 2.
 
@@ -41,3 +41,7 @@ Registrar aquí historias nuevas (evento E5), divisiones de historias grandes (E
 | 2026-10-07 | DEF-01 registrado (título de más de 180 caracteres respondía 500) | Encontrado en revisión de código de HU-01; corregido en `d9bcb17` | Equipo |
 | 2026-10-07 | Sprint 2 planificado sobre el resultado del Sprint 1 completo; HU-07 a Keyla y HU-08 a Sebastian; tareas T2-01 a T2-16 | Repartir 18 SP entre los tres y fijar el orden de pull | Equipo |
 | 2026-10-07 | El Sprint 2 empieza el martes 6 de octubre, el mismo día en que cierra el Sprint 1 (6–9 oct, 4 días) | Sprints consecutivos sin días sueltos entre uno y otro | Equipo |
+| 2026-10-11 | El Sprint 2 cierra el sábado 10 de octubre (no el viernes 9). El Sprint 3 va del sábado 10 al lunes 12 | El trabajo del viernes 9 terminó de integrarse esa noche; se mantiene el Sprint 3 de tres días antes de la entrega del 13 | Equipo |
+| 2026-10-11 | Sprint 2 cerrado con 0 de 4 historias Done. HU-04 y HU-08 se terminaron el 11 oct y siguen contando como historias del Sprint 2; HU-06 queda desbloqueada y HU-07 sigue abierta con Keyla | Regla del equipo: cada historia pertenece a un solo sprint. Ver Review y Retro del Sprint 2 | Equipo |
+| 2026-10-11 | DEF-02 (registro duplicado por doble clic) y DEF-03 (nombres insertados como HTML) registrados y corregidos | Encontrados al probar HU-01 con navegador y MySQL real; PR #33 | Equipo |
+| 2026-10-11 | Sprint 3 planificado: HU-09 y HU-10 a Sebastian, HU-11 y HU-12 a Miguel; Keyla dedica el sprint a HU-07. Tareas T3-01 a T3-16 y casos CP-29 a CP-43 | HU-07 es la única pieza que falta del flujo obligatorio; nadie toma historias nuevas con historias abiertas (Retro del Sprint 2) | Equipo |
