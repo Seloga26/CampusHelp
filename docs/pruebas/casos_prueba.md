@@ -37,6 +37,21 @@ Registrar el **resultado real** y la fecha al ejecutar cada caso. Si falla, crea
 | CP-26 | HU-08 | Incidente | Red | Consultar el historial de un caso registrado, asignado y en análisis | 3 eventos en orden cronológico con usuario y fecha | Desde la bandeja, Diego abre `historial.html?id=N`: "Caso registrado" (Ana), "Caso asignado" (Carla) y "Pendiente → En análisis" (Carla), con fecha; con eventos del mismo segundo se conserva el orden de registro (MySQL 8.0.46) | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
 | CP-27 | HU-08 | Solicitud | Cuentas | Bruno consulta el historial de un caso de Ana | 403 | HTTP 403; la página muestra "Solo puedes consultar el historial de tus propios casos" y no lista eventos | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
 | CP-28 | HU-08 | Ambos | Todas | Consultar el historial de un caso inexistente | 404 | HTTP 404; la página muestra "No existe un caso con el número …" | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
+| CP-29 | HU-09 | Ambos | Red | Filtrar por estado Cerrada y categoría Wi-Fi | Solo aparecen los casos cerrados de Wi-Fi | | Pendiente | | |
+| CP-30 | HU-09 | Ambos | Todas | Filtrar con un valor fuera del catálogo (`prioridad=P9`, `estado=Abierto`) | 400 con los valores permitidos; no se listan casos | | Pendiente | | |
+| CP-31 | HU-09 | Ambos | Plataformas | Filtrar una combinación sin coincidencias | Lista vacía y mensaje "No hay casos con esos filtros" | | Pendiente | | |
+| CP-32 | HU-10 | Ambos | Todas | Consultar indicadores con 3 incidentes y 2 solicitudes en distintos estados y prioridades | Cada conteo coincide con MySQL, incluidos los ceros | | Pendiente | | |
+| CP-33 | HU-10 | Ambos | Todas | Dos casos cerrados que tardaron 2 h y 4 h | Tiempo de resolución promedio 3,0 h sobre 2 casos | | Pendiente | | |
+| CP-34 | HU-10 | Ambos | Todas | Consultar indicadores sin casos cerrados | Tiempos de atención y resolución "Sin datos"; la página no falla | | Pendiente | | |
+| CP-35 | HU-10 | Ambos | Todas | Un Agente pide los indicadores | 403 | | Pendiente | | |
+| CP-36 | HU-11 | Ambos | Red | Crear la categoría "VPN institucional" en Red y conectividad | Queda activa y aparece al registrar un caso de esa área | | Pendiente | | |
+| CP-37 | HU-11 | Ambos | Red | Crear "wi-fi" donde ya existe "Wi-Fi" | 409; no se crea nada | | Pendiente | | |
+| CP-38 | HU-11 | Ambos | Hardware | Desactivar "Impresora", que tiene casos | No aparece al registrar; los casos existentes la siguen mostrando | | Pendiente | | |
+| CP-39 | HU-11 | Ambos | Todas | Un Agente intenta crear o editar una categoría | 403; no cambia nada | | Pendiente | | |
+| CP-40 | HU-12 | Incidente | Red | Ana abre el detalle de su caso con una atención | Ve datos, agente y solución con diagnóstico y fecha | | Pendiente | | |
+| CP-41 | HU-12 | Solicitud | Cuentas | Bruno pide el detalle de un caso de Ana | 403 | | Pendiente | | |
+| CP-42 | HU-12 | Ambos | Todas | Detalle de un caso Pendiente | Datos del caso y "Aún no hay una solución registrada" | | Pendiente | | |
+| CP-43 | HU-12 | Incidente | Hardware | Detalle de un caso devuelto con dos atenciones | La más reciente como solución vigente y la anterior debajo | | Pendiente | | |
 
 Ideas para los siguientes sprints: cerrar un caso sin solución, registrar atención con un agente no asignado, indicadores con cero casos.
 
