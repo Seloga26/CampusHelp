@@ -4,9 +4,9 @@ Registrar el **resultado real** y la fecha al ejecutar cada caso. Si falla, crea
 
 | ID | Historia | Tipo | Área | Caso | Resultado esperado | Resultado obtenido | Estado | Fecha | Ejecutó |
 |---|---|---|---|---|---|---|---|---|---|
-| CP-01 | HU-01 | Incidente | Red | Registrar Wi-Fi sin conexión | Se crea y persiste el incidente | Pasa (`tests/services/registrarCaso.test.js`) | OK | 2026-10-06 | Sebastian |
-| CP-02 | HU-01 | Solicitud | Software | Solicitar instalación de software | Se crea y persiste la solicitud | Pasa (`tests/services/registrarCaso.test.js`) | OK | 2026-10-06 | Sebastian |
-| CP-03 | HU-01 | Incidente | Cuentas | Registrar sin descripción | El sistema rechaza el registro | Pasa (`tests/services/registrarCaso.test.js`) | OK | 2026-10-06 | Sebastian |
+| CP-01 | HU-01 | Incidente | Red | Registrar Wi-Fi sin conexión | Se crea y persiste el incidente | Formulario: caso Pendiente con tipo, categoría, prioridad, solicitante y fecha en MySQL 8.0.46, evento "Caso registrado"; aparece en la bandeja; doble clic crea un solo caso (DEF-02) | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
+| CP-02 | HU-01 | Solicitud | Software | Solicitar instalación de software | Se crea y persiste la solicitud | Formulario: solicitud guardada en MySQL 8.0.46 y visible en "Mis casos"; sigue disponible tras reiniciar servidor y conexiones | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
+| CP-03 | HU-01 | Incidente | Cuentas | Registrar sin descripción | El sistema rechaza el registro | Vacía: el formulario no envía (`required`); con menos de 10 caracteres: HTTP 400 con mensaje, sin filas en MySQL y el texto escrito se conserva | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
 | CP-04 | HU-05 | Incidente | Red | Transición válida | Cambia estado y crea historial | Botón en bandeja: HTTP 200, estado e historial con autor; doble clic genera un solo cambio en MySQL 8.0.46 | Pasa (Chrome y MySQL real) | 2026-10-09 | Codex |
 | CP-05 | HU-05 | Solicitud | Software | Transición inválida | Sistema impide la operación | HTTP 409; estado e historial intactos en MySQL 8.0.46 | Pasa (MySQL real) | 2026-10-09 | Codex |
 | CP-06 | HU-04 | Ambos | Todas | Asignar agente | Se registra responsable y fecha | Botón Asignarme en bandeja: HTTP 200, `agente_id` y `fecha_asignacion` guardados, evento "Caso asignado", estado sin cambio; doble clic genera una sola asignación; dos agentes simultáneos: solo uno gana (MySQL 8.0.46) | Pasa (Chrome y MySQL real) | 2026-10-11 | Sebastian |
