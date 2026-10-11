@@ -56,6 +56,43 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
         const c = datos.categorias.find((x) => x.id === Number(id) && x.activa);
         return c ? sinActiva(c) : null;
       },
+      // HU-11: mismo formato que devolverá el repositorio real
+      async listarTodas() {
+        return [...datos.categorias]
+          .sort((a, b) => a.area.localeCompare(b.area) || a.nombre.localeCompare(b.nombre))
+          .map((c) => ({
+            id: c.id, nombre: c.nombre, descripcion: c.descripcion ?? null, activa: c.activa,
+            area_id: c.area_id, area: c.area,
+            casos: datos.casos.filter((caso) => caso.categoria_id === c.id).length,
+          }));
+      },
+      async buscarPorId(id) {
+        const c = datos.categorias.find((x) => x.id === Number(id));
+        return c ? { descripcion: null, ...c } : null;
+      },
+      async buscarAreaActivaPorId(areaId) {
+        const c = datos.categorias.find((x) => x.area_id === Number(areaId));
+        return c ? { id: c.area_id, nombre: c.area } : null;
+      },
+      async existeNombreEnArea(areaId, nombre, { excluirId } = {}) {
+        // Igual que utf8mb4_unicode_ci: sin distinguir mayúsculas ni tildes.
+        const normalizar = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+        return datos.categorias.some((c) => c.area_id === Number(areaId) && c.id !== Number(excluirId)
+          && normalizar(c.nombre) === normalizar(nombre));
+      },
+      async crear({ area_id, nombre, descripcion }) {
+        const id = Math.max(0, ...datos.categorias.map((c) => c.id)) + 1;
+        const area = (datos.categorias.find((c) => c.area_id === Number(area_id)) || {}).area;
+        datos.categorias.push({ id, nombre, descripcion: descripcion ?? null, area_id: Number(area_id), area, activa: true });
+        return id;
+      },
+      async actualizar(id, cambios) {
+        const c = datos.categorias.find((x) => x.id === Number(id));
+        if (!c) return;
+        for (const campo of ['nombre', 'descripcion', 'activa']) {
+          if (cambios[campo] !== undefined) c[campo] = cambios[campo];
+        }
+      },
     },
 
     casos: {
@@ -141,6 +178,30 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
             fecha: a.fecha,
             agente: (datos.usuarios.find((u) => u.id === a.agente_id) || {}).nombre,
           }));
+      },
+    },
+
+    // HU-10: mismo contrato que indicadoresRepository (conteos crudos y minutos)
+    indicadores: {
+      async contar() {
+        const agrupar = (campo) => Object.entries(datos.casos.reduce((acc, c) => {
+          acc[c[campo]] = (acc[c[campo]] || 0) + 1;
+          return acc;
+        }, {})).map(([valor, cantidad]) => ({ valor, cantidad }));
+        return { por_estado: agrupar('estado'), por_tipo: agrupar('tipo'), por_prioridad: agrupar('prioridad') };
+      },
+      async promediarTiempos() {
+        const minutos = (desde, hasta) => Math.floor((new Date(hasta.replace(' ', 'T')) - new Date(desde.replace(' ', 'T'))) / 60000);
+        const promedio = (pares) => ({
+          promedio_minutos: pares.length ? pares.reduce((t, [d, h]) => t + minutos(d, h), 0) / pares.length : null,
+          casos: pares.length,
+        });
+        const cerrados = datos.casos.filter((c) => c.fecha_cierre);
+        return {
+          asignacion: promedio(datos.casos.filter((c) => c.fecha_asignacion).map((c) => [c.fecha_creacion, c.fecha_asignacion])),
+          atencion: promedio(cerrados.filter((c) => c.fecha_inicio_atencion).map((c) => [c.fecha_inicio_atencion, c.fecha_cierre])),
+          resolucion: promedio(cerrados.map((c) => [c.fecha_creacion, c.fecha_cierre])),
+        };
       },
     },
 

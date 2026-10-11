@@ -62,7 +62,7 @@ Sebastian: HU-09 ─► HU-10 (tiempos de cierre ◄── HU-07)┘
 | T3-06 | HU-10 | Servicio `consultarIndicadores.js`: permiso, ceros del catálogo y redondeo | Servicio | Sebastian | Lun |
 | T3-07 | HU-10 | Pruebas CP-32 a CP-35, con fechas controladas en MySQL | Pruebas | Sebastian | Lun |
 | T3-08 | HU-10 | Página `indicadores.html` con tarjetas y barras CSS | Frontend | Sebastian | Lun |
-| T3-09 | HU-11 | `categoriasRepository.listarTodas()`, `crear()`, `actualizar()`, `existeNombreEnArea()` | Repositorio | Miguel | Dom |
+| T3-09 | HU-11 | `categoriasRepository.listarTodas()`, `buscarPorId()`, `buscarAreaActivaPorId()`, `existeNombreEnArea()`, `crear()`, `actualizar()` | Repositorio | Miguel | Dom |
 | T3-10 | HU-11 | Servicios de gestión + pruebas CP-36 a CP-39 | Servicio / pruebas | Miguel | Dom |
 | T3-11 | HU-11 | Página `categorias.html` | Frontend | Miguel | Lun |
 | T3-12 | HU-12 | Servicio `consultarDetalle.js` + pruebas CP-40 a CP-43 | Servicio / pruebas | Miguel | Lun |
@@ -90,7 +90,7 @@ Las rutas de HU-10, HU-11 y HU-12 quedan conectadas a su servicio y al contenedo
 |---|---|---|---|---|
 | HU-09 | `services/casos/listarCasos.js` | `casosRepository.listar()` | `tests/services/listarCasos.test.js` | `casos.html` |
 | HU-10 | `services/indicadores/consultarIndicadores.js` | `indicadoresRepository.js` (nuevo) | `tests/services/consultarIndicadores.test.js` | `indicadores.html` |
-| HU-11 | `services/catalogos/listarCategoriasGestion.js`, `crearCategoria.js`, `actualizarCategoria.js` | `categoriasRepository.js` | `tests/services/gestionarCategorias.test.js` | `categorias.html` |
+| HU-11 | `services/catalogos/listarCategoriasGestion.js`, `agregarCategoria.js`, `actualizarCategoria.js` | `categoriasRepository.js` | `tests/services/gestionarCategorias.test.js` | `categorias.html` |
 | HU-12 | `services/casos/consultarDetalle.js` | `casosRepository.buscarPorId()`, `atencionesRepository.listarPorCaso()` | `tests/services/consultarDetalle.test.js` | `detalle.html` |
 
 En `public/index.html` cada responsable agrega el enlace de su página al menú.
