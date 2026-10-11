@@ -85,7 +85,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | POST | `/api/casos/:id/atencion` | HU-06 | ✅ |
 | POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/atenciones` | HU-07 | ⏳ Sprint 2 |
-| GET | `/api/casos/:id/historial` | HU-08 | ⏳ Sprint 2 |
+| GET | `/api/casos/:id/historial` | HU-08 | ✅ |
 | GET | `/api/casos/:id` | HU-12 | ⏳ Sprint 3 |
 | GET | `/api/indicadores` | HU-10 | ⏳ Sprint 3 |
 
@@ -148,6 +148,19 @@ también puede indicarse el ID en el formulario. La bandeja muestra **Registrar
 atención** en los casos En atención asignados al agente seleccionado; el
 formulario permite volver a la bandeja para enviar a validación. Pruebas,
 alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
+
+### Consultar el historial (HU-08)
+
+`GET /api/casos/:id/historial?usuario_id=3` devuelve `200` con los eventos del
+caso en orden cronológico: `id`, `evento`, `estado_anterior`, `estado_nuevo`,
+`usuario`, `rol` y `fecha`. Agentes, validadores y administradores ven cualquier
+caso; un solicitante, solo los suyos. Errores: `400` por `usuario_id` o id
+inválido, `403` sin permiso (o usuario inactivo) y `404` si el caso no existe.
+El historial es solo lectura.
+
+La página `/historial.html?id=10` muestra la línea de tiempo con fecha, evento,
+cambio de estado y quién lo hizo. Se abre con **Ver historial** desde la bandeja
+y desde "Mis casos", o escribiendo el número de caso.
 
 ### `GET /api/casos`
 
