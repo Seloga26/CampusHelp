@@ -12,3 +12,4 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .acciones-caso { min-width: 15rem; white-space: normal; }
 .acciones-caso a { display: inline-block; margin-top: .5rem; color: var(--cobalto); }
 [hidden] { display: none !important; }
+.acciones-caso .asignarme { display: block; margin-bottom: .5rem; }

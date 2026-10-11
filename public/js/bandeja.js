@@ -1,4 +1,4 @@
-// Bandeja de casos pendientes (HU-03).
+// Bandeja de casos pendientes (HU-03), con asignación (HU-04) y cambio de estado (HU-05).
 // Se accede actuando como un usuario con rol Agente.
 // Usa GET /api/casos?vista=bandeja (sin cerrados; P1 → P3 y, dentro de la
 // misma prioridad, el más antiguo primero). El orden lo decide el servidor.
@@ -20,6 +20,41 @@ function mostrarMensaje(texto, tipo) {
   const el = document.getElementById('mensaje');
   el.textContent = texto;
   el.className = tipo || '';
+}
+
+// HU-04 Asignarme un caso: PATCH /api/casos/:id/asignar con el agente de "Actuar como".
+function crearBotonAsignar(caso) {
+  const boton = document.createElement('button');
+  boton.type = 'button';
+  boton.className = 'asignarme';
+  boton.textContent = 'Asignarme';
+  boton.disabled = !usuarioSeleccionado;
+  boton.addEventListener('click', async () => {
+    if (boton.disabled || !usuarioSeleccionado) return;
+    boton.disabled = true; // evita una segunda petición por doble clic
+    boton.textContent = 'Asignando…';
+    try {
+      const actualizado = await api(`/api/casos/${encodeURIComponent(caso.id)}/asignar`, {
+        method: 'PATCH',
+        body: JSON.stringify({ usuario_id: usuarioSeleccionado.id }),
+      });
+      await cargarBandeja({
+        conservarTabla: true,
+        confirmacion: `Caso #${actualizado.id} asignado a ${actualizado.agente}.`,
+      });
+    } catch (err) {
+      mostrarMensaje(err.message || 'No se pudo asignar el caso.', 'error');
+      if (err.status === 409) {
+        // Otro agente lo tomó: se recarga para mostrar quién lo tiene.
+        cargarBandeja({ conservarTabla: true, confirmacion: '' })
+          .then(() => mostrarMensaje(err.message, 'error')).catch(() => {});
+        return;
+      }
+      boton.disabled = false;
+      boton.textContent = 'Asignarme';
+    }
+  });
+  return boton;
 }
 
 function mostrarTabla(casos) {
@@ -53,6 +88,8 @@ function mostrarTabla(casos) {
         });
       },
     });
+    // HU-04: un caso sin agente muestra "Asignarme" antes del control de estado.
+    if (caso.agente_id === null) celda.append(crearBotonAsignar(caso));
     celda.append(control.elemento);
     // HU-06 exige registrar una solución antes de enviar a validación.
     if (caso.estado === 'En atención' && caso.agente_id === usuarioSeleccionado?.id) {
