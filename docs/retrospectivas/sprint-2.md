@@ -53,12 +53,12 @@
 ## Mejora seleccionada
 
 - **Problema:** las historias que desbloquean a otras se dejan para el final, y el trabajo se integra en bloque el último día, sin tiempo para probar ni cerrar.
-- **Hipótesis:** si nadie toma una historia nueva mientras tenga una abierta de un sprint anterior, y cada historia se integra en cuanto pasa sus pruebas, las historias pendientes se cierran primero y el flujo completo se puede probar antes de la Review.
+- **Hipótesis:** si cada historia se integra en cuanto pasa sus pruebas y se cierra en el mismo momento, el trabajo terminado cuenta como Done y el sprint se puede probar antes de la Review.
 - **Cambio:**
-  1. **WIP personal de 1:** quien tenga una historia abierta del Sprint 1 o del Sprint 2 la termina antes de tomar una del Sprint 3.
+  1. **Historias abiertas en su sprint:** las historias pendientes de los sprints 1 y 2 las terminan sus responsables como trabajo de su sprint; no se mezclan con el Sprint 3 ni ocupan su capacidad.
   2. **Integrar el mismo día:** cada historia abre su PR en cuanto pasan sus pruebas, sin esperar a la tarde del cierre.
   3. **Cerrar al fusionar:** quien fusiona el PR anota la fecha Done en el CSV y cierra el Issue en el mismo momento.
   4. **Avisar bloqueos el mismo día:** si una historia no avanza en el día, se marca `blocked` con el motivo.
-- **Indicador:** HU-02, HU-03, HU-06 y HU-07 en Done antes de la Review del Sprint 3 (lunes 12); Throughput del Sprint 3 ≥ 2; ningún PR de código fusionado después de las 18:00 del último día.
+- **Indicador:** Throughput del Sprint 3 ≥ 2; todas las historias fusionadas con fecha Done en el CSV el mismo día; ningún PR de código fusionado después de las 18:00 del último día. Aparte, se sigue el cierre de HU-02, HU-03, HU-06 y HU-07 en sus sprints.
 - **Responsable:** _completar_
 - **Fecha de revisión:** Retrospectiva del Sprint 3, lunes 12 de octubre.

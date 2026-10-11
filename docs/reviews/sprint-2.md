@@ -59,6 +59,6 @@ Con HU-04 integrada, **HU-06 quedó desbloqueada** y puede cerrarse. **HU-07 sig
 
 ## Retroalimentación y cambios al backlog
 
-- El Sprint 3 mantiene HU-09, HU-10, HU-11 y HU-12, con el plan de contingencia de [scrumban.md](../scrumban.md) (recortar primero HU-12 y luego HU-11). Ver [sprint-3-planning.md](../sprints/sprint-3-planning.md).
-- HU-07 tiene prioridad sobre cualquier historia del Sprint 3, porque sin ella no se demuestra el flujo obligatorio el 13 de octubre.
+- **Las historias abiertas no se mezclan con el Sprint 3.** HU-02 y HU-03 (Sprint 1, Keyla), HU-06 (Miguel) y HU-07 (Keyla) se completan como historias de su sprint, con sus responsables, sin ocupar capacidad del Sprint 3.
+- El Sprint 3 mantiene HU-09, HU-10, HU-11 y HU-12 y se planifica asumiendo los sprints 1 y 2 completos, con el plan de contingencia de [scrumban.md](../scrumban.md) (recortar primero HU-12 y luego HU-11). Ver [sprint-3-planning.md](../sprints/sprint-3-planning.md).
 - _completar con comentarios de la reunión_
