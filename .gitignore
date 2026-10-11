@@ -6,3 +6,6 @@ Thumbs.db
 .vscode/
 .idea/
 coverage/
+
+# Configuración local de herramientas del editor
+.claude/
