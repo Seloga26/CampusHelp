@@ -40,10 +40,10 @@ Registrar el **resultado real** y la fecha al ejecutar cada caso. Si falla, crea
 | CP-29 | HU-09 | Ambos | Red | Filtrar por estado Cerrada y categoría Wi-Fi | Solo aparecen los casos cerrados de Wi-Fi | | Pendiente | | |
 | CP-30 | HU-09 | Ambos | Todas | Filtrar con un valor fuera del catálogo (`prioridad=P9`, `estado=Abierto`) | 400 con los valores permitidos; no se listan casos | | Pendiente | | |
 | CP-31 | HU-09 | Ambos | Plataformas | Filtrar una combinación sin coincidencias | Lista vacía y mensaje "No hay casos con esos filtros" | | Pendiente | | |
-| CP-32 | HU-10 | Ambos | Todas | Consultar indicadores con 3 incidentes y 2 solicitudes en distintos estados y prioridades | Cada conteo coincide con MySQL, incluidos los ceros | Fabio ve total 5, abiertos 3, cerrados 2; por estado 1/1/0/1/2, por tipo 3/2 y por prioridad 2/2/1, iguales a `SELECT … GROUP BY` en la base | Pasa (memoria y MariaDB 10.11 local, no MySQL 8) | 2026-10-11 | Sebastian |
-| CP-33 | HU-10 | Ambos | Todas | Dos casos cerrados que tardaron 2 h y 4 h | Tiempo de resolución promedio 3,0 h sobre 2 casos | Resolución 3,0 h sobre 2 casos; además asignación 0,5 h (4 casos) y atención 1,8 h (2 casos) | Pasa (memoria y MariaDB 10.11 local, no MySQL 8) | 2026-10-11 | Sebastian |
-| CP-34 | HU-10 | Ambos | Todas | Consultar indicadores sin casos cerrados | Tiempos de atención y resolución "Sin datos"; la página no falla | Atención y resolución en `null` con 0 casos; la página muestra "Sin datos" y no falla | Pasa (memoria y MariaDB 10.11 local, no MySQL 8) | 2026-10-11 | Sebastian |
-| CP-35 | HU-10 | Ambos | Todas | Un Agente pide los indicadores | 403 | Agente, Validador y Solicitante reciben 403; la página pide elegir un administrador y no muestra datos | Pasa (memoria y MariaDB 10.11 local, no MySQL 8) | 2026-10-11 | Sebastian |
+| CP-32 | HU-10 | Ambos | Todas | Consultar indicadores con 3 incidentes y 2 solicitudes en distintos estados y prioridades | Cada conteo coincide con MySQL, incluidos los ceros | Fabio ve total 5, abiertos 3, cerrados 2; por estado 1/1/0/1/2, por tipo 3/2 y por prioridad 2/2/1, iguales a `SELECT … GROUP BY` en la base | Pasa (memoria y MySQL 8.0.46) | 2026-10-11 | Sebastian |
+| CP-33 | HU-10 | Ambos | Todas | Dos casos cerrados que tardaron 2 h y 4 h | Tiempo de resolución promedio 3,0 h sobre 2 casos | Resolución 3,0 h sobre 2 casos; además asignación 0,5 h (4 casos) y atención 1,8 h (2 casos) | Pasa (memoria y MySQL 8.0.46) | 2026-10-11 | Sebastian |
+| CP-34 | HU-10 | Ambos | Todas | Consultar indicadores sin casos cerrados | Tiempos de atención y resolución "Sin datos"; la página no falla | Atención y resolución en `null` con 0 casos; la página muestra "Sin datos" y no falla | Pasa (memoria y MySQL 8.0.46) | 2026-10-11 | Sebastian |
+| CP-35 | HU-10 | Ambos | Todas | Un Agente pide los indicadores | 403 | Agente, Validador y Solicitante reciben 403; la página pide elegir un administrador y no muestra datos | Pasa (memoria y MySQL 8.0.46) | 2026-10-11 | Sebastian |
 | CP-36 | HU-11 | Ambos | Red | Crear la categoría "VPN institucional" en Red y conectividad | Queda activa y aparece al registrar un caso de esa área | | Pendiente | | |
 | CP-37 | HU-11 | Ambos | Red | Crear "wi-fi" donde ya existe "Wi-Fi" | 409; no se crea nada | | Pendiente | | |
 | CP-38 | HU-11 | Ambos | Hardware | Desactivar "Impresora", que tiene casos | No aparece al registrar; los casos existentes la siguen mostrando | | Pendiente | | |
@@ -83,3 +83,11 @@ completa. Se verificaron doble clic, conservación de textos ante errores,
 rollback real y reintento, múltiples atenciones y envío desde bandeja a
 validación. No se modificó `campushelp`. HU-06 pasa a En validación; permanece
 abierta hasta demostrar el flujo desde la asignación real de HU-04.
+
+HU-10 se ejecutó el 2026-10-11 en MySQL 8.0.46 con `CAMPUSHELP_TEST_MYSQL=1`:
+**179 pruebas aprobadas, sin fallos** en la suite completa (las 4 omitidas son
+las de navegador). Las 4 suites de navegador se corrieron aparte con
+`CAMPUSHELP_TEST_BROWSER=1` en Chromium: **30 pruebas aprobadas, sin fallos**.
+`tests/indicadores.mysql.test.js` fija las fechas de los casos en una base
+temporal para CP-32 a CP-35 y la elimina al terminar. La página
+`indicadores.html` se revisó en Chromium a 1280 px y 390 px.
