@@ -1,4 +1,5 @@
 // Control de HU-05 reutilizable en cada fila de la bandeja de HU-03.
+// Respeta la regla de HU-04: solo el agente asignado avanza el caso.
 (() => {
   const siguientes = Object.freeze({
     'Pendiente': 'En análisis',
@@ -29,20 +30,31 @@
     mensaje.setAttribute('aria-live', 'polite');
     elemento.append(boton, mensaje);
 
+    // HU-04: solo el agente asignado cambia el estado. Si la pantalla no conoce
+    // el agente del caso (agente_id ausente), la regla la aplica el servidor.
+    function motivoSinPermiso(usuario) {
+      if (!usuario || usuario.rol !== 'Agente') return 'Selecciona un agente para cambiar el estado.';
+      if (!('agente_id' in actual)) return '';
+      if (actual.agente_id === null) return 'Asígnate el caso para cambiar su estado.';
+      if (Number(actual.agente_id) !== usuario.id) {
+        return `Asignado a ${actual.agente || 'otro agente'}: solo ese agente puede cambiar el estado.`;
+      }
+      return '';
+    }
+
     function actualizarUsuario() {
       const usuario = obtenerUsuario();
       const siguiente = siguientes[actual.estado];
+      const motivo = motivoSinPermiso(usuario);
       boton.hidden = !siguiente;
       boton.textContent = guardando ? 'Guardando…' : `Pasar a ${siguiente || ''}`;
-      boton.disabled = guardando || !usuario || usuario.rol !== 'Agente';
+      boton.disabled = guardando || Boolean(motivo);
       if (!siguiente) {
         mensaje.textContent = actual.estado === 'En validación'
           ? 'Pendiente de aprobación o devolución por el validador.'
           : actual.estado === 'Cerrada' ? 'Caso cerrado.' : 'Estado no reconocido.';
-      } else if (!usuario || usuario.rol !== 'Agente') {
-        mensaje.textContent = 'Selecciona un agente para cambiar el estado.';
       } else {
-        mensaje.textContent = '';
+        mensaje.textContent = motivo;
       }
       mensaje.className = '';
     }
@@ -50,7 +62,7 @@
     boton.addEventListener('click', async () => {
       const usuario = obtenerUsuario();
       const siguiente = siguientes[actual.estado];
-      if (guardando || !siguiente || !usuario || usuario.rol !== 'Agente') return;
+      if (guardando || !siguiente || motivoSinPermiso(usuario)) return;
       guardando = true;
       actualizarUsuario();
       try {

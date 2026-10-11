@@ -35,6 +35,13 @@ function crearCambiarEstado({ enTransaccion }) {
       const caso = await tx.casos.buscarPorId(casoId, { bloquear: true });
       if (!caso) throw new ErrorNoEncontrado('Caso no encontrado');
       if (caso.estado === 'Cerrada') throw new ErrorConflicto('Un caso cerrado no puede cambiar de estado');
+      // HU-04 (regla 7, Taller sección 7): solo el agente asignado avanza el caso.
+      if (caso.agente_id === null || caso.agente_id === undefined) {
+        throw new ErrorPermiso('Asígnate el caso antes de cambiar su estado');
+      }
+      if (Number(caso.agente_id) !== usuarioId) {
+        throw new ErrorPermiso('Solo el agente asignado puede cambiar el estado del caso');
+      }
       if (caso.estado === 'En validación') {
         throw new ErrorConflicto('La aprobación o devolución corresponde al validador (HU-07)');
       }

@@ -114,6 +114,21 @@ function crearCasosRepository(ejecutor) {
         [nuevoEstado, marcarInicioAtencion, id],
       );
     },
+
+    // ---------------------------------------------------------------- HU-04
+    /**
+     * Asigna el agente y guarda fecha_asignacion = NOW(). Solo actúa si el
+     * caso sigue sin agente (protege contra dos agentes al mismo tiempo).
+     * @returns {Promise<boolean>} true si el caso quedó asignado
+     */
+    async asignarAgente(id, agenteId) {
+      const [resultado] = await ejecutor.query(
+        `UPDATE caso SET agente_id = ?, fecha_asignacion = CURRENT_TIMESTAMP
+          WHERE id = ? AND agente_id IS NULL`,
+        [agenteId, id],
+      );
+      return resultado.affectedRows === 1;
+    },
   };
 }
 

@@ -11,7 +11,7 @@ const { crearApp } = require('../../src/app');
 const { crearContenedor } = require('../../src/config/contenedor');
 const { abrirNavegador } = require('../helpers/navegador');
 
-test('HU-05: bandeja en navegador con MySQL real', {
+test('HU-04/HU-05: bandeja en navegador con MySQL real', {
   skip: process.env.CAMPUSHELP_TEST_BROWSER !== '1',
 }, async (t) => {
   const nombre = `campushelp_bandeja_test_${randomBytes(8).toString('hex')}`;
@@ -78,15 +78,32 @@ test('HU-05: bandeja en navegador con MySQL real', {
     }) }).then((r) => r.json());
   const id = registrado.id;
   assert.ok(id);
-  // HU-04 aún no implementa la asignación: prepara únicamente el caso de esta BD temporal.
-  await db.execute('UPDATE caso SET agente_id = 3 WHERE id = ?', [id]);
   await navegador.navegar(`${base}/bandeja.html`);
   await esperar(estado(id, 'Pendiente'));
+  const botonEstado = (casoId) => `${fila(casoId)}.querySelector('.control-estado button')`;
+  const botonAsignar = (casoId) => `${fila(casoId)}?.querySelector('button.asignarme')`;
+
+  await t.test('CP-06 (HU-04): Carla se asigna el caso desde la bandeja; un doble clic no duplica', async () => {
+    assert.equal(await evaluar("document.getElementById('actuar-como').value"), '3');
+    assert.equal(await evaluar(`${botonEstado(id)}.disabled`), true);
+    assert.match(await evaluar(`${fila(id)}.querySelector('.control-estado p').textContent`), /Asígnate el caso/);
+    await evaluar(`{ const b = ${botonAsignar(id)}; b.click(); b.click(); }`);
+    await esperar(`${fila(id)}?.cells[8].textContent === 'Carla Agente'`);
+    await esperar("document.getElementById('mensaje').className === 'ok'");
+    assert.match(await evaluar("document.getElementById('mensaje').textContent"), /asignado a Carla Agente/);
+    assert.equal(await evaluar(`${botonAsignar(id)} === null`), true);
+    assert.equal(await evaluar(`${botonEstado(id)}.disabled`), false);
+    const [[caso]] = await db.execute('SELECT agente_id, fecha_asignacion, estado FROM caso WHERE id = ?', [id]);
+    assert.equal(caso.agente_id, 3);
+    assert.ok(caso.fecha_asignacion);
+    assert.equal(caso.estado, 'Pendiente');
+    assert.equal((await eventos(id)).filter((e) => e.evento === 'Caso asignado').length, 1);
+  });
 
   await t.test('CP-04: botón integrado, doble clic e historial único', async () => {
     assert.equal(await evaluar(`${fila(id)}.cells[1].textContent`), '<img src=x onerror=window.inyectado=true>');
     assert.equal(await evaluar('Boolean(window.inyectado)'), false);
-    await evaluar(`{ const b = ${fila(id)}.querySelector('button'); b.click(); b.click(); }`);
+    await evaluar(`{ const b = ${botonEstado(id)}; b.click(); b.click(); }`);
     await esperar(estado(id, 'En análisis'));
     await esperar("document.getElementById('mensaje').className === 'ok'");
     assert.equal(cambios, 1);
@@ -97,26 +114,35 @@ test('HU-05: bandeja en navegador con MySQL real', {
     assert.equal(historial[0].estado_nuevo, 'En análisis');
   });
 
-  await t.test('cambiar agente usa el usuario nuevo y recarga sin perder orden', async () => {
+  await t.test('CP-19 (HU-04): otro agente no puede avanzar el caso; la asignada sí', async () => {
     await evaluar("{ const s = document.getElementById('actuar-como'); s.value = '4'; s.dispatchEvent(new Event('change')); }");
-    await esperar(estado(id, 'En análisis'));
-    await evaluar(`${fila(id)}.querySelector('button').click()`);
+    await esperar(`${fila(id)}?.querySelector('.control-estado p')?.textContent.includes('Asignado a Carla Agente')`);
+    assert.equal(await evaluar(`${botonEstado(id)}.disabled`), true);
+    const intento = await fetch(`${base}/api/casos/${id}/estado`, { method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ estado: 'En atención', usuario_id: 4 }) });
+    assert.equal(intento.status, 403);
+    assert.ok(await evaluar(estado(id, 'En análisis')));
+    await evaluar("{ const s = document.getElementById('actuar-como'); s.value = '3'; s.dispatchEvent(new Event('change')); }");
+    await esperar(`${fila(id)} && !${botonEstado(id)}.disabled`);
+    await evaluar(`${botonEstado(id)}.click()`);
     await esperar(estado(id, 'En atención'));
     await esperar("document.getElementById('mensaje').className === 'ok'");
-    assert.equal((await eventos(id)).at(-1).usuario_id, 4);
+    assert.equal((await eventos(id)).at(-1).usuario_id, 3);
     const [[caso]] = await db.execute('SELECT fecha_inicio_atencion FROM caso WHERE id = ?', [id]);
     assert.ok(caso.fecha_inicio_atencion);
     assert.deepEqual(await evaluar("Array.from(document.querySelectorAll('#cuerpo-casos tr'), f => Number(f.dataset.casoId))"), [1, 3, 2, id]);
   });
 
   await t.test('HU-06: error visible sin solución, enlace al agente asignado y envío a validación', async () => {
-    await evaluar(`${fila(id)}.querySelector('button').click()`);
-    await esperar(`${fila(id)}?.querySelector('.error')?.textContent.includes('diagnóstico y solución')`);
-    assert.ok(await evaluar(estado(id, 'En atención')));
-    assert.equal((await eventos(id)).filter((e) => e.evento === 'Cambio de estado').length, 2);
+    await evaluar("{ const s = document.getElementById('actuar-como'); s.value = '4'; s.dispatchEvent(new Event('change')); }");
+    await esperar(`${fila(id)}?.querySelector('.control-estado p')?.textContent.includes('Asignado a Carla Agente')`);
     assert.equal(await evaluar(`${fila(id)}.querySelector('a') === null`), true);
     await evaluar("{ const s = document.getElementById('actuar-como'); s.value = '3'; s.dispatchEvent(new Event('change')); }");
     await esperar(`${fila(id)}?.querySelector('a')?.getAttribute('href') === 'atender.html?id=${id}'`);
+    await evaluar(`${botonEstado(id)}.click()`);
+    await esperar(`${fila(id)}?.querySelector('.error')?.textContent.includes('diagnóstico y solución')`);
+    assert.ok(await evaluar(estado(id, 'En atención')));
+    assert.equal((await eventos(id)).filter((e) => e.evento === 'Cambio de estado').length, 2);
     await evaluar(`${fila(id)}.querySelector('a').click()`);
     await esperar("document.getElementById('guardar-atencion')?.disabled === false");
     assert.equal(await evaluar("document.getElementById('caso-id').value"), String(id));
@@ -126,10 +152,10 @@ test('HU-05: bandeja en navegador con MySQL real', {
     await esperar("document.getElementById('mensaje').className === 'ok'");
     await evaluar("document.querySelector('a[href=\"bandeja.html\"]').click()");
     await esperar(estado(id, 'En atención'));
-    await evaluar(`${fila(id)}.querySelector('button').click()`);
+    await evaluar(`${botonEstado(id)}.click()`);
     await esperar(estado(id, 'En validación'));
     await esperar("document.getElementById('mensaje').className === 'ok'");
-    assert.equal(await evaluar(`${fila(id)}.querySelector('button').hidden`), true);
+    assert.equal(await evaluar(`${botonEstado(id)}.hidden`), true);
     assert.match(await evaluar(`${fila(id)}.querySelector('.control-estado p').textContent`), /validador/);
     const historial = (await eventos(id)).filter((e) => e.evento === 'Cambio de estado');
     assert.equal(historial.length, 3);
@@ -137,16 +163,18 @@ test('HU-05: bandeja en navegador con MySQL real', {
   });
 
   await t.test('un fallo de recarga conserva el estado guardado y permite continuar', async () => {
+    await evaluar(`${botonAsignar(1)}.click()`);
+    await esperar(`${fila(1)}?.cells[8].textContent === 'Carla Agente'`);
     fallarRecarga = true;
-    await evaluar(`${fila(1)}.querySelector('button').click()`);
+    await evaluar(`${botonEstado(1)}.click()`);
     await esperar(`${fila(1)}?.querySelector('.control-estado p')?.textContent.includes('No se pudo refrescar')`);
     assert.ok(await evaluar(estado(1, 'En análisis')));
-    assert.equal(await evaluar(`${fila(1)}.querySelector('button').textContent`), 'Pasar a En atención');
-    assert.equal((await eventos(1)).length, 1);
-    await evaluar(`${fila(1)}.querySelector('button').click()`);
+    assert.equal(await evaluar(`${botonEstado(1)}.textContent`), 'Pasar a En atención');
+    assert.equal((await eventos(1)).length, 2);
+    await evaluar(`${botonEstado(1)}.click()`);
     await esperar(estado(1, 'En atención'));
     await esperar("document.getElementById('mensaje').className === 'ok'");
-    assert.equal((await eventos(1)).length, 2);
+    assert.equal((await eventos(1)).length, 3);
   });
 
   await t.test('recargar conserva agente, estado, historial y restricciones de HU-05', async () => {
@@ -154,8 +182,9 @@ test('HU-05: bandeja en navegador con MySQL real', {
     await esperar(estado(id, 'En validación'));
     assert.equal(await evaluar("document.getElementById('actuar-como').value"), '3');
     assert.equal(await evaluar(`${fila(4)} === null`), true);
-    for (const [casoId, destino, usuario, status] of [[3, 'Cerrada', 3, 409],
-      [3, 'En atención', 3, 409], [4, 'En análisis', 3, 409], [3, 'En análisis', 1, 403]]) {
+    // Caso 3 sin agente: 403 por HU-04 aunque la transición también sea inválida.
+    for (const [casoId, destino, usuario, status] of [[3, 'Cerrada', 3, 403],
+      [3, 'En atención', 3, 403], [4, 'En análisis', 3, 409], [3, 'En análisis', 1, 403]]) {
       const respuesta = await fetch(`${base}/api/casos/${casoId}/estado`, { method: 'PATCH',
         headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ estado: destino, usuario_id: usuario }) });
       assert.equal(respuesta.status, status);

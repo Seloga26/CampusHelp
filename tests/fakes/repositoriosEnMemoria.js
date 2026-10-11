@@ -104,9 +104,11 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
       // HU-04
       async asignarAgente(id, agenteId) {
         const c = datos.casos.find((x) => x.id === Number(id));
-        if (!c) return;
+        // Igual que el UPDATE real: solo asigna si el caso sigue sin agente.
+        if (!c || (c.agente_id !== null && c.agente_id !== undefined)) return false;
         c.agente_id = Number(agenteId);
         c.fecha_asignacion = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        return true;
       },
     },
 

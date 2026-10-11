@@ -9,9 +9,9 @@ const app = crearApp(crearContenedor(pool));
 // Doble transaccional de MySQL: permite comprobar HTTP, permisos y rollback
 // sin requerir un servidor local. No reemplaza la prueba manual de persistencia.
 function baseDePrueba({ estado = 'Pendiente', tipo = 'Incidente', rol = 'Agente', activo = true,
-  existeUsuario = true, existeCaso = true, fecha = null, fallo = null, atenciones = 0 } = {}) {
+  existeUsuario = true, existeCaso = true, fecha = null, fallo = null, atenciones = 0, agente = 3 } = {}) {
   let caso = existeCaso ? {
-    id: 10, tipo, titulo: 'Caso de prueba HU-05', estado,
+    id: 10, tipo, titulo: 'Caso de prueba HU-05', estado, agente_id: agente,
     fecha_inicio_atencion: fecha,
   } : null;
   let historial = [];
@@ -150,7 +150,7 @@ test('HU-05: contrato HTTP y transacción caso + historial', async (t) => {
   }
 
   await t.test('primera entrada a atención guarda fecha', async (st) => {
-    const db = preparar(st, { estado: 'En análisis' });
+    const db = preparar(st, { estado: 'En análisis', agente: 4 });
     const respuesta = await enviar(10, { estado: 'En atención', usuario_id: 4 });
     assert.equal(respuesta.status, 200);
     assert.ok(respuesta.body.fecha_inicio_atencion);

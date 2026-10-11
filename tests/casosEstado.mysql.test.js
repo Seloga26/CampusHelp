@@ -43,12 +43,14 @@ test('HU-05: persistencia, rollback y concurrencia en MySQL real', {
   }
   db = mysql.createPool({ ...config, database: nombre, connectionLimit: 4 });
 
-  async function crearCaso(estado = 'Pendiente', fecha = null, tipo = 'Incidente') {
+  // Desde HU-04 solo el agente asignado cambia el estado: los casos son de Carla (3).
+  async function crearCaso(estado = 'Pendiente', fecha = null, tipo = 'Incidente', agente = 3) {
     const [resultado] = await db.execute(
       `INSERT INTO caso (tipo, titulo, descripcion, prioridad, estado, usuario_id,
-        categoria_id, fecha_inicio_atencion)
-       VALUES (?, 'Prueba HU-05', 'Sin conexión a la red institucional', 'P1', ?, 1, 8, ?)`,
-      [tipo, estado, fecha],
+        categoria_id, fecha_inicio_atencion, agente_id, fecha_asignacion)
+       VALUES (?, 'Prueba HU-05', 'Sin conexión a la red institucional', 'P1', ?, 1, 8, ?, ?,
+        IF(? IS NULL, NULL, CURRENT_TIMESTAMP))`,
+      [tipo, estado, fecha, agente, agente],
     );
     return resultado.insertId;
   }
@@ -111,8 +113,9 @@ test('HU-05: persistencia, rollback y concurrencia en MySQL real', {
 
   await t.test('dos peticiones simultáneas solo generan un cambio', async () => {
     const id = await crearCaso();
+    // Desde HU-04 solo Carla (asignada) puede avanzar: simula su doble envío.
     const resultados = await Promise.allSettled([
-      avanzar(id, 'En análisis', 3), avanzar(id, 'En análisis', 4),
+      avanzar(id, 'En análisis', 3), avanzar(id, 'En análisis', 3),
     ]);
     assert.equal(resultados.filter((r) => r.status === 'fulfilled').length, 1);
     assert.equal(resultados.find((r) => r.status === 'rejected').reason.status, 409);
