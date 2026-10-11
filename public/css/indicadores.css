@@ -1,0 +1,68 @@
+/* HU-10 — tarjetas y barras de los indicadores (solo CSS, sin librerías). */
+[hidden] { display: none !important; }
+
+.encabezado-indicadores {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+}
+.encabezado-indicadores h2 { margin-bottom: 1.25rem; }
+
+button.secundario {
+  font: inherit; font-weight: 600; padding: .45rem 1rem; cursor: pointer;
+  color: var(--tinta); background: transparent;
+  border: 1px solid var(--tinta); border-radius: var(--radio);
+}
+button.secundario:hover { color: #fff; background: var(--tinta); }
+
+.nota { margin: -.75rem 0 1.25rem; color: var(--suave); }
+
+/* ---------- Tarjetas ---------- */
+.tarjetas {
+  display: grid; gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+.tarjeta {
+  display: grid; gap: .2rem; align-content: start;
+  padding: 1.1rem 1.25rem;
+  background: rgba(255, 255, 255, .8);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+.tarjeta-titulo { font-weight: 600; color: var(--suave); }
+.tarjeta-valor {
+  font-family: var(--titulos); font-size: 2.4rem; font-weight: 800;
+  letter-spacing: -.03em; line-height: 1.1; font-variant-numeric: tabular-nums;
+}
+.tarjeta-detalle { font-size: .9rem; color: var(--suave); }
+.tarjeta.sin-datos .tarjeta-valor { font-size: 1.6rem; color: var(--suave); }
+
+/* ---------- Barras ---------- */
+.rejilla-barras {
+  display: grid; gap: 0 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+.barras { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.barras li {
+  display: grid; grid-template-columns: 1fr auto; gap: .35rem .75rem; align-items: baseline;
+}
+.barra-etiqueta { font-weight: 600; }
+.barra-numero { color: var(--suave); font-variant-numeric: tabular-nums; }
+.barra-pista {
+  grid-column: 1 / -1; height: .7rem; overflow: hidden;
+  background: var(--linea); border-radius: 999px;
+}
+.barra-relleno {
+  display: block; height: 100%; min-width: 0;
+  background: var(--cobalto); border-radius: 999px;
+  transition: width .4s ease;
+}
+
+/* Colores con significado: mismos de la prioridad en la bandeja. */
+.prioridad-barra-P1 { background: var(--rojo); }
+.prioridad-barra-P2 { background: var(--ambar); }
+.prioridad-barra-P3 { background: var(--verde); }
+.estado-cerrada { background: var(--verde); }
+.estado-pendiente { background: var(--suave); }
+
+@media (prefers-reduced-motion: reduce) {
+  .barra-relleno { transition: none; }
+}

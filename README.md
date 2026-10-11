@@ -90,7 +90,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | GET | `/api/casos/:id/atenciones` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/historial` | HU-08 | ✅ |
 | GET | `/api/casos/:id` | HU-12 | ⏳ Sprint 3 |
-| GET | `/api/indicadores` | HU-10 | ⏳ Sprint 3 |
+| GET | `/api/indicadores` | HU-10 | ✅ |
 
 Los endpoints pendientes responden `501` hasta que se implementan.
 
@@ -164,6 +164,19 @@ El historial es solo lectura.
 La página `/historial.html?id=10` muestra la línea de tiempo con fecha, evento,
 cambio de estado y quién lo hizo. Se abre con **Ver historial** desde la bandeja
 y desde "Mis casos", o escribiendo el número de caso.
+
+### Indicadores del servicio (HU-10)
+
+`GET /api/indicadores?usuario_id=6` devuelve `200` con `total`, `abiertos`,
+`cerrados`, los conteos `por_estado`, `por_tipo` y `por_prioridad` (todos los
+valores del catálogo, incluidos los ceros) y `tiempos` (`asignacion`,
+`atencion` y `resolucion`), cada uno con `promedio_horas` (un decimal, o `null`
+si no hay casos para calcularlo) y `casos`. Todo se calcula en la base con
+`GROUP BY` y `TIMESTAMPDIFF`. Solo un Administrador activo lo consulta:
+`400` por `usuario_id` inválido y `403` para cualquier otro rol. Es solo lectura.
+
+La página `/indicadores.html` muestra las tarjetas de resumen y de tiempos, y
+barras por estado, tipo y prioridad hechas con CSS. Se abre desde Inicio.
 
 ### `GET /api/casos`
 

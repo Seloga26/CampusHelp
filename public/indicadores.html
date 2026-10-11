@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Indicadores — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/indicadores.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Indicadores del servicio</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html">Mis casos</a>
+      <a href="bandeja.html">Bandeja</a>
+      <a href="historial.html">Historial</a>
+      <a href="indicadores.html" aria-current="page">Indicadores</a>
+    </nav>
+
+    <section>
+      <label for="actuar-como">Actuar como</label>
+      <select id="actuar-como"></select>
+    </section>
+
+    <p id="mensaje" role="status" aria-live="polite"></p>
+
+    <div id="resultado" hidden>
+      <section>
+        <div class="encabezado-indicadores">
+          <h2>Resumen</h2>
+          <button id="actualizar" type="button" class="secundario">Actualizar</button>
+        </div>
+        <div id="tarjetas" class="tarjetas"></div>
+      </section>
+
+      <section>
+        <h2>Tiempos promedio</h2>
+        <p class="nota">En horas, calculados sobre los casos que tienen las fechas necesarias.</p>
+        <div id="tiempos" class="tarjetas"></div>
+      </section>
+
+      <div class="rejilla-barras">
+        <section>
+          <h2>Por estado</h2>
+          <ul id="barras-estado" class="barras"></ul>
+        </section>
+        <section>
+          <h2>Por tipo</h2>
+          <ul id="barras-tipo" class="barras"></ul>
+        </section>
+        <section>
+          <h2>Por prioridad</h2>
+          <ul id="barras-prioridad" class="barras"></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/indicadores.js"></script>
+</body>
+</html>

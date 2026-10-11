@@ -13,7 +13,7 @@ Backlog inicial del docente, refinado por el equipo. Una historia pasa a **Ready
 | HU-07 | Como validador, quiero aprobar o devolver una solución para controlar la calidad. | P1 | 5 | 2 | HU-06 | Keyla | Ready |
 | HU-08 | Como usuario autorizado, quiero consultar el historial para conocer lo ocurrido. | P2 | 5 | 2 | HU-05 | Sebastian | Done (2026-10-11, PR #32; Issue #8 cerrado) |
 | HU-09 | Como administrador, quiero filtrar casos para encontrarlos rápidamente. | P2 | 3 | 3 | HU-02, HU-03 | Keyla | Ready (2026-10-11) |
-| HU-10 | Como administrador, quiero visualizar indicadores para conocer el comportamiento del servicio. | P2 | 5 | 3 | HU-04, HU-05, HU-07 | Sebastian | Ready (2026-10-11) |
+| HU-10 | Como administrador, quiero visualizar indicadores para conocer el comportamiento del servicio. | P2 | 5 | 3 | HU-04, HU-05, HU-07 | Sebastian | En validación (implementada el 11 oct; falta integrar y registrar Done) |
 | HU-11 | Como administrador, quiero gestionar categorías de soporte. | P2 | 3 | 3 | — | Miguel | Ready (2026-10-11) |
 | HU-12 | Como solicitante, quiero consultar el detalle de mi caso y la solución registrada. | P3 | 3 | 3 | HU-06, HU-07 | Miguel | Ready (2026-10-11) |
 
