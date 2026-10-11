@@ -50,9 +50,8 @@ async function inicializarActuarComo(selectOrId, opciones = {}) {
 
   const query = opciones.rol ? `?rol=${encodeURIComponent(opciones.rol)}` : '';
   const usuarios = await api(`/api/usuarios${query}`);
-  select.innerHTML = usuarios
-    .map((u) => `<option value="${u.id}">${u.nombre} (${u.rol})</option>`)
-    .join('');
+  // new Option() trata el nombre como texto (DEF-03).
+  select.replaceChildren(...usuarios.map((u) => new Option(`${u.nombre} (${u.rol})`, u.id)));
 
   const guardado = usuarioActualId();
   if (guardado && usuarios.some((u) => u.id === guardado)) {

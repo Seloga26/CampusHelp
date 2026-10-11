@@ -11,9 +11,14 @@ async function cargar() {
     const categorias = await fetch('/api/categorias').then((r) => r.json());
     const porArea = {};
     categorias.forEach((c) => (porArea[c.area] ??= []).push(c.nombre));
-    document.getElementById('categorias').innerHTML = Object.entries(porArea)
-      .map(([area, cats]) => `<li><strong>${area}:</strong> ${cats.join(', ')}</li>`)
-      .join('');
+    // Se arma con textContent: los nombres nunca se interpretan como HTML (DEF-03).
+    document.getElementById('categorias').replaceChildren(...Object.entries(porArea).map(([area, cats]) => {
+      const item = document.createElement('li');
+      const titulo = document.createElement('strong');
+      titulo.textContent = `${area}:`;
+      item.append(titulo, ` ${cats.join(', ')}`);
+      return item;
+    }));
   } catch (err) {
     estado.textContent = 'No se pudo contactar la API';
     estado.className = 'error';

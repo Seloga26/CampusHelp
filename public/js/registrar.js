@@ -12,9 +12,8 @@ function mostrarMensaje(texto, tipo) {
 function rellenarAreas() {
   const selectArea = document.getElementById('area');
   const areas = [...new Map(categorias.map((c) => [c.area_id, c.area])).entries()];
-  selectArea.innerHTML = areas
-    .map(([id, nombre]) => `<option value="${id}">${nombre}</option>`)
-    .join('');
+  // new Option() trata el nombre como texto (DEF-03: nunca se interpreta como HTML).
+  selectArea.replaceChildren(...areas.map(([id, nombre]) => new Option(nombre, id)));
   rellenarCategorias();
 }
 
@@ -22,9 +21,7 @@ function rellenarCategorias() {
   const areaId = Number(document.getElementById('area').value);
   const selectCat = document.getElementById('categoria');
   const filtradas = categorias.filter((c) => c.area_id === areaId);
-  selectCat.innerHTML = filtradas
-    .map((c) => `<option value="${c.id}">${c.nombre}</option>`)
-    .join('');
+  selectCat.replaceChildren(...filtradas.map((c) => new Option(c.nombre, c.id)));
 }
 
 async function cargarCatalogos() {
@@ -32,8 +29,12 @@ async function cargarCatalogos() {
   rellenarAreas();
 }
 
+let enviando = false;
+
 async function enviarRegistro(evento) {
   evento.preventDefault();
+  // DEF-02: un doble clic no debe registrar el caso dos veces.
+  if (enviando) return;
   const usuarioId = usuarioActualId();
   if (!usuarioId) {
     mostrarMensaje('Selecciona un solicitante en "Actuar como".', 'error');
@@ -49,6 +50,10 @@ async function enviarRegistro(evento) {
     usuario_id: usuarioId,
   };
 
+  const boton = evento.target.querySelector('button[type="submit"]');
+  enviando = true;
+  boton.disabled = true;
+  boton.textContent = 'Registrando…';
   try {
     const caso = await api('/api/casos', {
       method: 'POST',
@@ -63,6 +68,10 @@ async function enviarRegistro(evento) {
     rellenarCategorias();
   } catch (err) {
     mostrarMensaje(err.message || 'No se pudo registrar el caso', 'error');
+  } finally {
+    enviando = false;
+    boton.disabled = false;
+    boton.textContent = 'Registrar caso';
   }
 }
 
