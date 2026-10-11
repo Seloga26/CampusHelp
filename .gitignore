@@ -7,5 +7,3 @@ Thumbs.db
 .idea/
 coverage/
 
-# Configuración local de herramientas del editor
-.claude/
