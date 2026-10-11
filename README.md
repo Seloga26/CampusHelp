@@ -81,7 +81,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | POST | `/api/casos` | HU-01 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ |
 | PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
-| PATCH | `/api/casos/:id/asignar` | HU-04 | ⏳ Sprint 2 |
+| PATCH | `/api/casos/:id/asignar` | HU-04 | ✅ |
 | POST | `/api/casos/:id/atencion` | HU-06 | ✅ |
 | POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
 | GET | `/api/casos/:id/atenciones` | HU-07 | ⏳ Sprint 2 |
@@ -95,8 +95,8 @@ Los endpoints pendientes responden `501` hasta que se implementan.
 
 `PATCH /api/casos/:id/estado` recibe `{ "estado": "En análisis", "usuario_id": 3 }`
 y devuelve `200` con el caso actualizado. Respuestas de error: `400` por datos
-inválidos, `403` si el usuario no es un agente activo, `404` si el caso no existe
-y `409` por una transición no permitida.
+inválidos, `403` si el usuario no es un agente activo o no es el agente asignado
+al caso (HU-04), `404` si el caso no existe y `409` por una transición no permitida.
 
 El agente avanza `Pendiente → En análisis → En atención → En validación`.
 El estado y el evento de historial se guardan juntos; el inicio de atención se
@@ -110,6 +110,23 @@ incluye el botón **Pasar a <siguiente estado>**, con el agente seleccionado en
 "Actuar como". Al guardar se actualiza la tabla; los errores quedan visibles
 y el doble clic no duplica el cambio. Los casos En validación quedan a cargo
 del validador y no muestran botón de avance.
+
+### Asignarme un caso (HU-04)
+
+`PATCH /api/casos/:id/asignar` recibe `{ "usuario_id": 3 }` (el agente de
+"Actuar como") y devuelve `200` con el caso actualizado, incluido el nombre del
+agente. Se guardan `agente_id` y `fecha_asignacion`, y se registra el evento
+"Caso asignado" en la misma transacción. Asignar **no** cambia el estado.
+
+Errores: `400` por datos inválidos, `403` si no es un agente activo, `404` si el
+caso no existe y `409` si está cerrado o ya tiene agente (no hay reasignación en
+el MVP). Si dos agentes se asignan el mismo caso a la vez, solo uno lo consigue.
+
+Desde HU-04, **solo el agente asignado cambia el estado** (Taller, sección 7):
+un caso sin agente no sale de Pendiente y otro agente recibe `403`. En
+`/bandeja.html`, los casos sin agente muestran **Asignarme**; si el agente
+seleccionado no es el asignado, el botón de estado queda deshabilitado y explica
+por qué.
 
 ### Registrar atención (HU-06)
 
@@ -129,8 +146,7 @@ a En validación sin una atención del propio caso.
 La página `/atender.html?id=10` permite registrar la atención directamente;
 también puede indicarse el ID en el formulario. La bandeja muestra **Registrar
 atención** en los casos En atención asignados al agente seleccionado; el
-formulario permite volver a la bandeja para enviar a validación. El flujo de
-asignación depende de HU-04. Pruebas,
+formulario permite volver a la bandeja para enviar a validación. Pruebas,
 alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
 
 ### `GET /api/casos`
