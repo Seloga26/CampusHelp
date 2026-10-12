@@ -9,7 +9,7 @@ Backlog inicial del docente, refinado por el equipo. Una historia pasa a **Ready
 | HU-03 | Como agente, quiero visualizar la bandeja de casos pendientes para seleccionar trabajo. | P1 | 3 | 1 | HU-01 (se mitiga con T0) | Keyla | En validación (integrada el 9 oct, PR #25; falta registrar Done) |
 | HU-05 | Como agente, quiero cambiar el estado del caso para reflejar su avance. | P1 | 5 | 1 | HU-03 (solo frontend) | Miguel | Done (2026-10-09, PR #28; Issue #5 cerrada) |
 | HU-04 | Como agente, quiero asignarme un caso para asumir su atención. | P1 | 3 | 2 | HU-05, HU-03 | Sebastian | Done (2026-10-11, PR #31; Issue #4 cerrado) |
-| HU-06 | Como agente, quiero registrar diagnóstico y solución para documentar la atención. | P1 | 5 | 2 | HU-04, HU-05 | Miguel | En validación (desbloqueada el 11 oct al integrarse HU-04; falta registrar Done) |
+| HU-06 | Como agente, quiero registrar diagnóstico y solución para documentar la atención. | P1 | 5 | 2 | HU-04, HU-05 | Miguel | En validación (flujo integrado verificado el 12 oct: 225 pruebas aprobadas; pendiente visto bueno y PR de cierre) |
 | HU-07 | Como validador, quiero aprobar o devolver una solución para controlar la calidad. | P1 | 5 | 2 | HU-06 | Keyla | Ready |
 | HU-08 | Como usuario autorizado, quiero consultar el historial para conocer lo ocurrido. | P2 | 5 | 2 | HU-05 | Sebastian | Done (2026-10-11, PR #32; Issue #8 cerrado) |
 | HU-09 | Como administrador, quiero filtrar casos para encontrarlos rápidamente. | P2 | 3 | 3 | HU-02, HU-03 | Keyla | Ready (2026-10-11) |
