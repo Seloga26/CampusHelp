@@ -5,7 +5,7 @@ const express = require('express');
 const { manejar } = require('../middleware/asincrono');
 
 function crearCategoriasRouter({
-  listarCategorias, listarCategoriasGestion, agregarCategoria, actualizarCategoria,
+  listarCategorias, listarAreas, listarCategoriasGestion, agregarCategoria, actualizarCategoria,
 }) {
   const router = express.Router();
   // HU-01: solo activas, para el formulario de registro
@@ -14,6 +14,9 @@ function crearCategoriasRouter({
   }));
 
   // HU-11: gestión por el administrador
+  router.get('/areas', manejar(async (req, res) => {
+    res.json(await listarAreas());
+  }));
   router.get('/gestion', manejar(async (req, res) => {
     res.json(await listarCategoriasGestion({ usuario_id: req.query.usuario_id }));
   }));
@@ -21,7 +24,7 @@ function crearCategoriasRouter({
     res.status(201).json(await agregarCategoria(req.body));
   }));
   router.patch('/:id', manejar(async (req, res) => {
-    res.json(await actualizarCategoria({ ...req.body, id: Number(req.params.id) }));
+    res.json(await actualizarCategoria({ ...req.body, id: req.params.id }));
   }));
   return router;
 }

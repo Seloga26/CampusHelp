@@ -18,6 +18,7 @@ const { crearAtencionesRepository } = require('../repositories/atencionesReposit
 const { crearIndicadoresRepository } = require('../repositories/indicadoresRepository');
 
 const { crearListarCategorias } = require('../services/catalogos/listarCategorias');
+const { crearListarAreas } = require('../services/catalogos/listarAreas');
 const { crearListarUsuarios } = require('../services/catalogos/listarUsuarios');
 const { crearRegistrarCaso } = require('../services/casos/registrarCaso');
 const { crearListarCasos } = require('../services/casos/listarCasos');
@@ -76,6 +77,7 @@ function crearServicios({ repos, enTransaccion }) {
   const deps = { repos, enTransaccion };
   return {
     listarCategorias: crearListarCategorias(deps),
+    listarAreas: crearListarAreas(deps), // HU-11
     listarUsuarios: crearListarUsuarios(deps),
     registrarCaso: crearRegistrarCaso(deps), // HU-01
     listarCasos: crearListarCasos(deps), // HU-02 / HU-03

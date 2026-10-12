@@ -77,9 +77,10 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 |---|---|---|---|
 | GET | `/api/health` | — | ✅ |
 | GET | `/api/categorias` | HU-01 | ✅ (activas, para el registro) |
-| GET | `/api/categorias/gestion` | HU-11 | ⏳ Sprint 3 |
-| POST | `/api/categorias` | HU-11 | ⏳ Sprint 3 |
-| PATCH | `/api/categorias/:id` | HU-11 | ⏳ Sprint 3 |
+| GET | `/api/categorias/gestion` | HU-11 | ✅ |
+| GET | `/api/categorias/areas` | HU-11 | ✅ (áreas activas, incluidas las vacías) |
+| POST | `/api/categorias` | HU-11 | ✅ |
+| PATCH | `/api/categorias/:id` | HU-11 | ✅ |
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
 | GET | `/api/casos` | HU-02, HU-03 | ✅ (filtros de HU-09: ⏳ Sprint 3) |
@@ -181,6 +182,33 @@ si no hay casos para calcularlo) y `casos`. Todo se calcula en la base con
 
 La página `/indicadores.html` muestra las tarjetas de resumen y de tiempos, y
 barras por estado, tipo y prioridad hechas con CSS. Se abre desde Inicio.
+
+### Gestionar categorías (HU-11)
+
+En `/categorias.html`, seleccionar a Fabio Administrador permite crear,
+editar, desactivar y reactivar categorías. El catálogo agrupa por área las
+activas e inactivas y muestra cuántos casos tiene cada una. Todas las páginas
+incluyen el enlace **Categorías** en el menú.
+
+`GET /api/categorias/gestion?usuario_id=6` lista todas las categorías.
+`POST /api/categorias` recibe `{ area_id, nombre, descripcion?, usuario_id }`
+y devuelve `201`. `PATCH /api/categorias/:id` recibe
+`{ nombre?, descripcion?, activa?, usuario_id }` y devuelve `200`; conserva
+los campos omitidos y el área. `activa` debe ser un booleano. Solo un
+Administrador activo puede consultar la gestión o modificar categorías.
+
+El nombre tiene entre 3 y 100 caracteres tras recortar espacios; la descripción
+es opcional, de hasta 255. Se rechazan nombres repetidos en la misma área sin
+distinguir mayúsculas ni tildes, incluso para categorías inactivas. El índice
+único protege también los intentos concurrentes. Errores: `400` datos inválidos
+o área inexistente/inactiva, `403` sin permiso, `404` categoría inexistente,
+`409` nombre repetido.
+
+Desactivar oculta la categoría al registrar casos; sus casos existentes y su
+clasificación se conservan. Reactivarla vuelve a ofrecerla en el registro.
+`GET /api/categorias/areas` ofrece las cinco áreas activas, incluso cuando una
+no tiene categorías; las áreas no se administran en esta historia.
+Evidencia y comandos de prueba: [guía de HU-11](docs/pruebas/HU-11.md).
 
 ### `GET /api/casos`
 
