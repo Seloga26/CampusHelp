@@ -86,8 +86,8 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ✅ |
 | POST | `/api/casos/:id/atencion` | HU-06 | ✅ |
-| POST | `/api/casos/:id/validacion` | HU-07 | ⏳ Sprint 2 |
-| GET | `/api/casos/:id/atenciones` | HU-07 | ⏳ Sprint 2 |
+| POST | `/api/casos/:id/validacion` | HU-07 | ✅ |Sprint 2 |
+| GET | `/api/casos/:id/atenciones` | HU-07 | ✅ | Sprint 2 |
 | GET | `/api/casos/:id/historial` | HU-08 | ✅ |
 | GET | `/api/casos/:id` | HU-12 | ⏳ Sprint 3 |
 | GET | `/api/indicadores` | HU-10 | ✅ |

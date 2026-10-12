@@ -1,8 +1,5 @@
 // CAPA DE REPOSITORIOS — único lugar con SQL de la tabla `atencion`.
 // HU-06 implementa crear() y contarPorCaso(). HU-07 implementa listarPorCaso().
-// Al implementar un método, borra su línea `throw new ErrorNoImplementado(...)`.
-
-const { ErrorNoImplementado } = require('../domain/errores');
 
 function crearAtencionesRepository(ejecutor) {
   return {
@@ -39,7 +36,16 @@ function crearAtencionesRepository(ejecutor) {
      * @returns {Promise<Array<{id, diagnostico, solucion, fecha, agente}>>}
      */
     async listarPorCaso(casoId) {
-      throw new ErrorNoImplementado('HU-07 atencionesRepository.listarPorCaso');
+      // a.id desempata atenciones registradas en el mismo segundo.
+      const [filas] = await ejecutor.query(
+        `SELECT a.id, a.diagnostico, a.solucion, a.fecha, u.nombre AS agente
+           FROM atencion a
+           JOIN usuario u ON u.id = a.agente_id
+          WHERE a.caso_id = ?
+          ORDER BY a.fecha DESC, a.id DESC`,
+        [casoId],
+      );
+      return filas;
     },
   };
 }
