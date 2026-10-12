@@ -48,6 +48,14 @@ Según la regla del equipo, estas historias siguen perteneciendo a su sprint ori
 
 Con HU-04 integrada, **HU-06 quedó desbloqueada** y puede cerrarse. **HU-07 sigue sin iniciar**: sin ella el flujo obligatorio no llega a Cerrada.
 
+### Cierre posterior de HU-06 (lunes 12)
+
+HU-06 queda **Done el 12 de octubre**, por PR #42, después de verificar el
+recorrido registro → asignación real → atención → validación en Chrome y
+MySQL 8.0.46. Suite completa: 225 aprobadas, 0 fallidas y 0 omitidas.
+Se cierra la Issue #6 y se registra la fecha en las métricas. La historia
+sigue perteneciendo al Sprint 2; el resultado de 0 Done en su timebox se conserva.
+
 ## Otros resultados del sprint
 
 | Fecha | Resultado | Evidencia |
