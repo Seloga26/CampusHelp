@@ -115,6 +115,15 @@ function crearCasosRepository(ejecutor) {
       );
     },
 
+    // ---------------------------------------------------------------- HU-07
+    /** Cierra el caso: estado Cerrada y fecha_cierre = NOW(). */
+    async cerrar(id) {
+      await ejecutor.query(
+        "UPDATE caso SET estado = 'Cerrada', fecha_cierre = CURRENT_TIMESTAMP WHERE id = ?",
+        [id],
+      );
+    },
+
     // ---------------------------------------------------------------- HU-04
     /**
      * Asigna el agente y guarda fecha_asignacion = NOW(). Solo actúa si el
