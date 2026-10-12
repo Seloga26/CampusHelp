@@ -151,6 +151,10 @@ también puede indicarse el ID en el formulario. La bandeja muestra **Registrar
 atención** en los casos En atención asignados al agente seleccionado; el
 formulario permite volver a la bandeja para enviar a validación. Pruebas,
 alcance y contrato de integración: [guía de HU-06](docs/pruebas/HU-06.md).
+El recorrido registro → asignación real → atención → validación se verifica
+para incidentes y solicitudes en `tests/browser/atencion-flujo.mysql.test.js`
+con Chrome y una base temporal MySQL; incluye los rechazos de permisos,
+estado incorrecto y ausencia de solución, además del historial completo.
 
 ### Consultar el historial (HU-08)
 

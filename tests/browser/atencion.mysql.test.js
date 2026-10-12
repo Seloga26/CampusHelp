@@ -36,7 +36,7 @@ test('HU-06: formulario, permisos y recuperación en navegador con MySQL real', 
   db = mysql.createPool({ ...config, database: nombre });
   const [[version]] = await db.query('SELECT VERSION() AS version');
   t.diagnostic(`MySQL ${version.version}; base temporal ${nombre}`);
-  // Solo prepara casos asignados en su propia BD: la asignación de HU-04 sigue pendiente.
+  // Casos asignados para criterios aislados; atencion-flujo.mysql.test.js cubre la asignación real.
   async function crearCaso(estado, tipo = 'Incidente', categoria = 8) {
     const [r] = await db.execute(`INSERT INTO caso
       (tipo, titulo, descripcion, prioridad, estado, usuario_id, categoria_id, agente_id)
