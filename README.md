@@ -83,7 +83,7 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | PATCH | `/api/categorias/:id` | HU-11 | ✅ |
 | GET | `/api/usuarios?rol=` | — | ✅ |
 | POST | `/api/casos` | HU-01 | ✅ |
-| GET | `/api/casos` | HU-02, HU-03 | ✅ (filtros de HU-09: ⏳ Sprint 3) |
+| GET | `/api/casos` | HU-02, HU-03, HU-09 | ✅ (filtros: `estado`, `tipo`, `prioridad`, `area_id`, `categoria_id`) |
 | PATCH | `/api/casos/:id/estado` | HU-05 | ✅ |
 | PATCH | `/api/casos/:id/asignar` | HU-04 | ✅ |
 | POST | `/api/casos/:id/atencion` | HU-06 | ✅ |

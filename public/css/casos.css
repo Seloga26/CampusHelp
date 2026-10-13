@@ -1,0 +1,22 @@
+/* HU-09: filtros de la página "Todos los casos". Complementa styles.css. */
+.filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem 1.25rem;
+  align-items: end;
+}
+.filtros label { display: block; margin-bottom: .35rem; font-weight: 600; }
+.filtros select { width: 100%; min-width: 0; }
+.filtros-accion button {
+  padding: .65rem 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--acento);
+  background: transparent;
+  border: 1.5px solid var(--acento);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.filtros-accion button:hover { color: #fff; background: var(--cobalto); border-color: var(--cobalto); }
+#contador { margin: 0 0 1rem; font-weight: 600; color: var(--suave); }
+#contador:empty { display: none; }

@@ -35,12 +35,20 @@ function crearCasosRepository(ejecutor) {
     // ---------------------------------------------------------- HU-02/HU-03
     /**
      * Lista casos con área, categoría, solicitante y agente.
-     * @param {{usuarioId?: number, soloAbiertos?: boolean, orden: 'recientes'|'bandeja'}} criterios
+     * HU-09 agrega filtros opcionales que se combinan con Y.
+     * @param {{usuarioId?: number, soloAbiertos?: boolean, orden: 'recientes'|'bandeja',
+     *          estado?: string, tipo?: string, prioridad?: string,
+     *          areaId?: number, categoriaId?: number}} criterios
      */
     async listar({
       usuarioId,
       soloAbiertos = false,
       orden = "recientes",
+      estado,
+      tipo,
+      prioridad,
+      areaId,
+      categoriaId,
     } = {}) {
       const condiciones = [];
       const params = [];
@@ -50,6 +58,27 @@ function crearCasosRepository(ejecutor) {
       }
       if (soloAbiertos) {
         condiciones.push("c.estado <> 'Cerrada'");
+      }
+      // HU-09: los valores van siempre como parámetros (?), nunca dentro del texto SQL.
+      if (estado !== undefined) {
+        condiciones.push("c.estado = ?");
+        params.push(estado);
+      }
+      if (tipo !== undefined) {
+        condiciones.push("c.tipo = ?");
+        params.push(tipo);
+      }
+      if (prioridad !== undefined) {
+        condiciones.push("c.prioridad = ?");
+        params.push(prioridad);
+      }
+      if (areaId !== undefined) {
+        condiciones.push("cat.area_id = ?");
+        params.push(areaId);
+      }
+      if (categoriaId !== undefined) {
+        condiciones.push("c.categoria_id = ?");
+        params.push(categoriaId);
       }
       const where = condiciones.length
         ? `WHERE ${condiciones.join(" AND ")}`
