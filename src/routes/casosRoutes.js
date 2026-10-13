@@ -52,7 +52,7 @@ function crearCasosRouter({
 
   // HU-12 (va al final: las rutas más específicas de arriba tienen prioridad)
   router.get('/:id', manejar(async (req, res) => {
-    res.json(await consultarDetalle({ usuario_id: req.query.usuario_id, id: Number(req.params.id) }));
+    res.json(await consultarDetalle({ usuario_id: req.query.usuario_id, id: req.params.id }));
   }));
 
   return router;

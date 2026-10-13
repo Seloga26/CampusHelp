@@ -1,4 +1,4 @@
-// Bases aisladas para las pruebas de HU-11; nunca inicializa campushelp.
+// Bases aisladas para las pruebas de integración; nunca inicializa campushelp.
 const fs = require('node:fs');
 const path = require('node:path');
 const { randomBytes } = require('node:crypto');

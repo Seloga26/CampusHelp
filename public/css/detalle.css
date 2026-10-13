@@ -1,0 +1,12 @@
+.datos-caso { display: grid; grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr); gap: .6rem 1.2rem; }
+.datos-caso dt { font-weight: 600; color: var(--suave); }
+.datos-caso dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.enlaces-detalle { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+.atenciones { list-style: none; padding: 0; margin: 0; }
+.atenciones li { padding: 1rem; border: 1px solid var(--linea); border-radius: var(--radio); margin-top: 1rem; }
+.atenciones .vigente { border-left: 4px solid var(--verde); }
+.atenciones h3 { margin-top: 0; }
+.atenciones p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.atencion-autor { color: var(--suave); }
+[hidden] { display: none !important; }
+@media (max-width: 640px) { .datos-caso { grid-template-columns: 1fr; gap: .25rem; } .datos-caso dd { margin-bottom: .75rem; } }

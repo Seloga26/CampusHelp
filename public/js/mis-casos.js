@@ -36,7 +36,8 @@ function mostrarTabla(casos) {
         <td>${escapar(c.prioridad)}</td>
         <td>${escapar(c.estado)}</td>
         <td>${escapar(c.fecha_creacion)}</td>
-        <td><a href="historial.html?id=${encodeURIComponent(c.id)}">Ver historial</a></td>
+        <td><a href="detalle.html?id=${encodeURIComponent(c.id)}">Ver detalle</a>
+          <a href="historial.html?id=${encodeURIComponent(c.id)}">Ver historial</a></td>
       </tr>`)
     .join('');
   tabla.hidden = casos.length === 0;

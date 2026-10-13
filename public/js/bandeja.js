@@ -99,6 +99,11 @@ function mostrarTabla(casos) {
       celda.append(enlace);
     }
     // HU-08: historial del caso, disponible para cualquier agente.
+    const detalle = document.createElement('a');
+    detalle.className = 'ver-detalle';
+    detalle.href = `detalle.html?id=${encodeURIComponent(caso.id)}`;
+    detalle.textContent = 'Ver detalle';
+    celda.append(detalle);
     const historial = document.createElement('a');
     historial.className = 'ver-historial';
     historial.href = `historial.html?id=${encodeURIComponent(caso.id)}`;
