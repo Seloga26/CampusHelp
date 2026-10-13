@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Todos los casos — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/casos.css">
+</head>
+<body>
+  <header>
+    <h1>CampusHelp</h1>
+    <p>Todos los casos</p>
+  </header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html">Mis casos</a>
+      <a href="bandeja.html">Bandeja</a>
+      <a href="casos.html" aria-current="page">Todos los casos</a>
+      <a href="cambiar-estado.html">Cambiar estado</a>
+      <a href="atender.html">Registrar atención</a>
+      <a href="validacion.html">Validación</a>
+      <a href="historial.html">Historial</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="categorias.html">Categorías</a>
+      <a href="detalle.html">Detalle</a>
+    </nav>
+
+    <section>
+      <h2>Filtrar casos</h2>
+      <form id="filtros" class="filtros">
+        <div>
+          <label for="filtro-estado">Estado</label>
+          <select id="filtro-estado" name="estado">
+            <option value="">Todos</option>
+            <option>Pendiente</option>
+            <option>En análisis</option>
+            <option>En atención</option>
+            <option>En validación</option>
+            <option>Cerrada</option>
+          </select>
+        </div>
+        <div>
+          <label for="filtro-tipo">Tipo</label>
+          <select id="filtro-tipo" name="tipo">
+            <option value="">Todos</option>
+            <option>Incidente</option>
+            <option>Solicitud de servicio</option>
+          </select>
+        </div>
+        <div>
+          <label for="filtro-prioridad">Prioridad</label>
+          <select id="filtro-prioridad" name="prioridad">
+            <option value="">Todas</option>
+            <option>P1</option>
+            <option>P2</option>
+            <option>P3</option>
+          </select>
+        </div>
+        <div>
+          <label for="filtro-area">Área</label>
+          <select id="filtro-area" name="area_id">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div>
+          <label for="filtro-categoria">Categoría</label>
+          <select id="filtro-categoria" name="categoria_id">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="filtros-accion">
+          <button type="button" id="limpiar">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <h2>Resultados</h2>
+      <p id="contador" role="status" aria-live="polite"></p>
+      <p id="mensaje" role="status"></p>
+      <p id="vacio" hidden>No hay casos con esos filtros</p>
+      <div class="tabla-contenedor">
+        <table id="tabla-casos" hidden>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título</th>
+              <th>Tipo</th>
+              <th>Área</th>
+              <th>Categoría</th>
+              <th>Prioridad</th>
+              <th>Estado</th>
+              <th>Solicitante</th>
+              <th>Agente</th>
+              <th>Fecha de creación</th>
+              <th>Ver</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-casos"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/casos.js"></script>
+</body>
+</html>

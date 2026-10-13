@@ -127,10 +127,19 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
         });
         return id;
       },
-      async listar({ usuarioId, soloAbiertos, orden = 'recientes' } = {}) {
+      async listar({ usuarioId, soloAbiertos, orden = 'recientes',  
+        estado, tipo, prioridad, areaId, categoriaId,
+      } = {}) {
+       const areaDe = (c) => (datos.categorias.find((x) => x.id === c.categoria_id) || {}).area_id;
         let lista = datos.casos.filter((c) =>
           (usuarioId === undefined || c.usuario_id === Number(usuarioId)) &&
-          (!soloAbiertos || c.estado !== 'Cerrada'));
+          (!soloAbiertos || c.estado !== 'Cerrada') &&
+          (estado === undefined || c.estado === estado) &&
+          (tipo === undefined || c.tipo === tipo) &&
+          (prioridad === undefined || c.prioridad === prioridad) &&
+          (areaId === undefined || areaDe(c) === Number(areaId)) &&
+          (categoriaId === undefined || c.categoria_id === Number(categoriaId)));
+          
         lista = [...lista].sort(orden === 'bandeja'
           ? (a, b) => PESO_PRIORIDAD[a.prioridad] - PESO_PRIORIDAD[b.prioridad]
               || a.fecha_creacion.localeCompare(b.fecha_creacion)
