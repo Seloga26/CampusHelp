@@ -90,10 +90,8 @@ Regla de dependencias: `routes → services → domain`, y `services` usa `repos
 | POST | `/api/casos/:id/validacion` | HU-07 | ✅ |Sprint 2 |
 | GET | `/api/casos/:id/atenciones` | HU-07 | ✅ | Sprint 2 |
 | GET | `/api/casos/:id/historial` | HU-08 | ✅ |
-| GET | `/api/casos/:id` | HU-12 | ⏳ Sprint 3 |
+| GET | `/api/casos/:id` | HU-12 | ✅ |
 | GET | `/api/indicadores` | HU-10 | ✅ |
-
-Los endpoints pendientes responden `501` hasta que se implementan.
 
 ### Cambiar estado (HU-05)
 
@@ -209,6 +207,25 @@ clasificación se conservan. Reactivarla vuelve a ofrecerla en el registro.
 `GET /api/categorias/areas` ofrece las cinco áreas activas, incluso cuando una
 no tiene categorías; las áreas no se administran en esta historia.
 Evidencia y comandos de prueba: [guía de HU-11](docs/pruebas/HU-11.md).
+
+### Consultar detalle y solución (HU-12)
+
+`GET /api/casos/:id?usuario_id=1` devuelve el caso con tipo, título,
+descripción, área, categoría, prioridad, estado, solicitante, agente y las
+fechas de creación, asignación, inicio de atención y cierre, junto con
+`atenciones` de la más reciente a la más antigua. Cada atención contiene
+diagnóstico, solución, agente y fecha. Es una consulta de solo lectura.
+
+Un Solicitante activo solo consulta sus propios casos; Agente, Validador y
+Administrador activos consultan cualquier caso. Respuestas: `200` detalle,
+`400` IDs inválidos, `403` sin permiso o usuario inactivo y `404` caso inexistente.
+
+La página `/detalle.html?id=10` se abre con **Ver detalle** desde Mis casos
+o la bandeja. Destaca la atención más reciente como **Solución vigente** y
+conserva las anteriores debajo; sin atenciones muestra **Aún no hay una
+solución registrada**. Incluye enlace al historial y limpia los datos al
+cambiar de usuario o fallar la consulta. Los menús incluyen **Detalle**.
+Pruebas y evidencia: [guía de HU-12](docs/pruebas/HU-12.md).
 
 ### `GET /api/casos`
 

@@ -137,9 +137,17 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
           : (a, b) => b.fecha_creacion.localeCompare(a.fecha_creacion));
         return lista.map((c) => ({ ...c }));
       },
-      async buscarPorId(id) {
+      async buscarPorId(id, { bloquear = false } = {}) {
         const c = datos.casos.find((x) => x.id === Number(id));
-        return c ? { ...c } : null;
+        if (!c) return null;
+        if (bloquear) return { ...c };
+        const categoria = datos.categorias.find(cat => cat.id === c.categoria_id);
+        return { ...c,
+          area: categoria?.area ?? c.area ?? null,
+          categoria: categoria?.nombre ?? c.categoria ?? null,
+          solicitante: datos.usuarios.find(u => u.id === c.usuario_id)?.nombre ?? c.solicitante ?? null,
+          agente: datos.usuarios.find(u => u.id === c.agente_id)?.nombre ?? c.agente ?? null,
+        };
       },
       async actualizarEstado(id, nuevoEstado, { marcarInicioAtencion = false } = {}) {
         const c = datos.casos.find((x) => x.id === Number(id));
@@ -188,7 +196,7 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
       async listarPorCaso(casoId) {
         return datos.atenciones
           .filter((a) => a.caso_id === Number(casoId))
-          .sort((a, b) => b.id - a.id)
+          .sort((a, b) => b.fecha.localeCompare(a.fecha) || b.id - a.id)
           .map((a) => ({
             id: a.id,
             diagnostico: a.diagnostico,

@@ -9,11 +9,30 @@
 // Errores de dominio: ErrorValidacion (400), ErrorPermiso (403), ErrorNoEncontrado (404).
 // Devuelve el caso con la lista `atenciones`.
 
-const { ErrorNoImplementado } = require('../../domain/errores');
+const { ROLES } = require('../../domain/catalogos');
+const { ErrorValidacion, ErrorPermiso, ErrorNoEncontrado } = require('../../domain/errores');
+
+function esIdValido(id) {
+  return (typeof id === 'number' || typeof id === 'string') && /^[1-9]\d*$/.test(String(id))
+    && Number.isSafeInteger(Number(id)) && Number(id) <= 2147483647;
+}
 
 function crearConsultarDetalle({ repos }) {
-  return async function consultarDetalle({ id, usuario_id } = {}) {
-    throw new ErrorNoImplementado('HU-12 Detalle del caso');
+  return async function consultarDetalle(datos = {}) {
+    if (!esIdValido(datos?.id)) throw new ErrorValidacion('El ID del caso debe ser un entero positivo');
+    if (!esIdValido(datos?.usuario_id)) throw new ErrorValidacion('usuario_id debe ser un entero positivo');
+    const id = Number(datos.id);
+    const usuarioId = Number(datos.usuario_id);
+    const usuario = await repos.usuarios.buscarActivoPorId(usuarioId);
+    if (!usuario || !Object.values(ROLES).includes(usuario.rol)) {
+      throw new ErrorPermiso('Solo un usuario activo puede consultar el detalle');
+    }
+    const caso = await repos.casos.buscarPorId(id);
+    if (!caso) throw new ErrorNoEncontrado('Caso no encontrado');
+    if (usuario.rol === ROLES.SOLICITANTE && Number(caso.usuario_id) !== usuarioId) {
+      throw new ErrorPermiso('Solo puedes consultar el detalle de tus propios casos');
+    }
+    return { ...caso, atenciones: await repos.atenciones.listarPorCaso(id) };
   };
 }
 

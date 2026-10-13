@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detalle del caso — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/detalle.css">
+</head>
+<body>
+  <header><h1>CampusHelp</h1><p>Detalle del caso y solución</p></header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html">Mis casos</a>
+      <a href="bandeja.html">Bandeja</a>
+      <a href="cambiar-estado.html">Cambiar estado</a>
+      <a href="atender.html">Registrar atención</a>
+      <a href="validacion.html">Validación</a>
+      <a href="historial.html">Historial</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="categorias.html">Categorías</a>
+      <a href="detalle.html" aria-current="page">Detalle</a>
+    </nav>
+    <section><label for="actuar-como">Actuar como</label><select id="actuar-como"></select></section>
+    <section>
+      <h2>Consultar detalle</h2>
+      <p>Un solicitante consulta sus propios casos; agentes, validadores y administradores pueden consultar cualquier caso.</p>
+      <form id="form-detalle" class="formulario">
+        <label for="caso-id">Número de caso</label>
+        <input id="caso-id" inputmode="numeric" required>
+        <button id="consultar" type="submit">Ver detalle</button>
+      </form>
+      <p id="mensaje" role="status" aria-live="polite"></p>
+    </section>
+    <div id="resultado" hidden>
+      <section>
+        <h2 id="titulo-detalle">Detalle</h2>
+        <dl id="datos-caso" class="datos-caso"></dl>
+        <div class="enlaces-detalle">
+          <a id="ver-historial" href="historial.html">Ver historial</a>
+          <a href="mis-casos.html">Mis casos</a>
+          <a href="bandeja.html">Bandeja</a>
+        </div>
+      </section>
+      <section>
+        <h2>Solución y atenciones</h2>
+        <p id="sin-solucion" hidden>Aún no hay una solución registrada</p>
+        <ol id="atenciones" class="atenciones"></ol>
+      </section>
+    </div>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/detalle.js"></script>
+</body>
+</html>
