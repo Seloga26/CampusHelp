@@ -7,11 +7,13 @@
 // Errores de dominio: ErrorValidacion (400), ErrorPermiso (403),
 // ErrorNoEncontrado (404), ErrorConflicto (409).
 
-const { ErrorNoImplementado } = require('../../domain/errores');
+const { validarObjeto, exigirAdministrador } = require('./validarCategoria');
 
 function crearListarCategoriasGestion({ repos }) {
-  return async function listarCategoriasGestion({ usuario_id } = {}) {
-    throw new ErrorNoImplementado('HU-11 Listar categorías para gestión');
+  return async function listarCategoriasGestion(datos = {}) {
+    validarObjeto(datos);
+    await exigirAdministrador(repos, datos.usuario_id);
+    return repos.categorias.listarTodas();
   };
 }
 

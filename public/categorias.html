@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Categorías — CampusHelp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/categorias.css">
+</head>
+<body>
+  <header><h1>CampusHelp</h1><p>Categorías de soporte</p></header>
+  <main>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="registrar.html">Registrar caso</a>
+      <a href="mis-casos.html">Mis casos</a>
+      <a href="bandeja.html">Bandeja</a>
+      <a href="cambiar-estado.html">Cambiar estado</a>
+      <a href="atender.html">Registrar atención</a>
+      <a href="validacion.html">Validación</a>
+      <a href="historial.html">Historial</a>
+      <a href="indicadores.html">Indicadores</a>
+      <a href="categorias.html" aria-current="page">Categorías</a>
+    </nav>
+    <section><label for="actuar-como">Actuar como</label><select id="actuar-como"></select></section>
+    <p id="mensaje" role="status" aria-live="polite"></p>
+    <div id="gestion" hidden>
+      <section>
+        <h2 id="titulo-formulario">Nueva categoría</h2>
+        <form id="form-categoria" class="formulario">
+          <label for="area">Área</label><select id="area" required></select>
+          <label for="nombre">Nombre</label><input id="nombre" required maxlength="100">
+          <label for="descripcion">Descripción (opcional)</label><textarea id="descripcion" maxlength="255" rows="3"></textarea>
+          <div class="botones-categoria">
+            <button id="guardar-categoria" type="submit">Crear categoría</button>
+            <button id="cancelar-edicion" type="button" hidden>Cancelar edición</button>
+          </div>
+        </form>
+      </section>
+      <div class="encabezado-categorias"><h2>Catálogo por área</h2><button id="actualizar" type="button">Actualizar</button></div>
+      <p>Las categorías inactivas conservan sus casos y se pueden reactivar.</p>
+      <div id="grupos-categorias"></div>
+    </div>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/categorias.js"></script>
+</body>
+</html>

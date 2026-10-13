@@ -8,6 +8,8 @@
 //   const registrarCaso = crearRegistrarCaso({ repos, enTransaccion });
 //   ... y luego revisar datos.casos / datos.historial
 
+const { ErrorConflicto } = require('../../src/domain/errores');
+
 function usuariosBase() {
   return [
     { id: 1, nombre: 'Ana Solicitante', correo: 'ana@campus.edu', rol: 'Solicitante', activo: true },
@@ -31,11 +33,21 @@ function categoriasBase() {
 
 const PESO_PRIORIDAD = { P1: 1, P2: 2, P3: 3 };
 
-function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoriasBase(), casos = [] } = {}) {
-  const datos = { usuarios, categorias, casos, historial: [], atenciones: [] };
+function areasBase() {
+  return ['Hardware', 'Software', 'Red y conectividad', 'Cuentas y acceso', 'Plataformas académicas']
+    .map((nombre, i) => ({ id: i + 1, nombre, activa: true }));
+}
+
+function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoriasBase(), casos = [], areas = areasBase() } = {}) {
+  const datos = { usuarios, categorias, casos, areas, historial: [], atenciones: [] };
   const fechasHistorial = new Map(); // fecha de cada evento, como la pone MySQL
   const sinActivo = ({ activo, ...resto }) => resto;
   const sinActiva = ({ activa, ...resto }) => resto;
+  // Aproxima utf8mb4_unicode_ci para los nombres usados en estas pruebas.
+  const normalizarNombre = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  const existeNombre = (areaId, nombre, excluirId) => datos.categorias.some(c =>
+    c.area_id === Number(areaId) && c.id !== Number(excluirId)
+    && normalizarNombre(c.nombre) === normalizarNombre(nombre));
 
   const repos = {
     usuarios: {
@@ -50,10 +62,11 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
 
     categorias: {
       async listarActivas() {
-        return datos.categorias.filter((c) => c.activa).map(sinActiva);
+        return datos.categorias.filter((c) => c.activa && datos.areas.some(a => a.id === c.area_id && a.activa)).map(sinActiva);
       },
       async buscarActivaPorId(id) {
-        const c = datos.categorias.find((x) => x.id === Number(id) && x.activa);
+        const c = datos.categorias.find((x) => x.id === Number(id) && x.activa
+          && datos.areas.some(a => a.id === x.area_id && a.activa));
         return c ? sinActiva(c) : null;
       },
       // HU-11: mismo formato que devolverá el repositorio real
@@ -71,24 +84,29 @@ function crearReposEnMemoria({ usuarios = usuariosBase(), categorias = categoria
         return c ? { descripcion: null, ...c } : null;
       },
       async buscarAreaActivaPorId(areaId) {
-        const c = datos.categorias.find((x) => x.area_id === Number(areaId));
-        return c ? { id: c.area_id, nombre: c.area } : null;
+        const area = datos.areas.find(a => a.id === Number(areaId) && a.activa);
+        return area ? { id: area.id, nombre: area.nombre } : null;
+      },
+      async listarAreasActivas() {
+        return datos.areas.filter(a => a.activa).map(({ id, nombre }) => ({ id, nombre }))
+          .sort((a, b) => a.nombre.localeCompare(b.nombre));
       },
       async existeNombreEnArea(areaId, nombre, { excluirId } = {}) {
-        // Igual que utf8mb4_unicode_ci: sin distinguir mayúsculas ni tildes.
-        const normalizar = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-        return datos.categorias.some((c) => c.area_id === Number(areaId) && c.id !== Number(excluirId)
-          && normalizar(c.nombre) === normalizar(nombre));
+        return existeNombre(areaId, nombre, excluirId);
       },
       async crear({ area_id, nombre, descripcion }) {
+        if (existeNombre(area_id, nombre)) throw new ErrorConflicto('Ya existe una categoría con ese nombre en el área');
         const id = Math.max(0, ...datos.categorias.map((c) => c.id)) + 1;
-        const area = (datos.categorias.find((c) => c.area_id === Number(area_id)) || {}).area;
+        const area = (datos.areas.find(a => a.id === Number(area_id)) || {}).nombre;
         datos.categorias.push({ id, nombre, descripcion: descripcion ?? null, area_id: Number(area_id), area, activa: true });
         return id;
       },
       async actualizar(id, cambios) {
         const c = datos.categorias.find((x) => x.id === Number(id));
         if (!c) return;
+        if (cambios.nombre !== undefined && existeNombre(c.area_id, cambios.nombre, id)) {
+          throw new ErrorConflicto('Ya existe una categoría con ese nombre en el área');
+        }
         for (const campo of ['nombre', 'descripcion', 'activa']) {
           if (cambios[campo] !== undefined) c[campo] = cambios[campo];
         }

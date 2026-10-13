@@ -14,7 +14,7 @@ Backlog inicial del docente, refinado por el equipo. Una historia pasa a **Ready
 | HU-08 | Como usuario autorizado, quiero consultar el historial para conocer lo ocurrido. | P2 | 5 | 2 | HU-05 | Sebastian | Done (2026-10-11, PR #32; Issue #8 cerrado) |
 | HU-09 | Como administrador, quiero filtrar casos para encontrarlos rápidamente. | P2 | 3 | 3 | HU-02, HU-03 | Keyla | Ready (2026-10-11) |
 | HU-10 | Como administrador, quiero visualizar indicadores para conocer el comportamiento del servicio. | P2 | 5 | 3 | HU-04, HU-05, HU-07 | Sebastian | Done (2026-10-11, PR #38) |
-| HU-11 | Como administrador, quiero gestionar categorías de soporte. | P2 | 3 | 3 | — | Miguel | Ready (2026-10-11) |
+| HU-11 | Como administrador, quiero gestionar categorías de soporte. | P2 | 3 | 3 | — | Miguel | Done (2026-10-12, PR #43; Issue #11 cerrada; 247 pruebas aprobadas con Chrome y MySQL) |
 | HU-12 | Como solicitante, quiero consultar el detalle de mi caso y la solución registrada. | P3 | 3 | 3 | HU-06, HU-07 | Miguel | Ready (2026-10-11) |
 
 **Totales por sprint:** Sprint 1 = 16 SP (0 terminados al cierre del timebox; sus historias siguen abiertas con sus responsables) · Sprint 2 = 18 SP (0 terminados al cierre del sábado 10) · Sprint 3 = 14 SP

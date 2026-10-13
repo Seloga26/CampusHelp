@@ -1,0 +1,14 @@
+.encabezado-categorias { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.encabezado-categorias h2 { margin: 0; }
+.botones-categoria { display: flex; flex-wrap: wrap; gap: .75rem; }
+.botones-categoria button { margin-top: 1rem; }
+.tabla-categorias td:last-child { white-space: normal; min-width: 13rem; }
+.tabla-categorias button, #actualizar {
+  font: inherit; cursor: pointer; border: 1px solid var(--tinta); border-radius: var(--radio);
+  padding: .5rem .75rem; color: var(--tinta); background: var(--blanco); margin: .2rem;
+}
+button:disabled { cursor: default; opacity: .55; }
+.estado-categoria { font-weight: 600; }
+.categoria-inactiva .estado-categoria { color: var(--suave); }
+.tabla-categorias td:nth-child(2) { font-weight: normal; overflow-wrap: anywhere; white-space: pre-wrap; }
+[hidden] { display: none !important; }
