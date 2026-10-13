@@ -56,7 +56,7 @@ Puntos a explicar mientras se avanza:
 
 ## 4. Calidad y métricas (2 min) — los tres
 
-- **Pruebas:** 206 automáticas sin fallos, más casos con Chrome y MySQL registrados en `docs/pruebas/casos_prueba.md`. Tres defectos encontrados y corregidos (`docs/pruebas/defectos.md`).
+- **Pruebas:** 248 automáticas con MySQL, sin fallos, más casos con Chrome y MySQL registrados en `docs/pruebas/casos_prueba.md`. Tres defectos encontrados y corregidos (`docs/pruebas/defectos.md`).
 - **Métricas** (`docs/metricas/README.md`): Throughput 0 → 0 → 4; Lead Time de las historias del sprint 5 → 4,5 → 0,75 días.
 - **Mejora que funcionó:** cerrar cada historia al fusionarla. **Lo que no:** seguimos integrando tarde el último día; se explica en la Retro del Sprint 3.
 - **Transparencia:** algunas fechas del CSV se completaron después desde GitHub y están declaradas como tales.

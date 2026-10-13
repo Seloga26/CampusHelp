@@ -19,7 +19,7 @@
 | Defectos | 2 (DEF-02 y DEF-03), encontrados y corregidos el 11 oct al cerrar HU-01 | `docs/pruebas/defectos.md` |
 | Bloqueos | 1: HU-06, 2 días, heredado del Sprint 2 y resuelto el 11 oct con HU-04 | `registro_flujo.csv` |
 | Hora de integración | 7 de los 9 PR del lunes 12 se fusionaron después de las 18:00 (#42 a #48) | PR #40 a #48 |
-| Pruebas automáticas | 206 pruebas, 0 fallidas | `npm test` |
+| Pruebas automáticas | 248 pruebas con MySQL 8.0.46, 0 fallidas | `npm test` |
 
 ## Seguimiento de la mejora del Sprint 2
 
@@ -42,7 +42,7 @@
 ## ¿Qué no funcionó?
 
 - **La integración volvió a quedar para la noche del último día**, sin margen para la prueba integrada con MySQL antes de la Review (T3-14).
-- **Las historias de Keyla se cerraron sin registro.** Los Issues se cerraron, pero sin fechas en el CSV ni resultados en `casos_prueba.md` para HU-07 y HU-09; las fechas se reconstruyeron desde GitHub.
+- **Las historias de Keyla se cerraron sin registro.** Los Issues se cerraron, pero sin fechas en el CSV ni resultados en `casos_prueba.md` para HU-07 y HU-09. Las fechas se reconstruyeron desde GitHub, y Sebastian ejecutó y registró sus casos la misma noche.
 - **El límite de WIP de En validación no se respetó.** HU-02 y HU-03 estuvieron fusionadas tres días sin cerrarse, y con HU-06 bloqueada la columna tuvo 3 historias.
 - **Nadie marcó `blocked`.** El bloqueo de HU-06 quedó en el CSV, pero no en el tablero.
 

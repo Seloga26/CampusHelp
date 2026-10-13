@@ -12,7 +12,7 @@
 
 | Historia | SP | Responsable | Done | Evidencia | Resultado |
 |---|---|---|---|---|---|
-| HU-09 Filtrar casos | 3 | Keyla | 12 oct | PR #46, #47 y #48; Issue #9; `casos.html` | Terminada. **CP-10, CP-29, CP-30 y CP-31 sin resultado registrado** en `casos_prueba.md` |
+| HU-09 Filtrar casos | 3 | Keyla | 12 oct | PR #46, #47 y #48; Issue #9; `casos.html` | Terminada. CP-10 y CP-29 a CP-31 ejecutados el 12 oct con API y MySQL 8.0.46 (sin prueba en navegador) |
 | HU-10 Indicadores del servicio | 5 | Sebastian | 11 oct | PR #38 y #39; Issue #10; CP-32 a CP-35 con MySQL 8.0.46 | Terminada |
 | HU-11 Gestionar categorías | 3 | Miguel | 12 oct | PR #43 y #44; Issue #11; CP-36 a CP-39 con MySQL 8.0.46 y Chrome | Terminada |
 | HU-12 Detalle del caso y solución | 3 | Miguel | 12 oct | PR #45; Issue #12; CP-40 a CP-43 con MySQL 8.0.46 y Chrome | Terminada |
@@ -29,7 +29,7 @@ Siguen perteneciendo a su sprint original; su Lead Time refleja el retraso.
 | HU-08 Consultar el historial | 2 | Sebastian | 11 oct | PR #32; CP-26, CP-27 y CP-28 |
 | HU-01 Registrar caso | 1 | Sebastian | 11 oct | PR #33; DEF-02 y DEF-03 corregidos |
 | HU-06 Registrar diagnóstico y solución | 2 | Miguel | 12 oct | PR #42; recorrido con asignación real en Chrome y MySQL 8.0.46 |
-| HU-07 Aprobar o devolver una solución | 2 | Keyla | 12 oct | PR #40; Issue #7. **CP-08, CP-09 y CP-23 a CP-25 sin resultado registrado** |
+| HU-07 Aprobar o devolver una solución | 2 | Keyla | 12 oct | PR #40; Issue #7; CP-08, CP-09 y CP-23 a CP-25 ejecutados el 12 oct con API y MySQL 8.0.46 (sin prueba en navegador) |
 | HU-02 Consultar mis casos | 1 | Keyla | 12 oct | PR #24 (fusionado el 9 oct); Issue #2; CP-12 |
 | HU-03 Bandeja de casos pendientes | 1 | Keyla | 12 oct | PR #25 (fusionado el 9 oct); Issue #3; CP-13 |
 
@@ -43,13 +43,13 @@ Siguen perteneciendo a su sprint original; su Lead Time refleja el retraso.
 4. **Categorías (HU-11):** crear, editar y desactivar categorías, con validación de nombre repetido en el área.
 5. **Detalle (HU-12):** el solicitante abre el detalle de su caso con la solución registrada.
 
-**Pruebas automáticas al cierre:** 206 pruebas, 192 aprobadas, 0 fallidas y 14 omitidas (las que necesitan MySQL; con MySQL se ejecutan todas).
+**Pruebas automáticas al cierre:** con MySQL 8.0.46, 248 pruebas, 241 aprobadas, 0 fallidas y 7 omitidas (las de navegador, que necesitan Chrome). Sin MySQL: 208 pruebas, 192 aprobadas y 16 omitidas.
 
 ## Pendientes antes de la entrega
 
 | Pendiente | Responsable | Por qué importa |
 |---|---|---|
-| Ejecutar y registrar CP-08, CP-09, CP-23, CP-24 y CP-25 (HU-07) y CP-10, CP-29, CP-30 y CP-31 (HU-09) | Keyla | La Definition of Done exige pruebas ejecutadas con resultado registrado; sin eso HU-07 y HU-09 no cumplen la DoD aunque su Issue esté cerrado |
+| Probar HU-07 y HU-09 en navegador (validación y filtros en Chrome) | Keyla | Sus casos se ejecutaron por API y MySQL; falta comprobar las pantallas, incluido el mensaje de CP-31 |
 | Prueba integrada del flujo completo con MySQL (T3-14) | Los tres | Es el recorrido de la demo y nadie lo ha corrido con todas las historias juntas |
 | Confirmar las fechas completadas de HU-02, HU-03, HU-07 y HU-09 | Keyla | Se tomaron de GitHub, no del tablero; ver [métricas](../metricas/README.md) |
 
